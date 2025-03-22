@@ -1,16 +1,33 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-background-primary: var(--color-neutral-900);
-  --color-background-secondary: var(--color-neutral-800);
-  --color-background-tertiary: var(--color-neutral-700);
-  --color-text-primary: var(--color-neutral-100);
-  --color-text-secondary: var(--color-neutral-200);
-  --color-text-tertiary: var(--color-neutral-300);
+  --color-background-strong: var(--color-neutral-950);
+  --color-background-default: var(--color-neutral-900);
+  --color-background-subtle: var(--color-neutral-800);
+
+  --color-fill-strong: var(--color-neutral-900);
+  --color-fill-default: var(--color-neutral-800);
+  --color-fill-subtle: var(--color-neutral-700);
+  --color-fill-subtler: var(--color-neutral-600);
+
+  --color-text-stronger: var(--color-white);
+  --color-text-strong: var(--color-neutral-100);
+  --color-text-default: var(--color-neutral-200);
+  --color-text-subtle: var(--color-neutral-300);
+
+  --color-border-strong: var(--color-neutral-500);
+  --color-border-default: var(--color-neutral-600);
+  --color-border-subtle: var(--color-neutral-700);
+
+  --color-success-default: var(--color-green-800);
+  --color-warning-default: var(--color-orange-800);
+  --color-error-default: var(--color-red-800);
+  --color-brand-default: #1378ae;
 }
 
 body {
-  background: var(--color-neutral-900);
-  color: var(--color-text-primary);
+  color-scheme: dark;
+  background: var(--color-background-default);
+  color: var(--color-text-default);
   font-family: Arial, Helvetica, sans-serif;
 }
