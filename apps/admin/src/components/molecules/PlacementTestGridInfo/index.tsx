@@ -1,34 +1,38 @@
 import { useParams } from 'next/navigation'
+import Image from 'next/image'
 
 import Input from '@/components/atoms/Input'
-import SearchArchitectPanel from '../SearchArchitectPanel'
-import ImageManager from '../ImageManager'
+import SelectBox from '@/components/atoms/SelectBox'
 import ImagePickerModal from '../ImagePickerModal'
 
 import { type GridInfo } from '@/types/content'
-import { useArchitectsStore } from '@/store/architectStore'
 import { useModalStore } from '@/store/modalStore'
+import { renamePngToWebp } from '@/utils/image'
+import { TIER } from '@/services/tier'
 
 type Props = {
   entries: GridInfo[]
-  onGridChange: (index: number, e: React.ChangeEvent<HTMLInputElement>) => void
-  onGridImageUrlChange: (index: number, imageUrl: string | null) => void
-  onGridMinecraftIdChange: (index: number, minecraftIds: string[]) => void
+  onGridChange: (
+    index: number,
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+  ) => void
 }
 
-export default function GridInfo({
+export default function PlacementTestGridInfo({
   entries,
   onGridChange,
-  onGridImageUrlChange,
-  onGridMinecraftIdChange,
 }: Props) {
-  const { architects } = useArchitectsStore()
   const { show } = useModalStore()
   const params = useParams()
+
+  console.log(entries)
 
   return (
     <div className="gap-12 w-full grid 2xl:grid-cols-6 xl:grid-cols-4 md:grid-cols-3 gap-y-32">
       {show && <ImagePickerModal />}
+
       {entries.map((entry, entryIdx) => (
         <div key={entryIdx} className="">
           <div key={entryIdx} className="flex flex-col gap-4">
@@ -39,18 +43,20 @@ export default function GridInfo({
               onChange={(e) => onGridChange(entryIdx, e)}
               placeholder="순서"
             />
-            <ImageManager
-              imageUrl={entry.imageUrl}
-              handleImageSelect={(imageUrl) =>
-                onGridImageUrlChange(entryIdx, imageUrl)
-              }
-            />
+            <div className="relative w-full aspect-video">
+              <Image
+                src={renamePngToWebp(entry.imageUrl)}
+                alt="작품 이미지"
+                fill
+                className="rounded-md"
+              />
+            </div>
             <div className="flex gap-2">
-              <SearchArchitectPanel
-                architects={architects}
-                onMinecraftIdChange={(minecraftIds) =>
-                  onGridMinecraftIdChange(entryIdx, minecraftIds)
-                }
+              <Input
+                onChange={() => {}}
+                name="minecraftId"
+                value={entry.minecraftId}
+                disabled
               />
               <Input
                 name="ranking"
@@ -62,10 +68,11 @@ export default function GridInfo({
                 defaultValue={0}
               />
             </div>
-            <Input
+            <SelectBox
               name="description"
-              onChange={(e) => onGridChange(entryIdx, e)}
-              placeholder="추가 설명"
+              options={TIER}
+              className={entry.description !== '' ? 'bg-fill-subtler' : ''}
+              handleSelectChange={(e) => onGridChange(entryIdx, e)}
             />
             <Input
               name="youtubeUrl"

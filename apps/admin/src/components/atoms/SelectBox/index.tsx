@@ -1,3 +1,5 @@
+import { cn } from '@/lib/cn'
+
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: string[] | number[]
   name: string
@@ -6,15 +8,25 @@ interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 export default function SelectBox(props: Props) {
-  const { value, options, handleSelectChange, name, optionSuffix, ...rest } =
-    props
+  const {
+    value,
+    options,
+    handleSelectChange,
+    name,
+    optionSuffix,
+    className,
+    ...rest
+  } = props
 
   return (
     <select
       value={value}
       onChange={handleSelectChange}
       name={name}
-      className="rounded-md py-2 border-2 border-border-default bg-fill-default pl-2 text-text-default outline-none"
+      className={cn(
+        'rounded-md py-2 border-2 border-border-default bg-fill-default pl-2 text-text-default outline-none',
+        className,
+      )}
       {...rest}
     >
       {options.map((option) => (

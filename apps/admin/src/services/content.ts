@@ -4,6 +4,7 @@ import {
   LineEventNoobProHacker,
   LineInfo,
   NoobProHacker,
+  PlacementTest,
 } from '@/types/content'
 
 // 상수
@@ -79,6 +80,27 @@ export const makeInitialGridEventNoobProHackerContent = (
   return gridEventNoobProHacker
 }
 
+export const makeInitialPlacmentTestContent = (
+  nextEpisode: number,
+  imageUrls: string[],
+) => {
+  const placementTest: PlacementTest = {
+    contentInfo: {
+      episode: nextEpisode,
+      date: new Date().toISOString().split('T')[0],
+      title: '',
+      youtubeUrl: null,
+    },
+    workInfo: imageUrls.map((imageUrl) => ({
+      ...makeInitialGridInfo(),
+      imageUrl: imageUrl,
+      minecraftId: [getMinecraftIdByImageUrl(imageUrl) || ''],
+    })),
+  }
+
+  return placementTest
+}
+
 export const makeInitialLineInfo = (entryLength: number, tiers: string[]) => {
   const lineInfo: LineInfo = {
     title: '',
@@ -115,4 +137,8 @@ export const makeInitialGridInfo = () => {
   }
 
   return gridInfo
+}
+
+export const getMinecraftIdByImageUrl = (imageUrl: string) => {
+  return imageUrl.split('/').at(-1)?.split('.')[0] || null
 }

@@ -132,7 +132,9 @@ export const useContentForm = <
 
   const onGridInfoChange = (
     index: number,
-    e: React.ChangeEvent<HTMLInputElement>,
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const { name, value, type } = e.target
 

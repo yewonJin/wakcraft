@@ -3,6 +3,7 @@
 import Divider from '@/components/atoms/Divider'
 import ContentInfo from '@/components/molecules/ContentInfo'
 import GridInfo from '@/components/molecules/GridInfo'
+import PlacementTestGridInfo from '@/components/molecules/PlacementTestGridInfo'
 
 import { useContentForm } from '@/hooks/useContentForm'
 import { GridEventNoobProHacker, PlacementTest } from '@/types/content'
@@ -30,12 +31,19 @@ export default function GridContentForm({ initialContent }: Props) {
         onContentInfoChange={onContentInfoChange}
       />
       <Divider />
-      <GridInfo
-        entries={content.workInfo}
-        onGridChange={onGridInfoChange}
-        onGridImageUrlChange={onGridImageUrlChange}
-        onGridMinecraftIdChange={onGridMinecraftIdChange}
-      />
+      {'type' in content ? (
+        <GridInfo
+          entries={content.workInfo}
+          onGridChange={onGridInfoChange}
+          onGridImageUrlChange={onGridImageUrlChange}
+          onGridMinecraftIdChange={onGridMinecraftIdChange}
+        />
+      ) : (
+        <PlacementTestGridInfo
+          entries={content.workInfo}
+          onGridChange={onGridInfoChange}
+        />
+      )}
     </form>
   )
 }

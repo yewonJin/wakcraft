@@ -7,6 +7,7 @@ import Input from '@/components/atoms/Input'
 
 import { useImageForm } from '@/hooks/useImageForm'
 import { cn } from '@/lib/cn'
+import { renamePngToWebp } from '@/utils/image'
 
 type Props = {
   imageUrl: string
@@ -38,7 +39,12 @@ export default function ImageManager({ imageUrl, handleImageSelect }: Props) {
         {imageUrl ? '이미지 변경' : '이미지 선택'}
       </Button>
       {imageUrl ? (
-        <Image src={imageUrl} alt="작품 이미지" fill className="rounded-md" />
+        <Image
+          src={renamePngToWebp(imageUrl)}
+          alt="작품 이미지"
+          fill
+          className="rounded-md"
+        />
       ) : (
         <div className="w-full">
           <label
