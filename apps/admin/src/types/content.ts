@@ -39,7 +39,7 @@ export type LineInfo = {
   entries: {
     tier: string
     description?: string
-    minecraftId: string[]
+    architectId: string[]
     imageUrl: string
     youtubeUrl: string | null
     ranking: number
@@ -50,7 +50,8 @@ export type LineInfo = {
 export type GridInfo = {
   order: number
   description: string
-  minecraftId: string[]
+  title: string | null
+  architectId: string[]
   imageUrl: string
   youtubeUrl: string | null
   ranking: number

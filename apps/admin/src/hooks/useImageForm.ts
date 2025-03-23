@@ -1,12 +1,14 @@
 import { fetchS3Images, uploadImages } from '@/lib/actions/aws'
 import { AWS_BASE_URL } from '@/lib/aws'
+import { useContentStore } from '@/store/contentStore'
 import { useModalStore } from '@/store/modalStore'
 import { renamePngToWebp } from '@/utils/image'
 
 export const useImageForm = (
   handleImageSelect: (imageUrl: string | null) => void,
 ) => {
-  const { toggleModal, setImageUrls, setHandleImageSelect } = useModalStore()
+  const { toggleModal, setHandleImageSelect } = useModalStore()
+  const { category, episode, setImageUrls } = useContentStore()
 
   const onImageClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -29,18 +31,20 @@ export const useImageForm = (
   }
 
   const handleFileUpload = async (file: File) => {
+    if (!category || !episode) return
+
     const formData = new FormData()
     formData.append('file', file)
 
     // 파일 업로드
-    const imageUrl = await uploadImages(formData, 'test', 1).then(
+    const imageUrl = await uploadImages(formData, category, episode).then(
       renamePngToWebp,
     )
     const webpUrl = renamePngToWebp(imageUrl)
     handleImageSelect(webpUrl)
 
     // 파일 업로드 후, 해당 객체 이미지들 url 형태로 받아오기
-    const images = await fetchS3Images('test', 1)
+    const images = await fetchS3Images(category, episode)
     setImageUrls(
       images.Contents?.filter(
         (content) => content.Key?.split('.').at(-1) === 'png',

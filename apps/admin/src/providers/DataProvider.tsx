@@ -3,9 +3,9 @@
 import { Fragment, useEffect } from 'react'
 
 import { useArchitectsStore, ArchitectInfo } from '@/store/architectStore'
-import { useModalStore } from '@/store/modalStore'
 import { AWS_BASE_URL, AWSDirectory } from '@/lib/aws'
 import { fetchS3Images } from '@/lib/actions/aws'
+import { useContentStore } from '@/store/contentStore'
 
 type Props = {
   architects: ArchitectInfo[]
@@ -21,10 +21,13 @@ export default function DataProvider({
   children,
 }: Props) {
   const { setArchitects } = useArchitectsStore()
-  const { setImageUrls } = useModalStore()
+  const { setCategory, setEpisode, setImageUrls } = useContentStore()
 
   useEffect(() => {
     setArchitects(architects)
+
+    setCategory(category)
+    setEpisode(episode)
     fetchS3Images(category, episode).then((res) =>
       setImageUrls(
         res.Contents?.filter(

@@ -19,7 +19,7 @@ type Props = {
     entryIdx: number,
     e: React.ChangeEvent<HTMLInputElement>,
   ) => void
-  onLineMinecraftIdChange: (
+  onLineArchitectIdChange: (
     lineIdx: number,
     entryIdx: number,
     minecraftIds: string[],
@@ -35,7 +35,7 @@ export default function LineInfo({
   lines,
   onLineInfoChange,
   onEntryChange,
-  onLineMinecraftIdChange,
+  onLineArchitectIdChange,
   onLineImageUrlChange,
 }: Props) {
   const { architects } = useArchitectsStore()
@@ -65,6 +65,7 @@ export default function LineInfo({
               name="title"
               onChange={(e) => onLineInfoChange(lineIdx, e)}
               tabIndex={1}
+              value={line.title}
               placeholder="작품명"
             />
           </div>
@@ -83,8 +84,8 @@ export default function LineInfo({
                 <div className="flex gap-2">
                   <SearchArchitectPanel
                     architects={architects}
-                    onMinecraftIdChange={(value: string[]) =>
-                      onLineMinecraftIdChange(lineIdx, entryIdx, value)
+                    onArchitectIdChange={(value: string[]) =>
+                      onLineArchitectIdChange(lineIdx, entryIdx, value)
                     }
                   />
                   <Input
@@ -101,6 +102,7 @@ export default function LineInfo({
                   name="description"
                   onChange={(e) => onEntryChange(lineIdx, entryIdx, e)}
                   placeholder="추가 설명"
+                  value={entry.description}
                 />
                 <Input
                   name="youtubeUrl"

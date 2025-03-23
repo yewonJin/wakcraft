@@ -76,10 +76,10 @@ export const useContentForm = <
     }))
   }
 
-  const onLineMinecraftIdChange = (
+  const onLineArchitectIdChange = (
     lineIdx: number,
     entryIdx: number,
-    minecraftIds: string[],
+    architectIds: string[],
   ) => {
     setContent((prev) => ({
       ...prev,
@@ -91,7 +91,7 @@ export const useContentForm = <
               if (j === entryIdx) {
                 return {
                   ...entry,
-                  ['minecraftId']: minecraftIds,
+                  ['architectId']: architectIds,
                 }
               }
               return entry
@@ -149,12 +149,12 @@ export const useContentForm = <
     }))
   }
 
-  const onGridMinecraftIdChange = (index: number, minecraftIds: string[]) => {
+  const onGridArchitectIdChange = (index: number, architectIds: string[]) => {
     setContent((prev) => ({
       ...prev,
       workInfo: prev.workInfo.map((item, i) => {
         if (i === index) {
-          return { ...item, ['minecraftId']: minecraftIds }
+          return { ...item, ['architectId']: architectIds }
         }
         return item
       }),
@@ -178,10 +178,10 @@ export const useContentForm = <
     onContentInfoChange,
     onLineInfoChange,
     onEntryChange,
-    onLineMinecraftIdChange,
+    onLineArchitectIdChange,
     onLineImageUrlChange,
     onGridInfoChange,
     onGridImageUrlChange,
-    onGridMinecraftIdChange,
+    onGridArchitectIdChange,
   }
 }

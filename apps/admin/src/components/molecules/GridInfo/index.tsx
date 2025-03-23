@@ -13,14 +13,14 @@ type Props = {
   entries: GridInfo[]
   onGridChange: (index: number, e: React.ChangeEvent<HTMLInputElement>) => void
   onGridImageUrlChange: (index: number, imageUrl: string | null) => void
-  onGridMinecraftIdChange: (index: number, minecraftIds: string[]) => void
+  onGridArchitectIdChange: (index: number, architectIds: string[]) => void
 }
 
 export default function GridInfo({
   entries,
   onGridChange,
   onGridImageUrlChange,
-  onGridMinecraftIdChange,
+  onGridArchitectIdChange,
 }: Props) {
   const { architects } = useArchitectsStore()
   const { show } = useModalStore()
@@ -48,8 +48,8 @@ export default function GridInfo({
             <div className="flex gap-2">
               <SearchArchitectPanel
                 architects={architects}
-                onMinecraftIdChange={(minecraftIds) =>
-                  onGridMinecraftIdChange(entryIdx, minecraftIds)
+                onArchitectIdChange={(architectIds) =>
+                  onGridArchitectIdChange(entryIdx, architectIds)
                 }
               />
               <Input
@@ -62,6 +62,11 @@ export default function GridInfo({
                 defaultValue={0}
               />
             </div>
+            <Input
+              name="title"
+              onChange={(e) => onGridChange(entryIdx, e)}
+              placeholder="작품명"
+            />
             <Input
               name="description"
               onChange={(e) => onGridChange(entryIdx, e)}

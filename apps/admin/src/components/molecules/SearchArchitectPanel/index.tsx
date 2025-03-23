@@ -5,13 +5,13 @@ import { useSearchArchitect } from '@/hooks/useSearchArchitect'
 import { Architect } from '@/types/architect'
 
 type Props = {
-  architects: Pick<Architect, 'minecraftId' | 'wakzooId'>[]
-  onMinecraftIdChange: (value: string[]) => void
+  architects: Pick<Architect, 'minecraftId' | 'wakzooId' | '_id'>[]
+  onArchitectIdChange: (value: string[]) => void
 }
 
 export default function SearchArchitectPanel({
   architects,
-  onMinecraftIdChange,
+  onArchitectIdChange,
 }: Props) {
   const [input, setInput] = useState('')
 
@@ -26,28 +26,28 @@ export default function SearchArchitectPanel({
 
     if (e.key === 'Tab') {
       setInput(filteredArchitect[0].wakzooId)
-      onMinecraftIdChange([filteredArchitect[0].minecraftId])
+      onArchitectIdChange([filteredArchitect[0].minecraftId])
     }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
-    onMinecraftIdChange([filteredArchitect[0]?.minecraftId ?? ''])
+    onArchitectIdChange([filteredArchitect[0]?.minecraftId ?? ''])
     if (
       filteredArchitect.length &&
       (input === filteredArchitect[0].minecraftId ||
         input === filteredArchitect[0].wakzooId)
     ) {
       setInput(e.target.value)
-      onMinecraftIdChange([filteredArchitect[0].minecraftId])
+      onArchitectIdChange([filteredArchitect[0].minecraftId])
     }
   }
 
   const handleArchitectClick = (
-    architect: Pick<Architect, 'minecraftId' | 'wakzooId'>,
+    architect: Pick<Architect, 'minecraftId' | 'wakzooId' | '_id'>,
   ) => {
     setInput(architect.wakzooId)
-    onMinecraftIdChange([architect.minecraftId])
+    onArchitectIdChange([architect.minecraftId])
   }
 
   return (
@@ -61,7 +61,7 @@ export default function SearchArchitectPanel({
         className={
           isSelected ? 'bg-success-default border-0 border-success-default' : ''
         }
-        tabIndex={isSelected ? 4 : 1}
+        tabIndex={1}
       />
       {input && filteredArchitect[0]?.wakzooId !== input && (
         <div className="flex flex-col absolute overflow-y-scroll max-h-60 w-full z-20">

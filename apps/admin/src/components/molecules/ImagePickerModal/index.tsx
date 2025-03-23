@@ -8,9 +8,11 @@ import Button from '@/components/atoms/Button'
 import { sortImagesByTierName } from '@/services/tier'
 import { useModalStore } from '@/store/modalStore'
 import { renamePngToWebp } from '@/utils/image'
+import { useContentStore } from '@/store/contentStore'
 
 export default function ImagePickerModal() {
-  const { imageUrls, toggleModal, handleImageSelect } = useModalStore()
+  const { toggleModal, handleImageSelect } = useModalStore()
+  const { imageUrls } = useContentStore()
 
   const handleImageDelete = () => {
     if (handleImageSelect !== null) {

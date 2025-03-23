@@ -6,7 +6,7 @@ export const getArchitectIds = async () => {
   await connectMongo()
   const architectIds = await Architect.find(
     {},
-    'minecraftId wakzooId -_id',
+    'minecraftId wakzooId _id',
   ).lean()
 
   return architectIds

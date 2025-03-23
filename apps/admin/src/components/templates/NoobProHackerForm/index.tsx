@@ -1,6 +1,7 @@
 'use client'
 
 import LineContentForm from '@/components/organisms/LineContentForm'
+import { postNoobProHacker } from '@/lib/actions/noobprohacker'
 import {
   BASE_ENTRY_LENGTH,
   BASE_LINE_TIERS,
@@ -20,5 +21,10 @@ export default function NoobProHackerForm({ nextEpisode }: Props) {
     BASE_LINE_TIERS,
   )
 
-  return <LineContentForm initialContent={initialNoobProHacker} />
+  return (
+    <LineContentForm
+      action={postNoobProHacker}
+      initialContent={initialNoobProHacker}
+    />
+  )
 }

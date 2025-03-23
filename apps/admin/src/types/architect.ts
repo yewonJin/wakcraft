@@ -1,6 +1,7 @@
-import { type TierGroup, type Tier } from '@/services/tier'
+import { type Tier } from '@/services/tier'
 
 export type Architect = {
+  _id: string
   minecraftId: string
   wakzooId: string
   tier: Tier[]
@@ -16,10 +17,10 @@ export type Architect = {
 }
 
 export type PortfolioItem = {
-  type?: TierGroup
+  type: string | null
   category: string
   episode: number
-  title: string
+  title: string | null
   ranking?: number | null
   imageUrl: string
   youtubeUrl?: string | null

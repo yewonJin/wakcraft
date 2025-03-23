@@ -11,7 +11,7 @@ const eventNoobProHackerSchema = new Schema<EventNoobProHacker>({
   },
   contentInfo: contentInfoSchema,
   workInfo: {
-    type: Schema.Types.Mixed, // LineInfo[] 또는 GridInfo[]를 저장
+    type: Schema.Types.Mixed,
     required: true,
     validate: {
       validator: function (this: EventNoobProHacker, value: any) {

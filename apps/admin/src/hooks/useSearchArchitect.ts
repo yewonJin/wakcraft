@@ -1,7 +1,7 @@
 import { Architect } from '@/types/architect'
 
 type Props = {
-  architects: Pick<Architect, 'minecraftId' | 'wakzooId'>[]
+  architects: Pick<Architect, 'minecraftId' | 'wakzooId' | '_id'>[]
   input: string
 }
 

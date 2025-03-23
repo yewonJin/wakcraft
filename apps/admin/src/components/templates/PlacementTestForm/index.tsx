@@ -1,19 +1,20 @@
 'use client'
 
 import GridContentForm from '@/components/organisms/GridContentForm'
+import { postPlacementTest } from '@/lib/actions/placementTest'
 import {
   getMinecraftIdByImageUrl,
   makeInitialPlacmentTestContent,
 } from '@/services/content'
 import { useArchitectsStore } from '@/store/architectStore'
-import { useModalStore } from '@/store/modalStore'
+import { useContentStore } from '@/store/contentStore'
 
 type Props = {
   nextEpisode: number
 }
 
 export default function PlacementTestForm({ nextEpisode }: Props) {
-  const { imageUrls } = useModalStore()
+  const { imageUrls } = useContentStore()
   const { architects } = useArchitectsStore()
 
   if (!imageUrls)
@@ -59,6 +60,7 @@ export default function PlacementTestForm({ nextEpisode }: Props) {
 
   return (
     <GridContentForm
+      action={postPlacementTest}
       initialContent={makeInitialPlacmentTestContent(nextEpisode, imageUrls)}
     />
   )

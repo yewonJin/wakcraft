@@ -27,8 +27,6 @@ export default function PlacementTestGridInfo({
   const { show } = useModalStore()
   const params = useParams()
 
-  console.log(entries)
-
   return (
     <div className="gap-12 w-full grid 2xl:grid-cols-6 xl:grid-cols-4 md:grid-cols-3 gap-y-32">
       {show && <ImagePickerModal />}
@@ -54,8 +52,8 @@ export default function PlacementTestGridInfo({
             <div className="flex gap-2">
               <Input
                 onChange={() => {}}
-                name="minecraftId"
-                value={entry.minecraftId}
+                name="architectId"
+                value={entry.architectId}
                 disabled
               />
               <Input
@@ -69,10 +67,15 @@ export default function PlacementTestGridInfo({
               />
             </div>
             <SelectBox
-              name="description"
+              name="title"
               options={TIER}
-              className={entry.description !== '' ? 'bg-fill-subtler' : ''}
+              className={entry.title !== null ? 'bg-fill-subtler' : ''}
               handleSelectChange={(e) => onGridChange(entryIdx, e)}
+            />
+            <Input
+              name="description"
+              onChange={(e) => onGridChange(entryIdx, e)}
+              placeholder="추가 정보"
             />
             <Input
               name="youtubeUrl"

@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
 export type ArchitectInfo = {
+  _id: string
   minecraftId: string
   wakzooId: string
 }

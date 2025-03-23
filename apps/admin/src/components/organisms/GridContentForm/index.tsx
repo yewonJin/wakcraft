@@ -6,23 +6,34 @@ import GridInfo from '@/components/molecules/GridInfo'
 import PlacementTestGridInfo from '@/components/molecules/PlacementTestGridInfo'
 
 import { useContentForm } from '@/hooks/useContentForm'
+import { convertGridContentArchitectId } from '@/services/content'
+import { useArchitectsStore } from '@/store/architectStore'
 import { GridEventNoobProHacker, PlacementTest } from '@/types/content'
 
-type Props = {
-  initialContent: GridEventNoobProHacker | PlacementTest
+type Props<T extends GridEventNoobProHacker | PlacementTest> = {
+  action: (payload: T) => Promise<void>
+  initialContent: T
 }
 
-export default function GridContentForm({ initialContent }: Props) {
+export default function GridContentForm<
+  T extends GridEventNoobProHacker | PlacementTest,
+>({ action, initialContent }: Props<T>) {
   const {
     content,
     onContentInfoChange,
     onGridInfoChange,
     onGridImageUrlChange,
-    onGridMinecraftIdChange,
+    onGridArchitectIdChange,
   } = useContentForm(initialContent)
+  const { architects } = useArchitectsStore()
 
   return (
-    <form className="flex flex-col gap-8 p-8 max-w-[1920px] mx-auto">
+    <form
+      action={() =>
+        action(convertGridContentArchitectId(architects, content) as T)
+      }
+      className="flex flex-col gap-8 p-8 max-w-[1920px] mx-auto"
+    >
       <h1 className="text-2xl font-bold">
         {'type' in content ? '그리드 이벤트 눕프핵' : '배치고사'}
       </h1>
@@ -36,7 +47,7 @@ export default function GridContentForm({ initialContent }: Props) {
           entries={content.workInfo}
           onGridChange={onGridInfoChange}
           onGridImageUrlChange={onGridImageUrlChange}
-          onGridMinecraftIdChange={onGridMinecraftIdChange}
+          onGridArchitectIdChange={onGridArchitectIdChange}
         />
       ) : (
         <PlacementTestGridInfo

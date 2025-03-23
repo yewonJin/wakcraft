@@ -1,7 +1,7 @@
 import { cn } from '@/lib/cn'
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   children: React.ReactNode
 }
 

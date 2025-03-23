@@ -17,7 +17,7 @@ export const lineInfoSchema = new Schema<LineInfo>({
     {
       tier: { type: String, required: true },
       description: { type: String },
-      minecraftId: { type: [String] },
+      architectId: { type: [String] },
       imageUrl: { type: String },
       youtubeUrl: { type: String, default: null },
       ranking: { type: Number },
@@ -28,8 +28,9 @@ export const lineInfoSchema = new Schema<LineInfo>({
 export const gridInfoSchema = new Schema<GridInfo>({
   order: { type: Number, required: true },
   description: { type: String },
-  minecraftId: { type: [String] },
+  architectId: { type: [String] },
   imageUrl: { type: String },
+  title: { type: String },
   youtubeUrl: { type: String, default: null },
   ranking: { type: Number },
 })

@@ -12,7 +12,7 @@ export default async function Page() {
     <DataProvider
       category="noobProHacker"
       episode={nextEpisode}
-      architects={architects}
+      architects={JSON.parse(JSON.stringify(architects))}
     >
       <NoobProHackerForm nextEpisode={nextEpisode} />
     </DataProvider>
