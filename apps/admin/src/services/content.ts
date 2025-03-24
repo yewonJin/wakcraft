@@ -188,7 +188,7 @@ export const convertNoobProHackerToPortfolioItems = (
   payload.workInfo.forEach((line) => {
     line.entries.forEach((entry) => {
       const portfolioItem: PortfolioItem = {
-        category: `제 ${payload.contentInfo.episode}회 눕프로해커`,
+        category: '눕프로해커',
         episode: payload.contentInfo.episode,
         date: payload.contentInfo.date,
         description: entry.description,
@@ -251,6 +251,7 @@ export const convertGridEventNoobProHackerToPortfolioItems = (
       type: null,
       ranking: entry.ranking,
       title: entry.title,
+      description: entry.description,
     }
 
     entry.architectId.forEach((_id) => {
@@ -268,7 +269,7 @@ export const convertPlacementTestToPortfolioItems = (
 
   payload.workInfo.forEach((entry) => {
     const portfolioItem: PortfolioItem = {
-      category: `${payload.contentInfo.episode}회 배치고사`,
+      category: '배치고사',
       episode: payload.contentInfo.episode,
       date: payload.contentInfo.date,
       imageUrl: entry.imageUrl,
@@ -323,6 +324,18 @@ export const hasEmptyDescription = (workInfo: GridInfo[]) =>
 
 export const hasEmptyTitle = (workInfo: LineInfo[] | GridInfo[]) =>
   workInfo.some((item) => item.title === '' || item.title === null)
+
+export const hasEmptyYoutubeUrl = (workInfo: LineInfo[] | GridInfo[]) => {
+  return workInfo.some((item) => {
+    if ('entries' in item) {
+      return item.entries.some(
+        (entry) => entry.youtubeUrl === '' || entry.youtubeUrl === null,
+      )
+    } else {
+      return item.youtubeUrl === '' || item.youtubeUrl === null
+    }
+  })
+}
 
 export const getMinecraftIdByImageUrl = (imageUrl: string) => {
   return imageUrl.split('/').at(-1)?.split('.')[0] || null

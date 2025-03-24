@@ -1,5 +1,7 @@
 'use client'
 
+import { useParams } from 'next/navigation'
+
 import Divider from '@/components/atoms/Divider'
 import ContentInfo from '@/components/molecules/ContentInfo'
 import GridInfo from '@/components/molecules/GridInfo'
@@ -26,11 +28,16 @@ export default function GridContentForm<
     onGridArchitectIdChange,
   } = useContentForm(initialContent)
   const { architects } = useArchitectsStore()
+  const params = useParams()
 
   return (
     <form
       action={() =>
-        action(convertGridContentArchitectId(architects, content) as T)
+        action(
+          !Boolean(params.episode)
+            ? (convertGridContentArchitectId(architects, content) as T)
+            : content,
+        )
       }
       className="flex flex-col gap-8 p-8 max-w-[1920px] mx-auto"
     >

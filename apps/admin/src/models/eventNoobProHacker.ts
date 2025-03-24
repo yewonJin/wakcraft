@@ -10,23 +10,27 @@ const eventNoobProHackerSchema = new Schema<EventNoobProHacker>({
     required: true,
   },
   contentInfo: contentInfoSchema,
-  workInfo: {
-    type: Schema.Types.Mixed,
-    required: true,
-    validate: {
-      validator: function (this: EventNoobProHacker, value: any) {
-        if (this.type === 'line') {
-          return (
-            Array.isArray(value) && value.every((item) => 'entries' in item)
-          )
-        }
-        if (this.type === 'grid') {
-          return Array.isArray(value) && value.every((item) => 'order' in item)
-        }
-        return false
+  workInfo: [
+    {
+      type: Schema.Types.Mixed,
+      required: true,
+      validate: {
+        validator: function (this: EventNoobProHacker, value: any) {
+          if (this.type === 'line') {
+            return (
+              Array.isArray(value) && value.every((item) => 'entries' in item)
+            )
+          }
+          if (this.type === 'grid') {
+            return (
+              Array.isArray(value) && value.every((item) => 'order' in item)
+            )
+          }
+          return false
+        },
       },
     },
-  },
+  ],
 })
 
 interface EventNoobProHackerModel extends Model<EventNoobProHacker> {}

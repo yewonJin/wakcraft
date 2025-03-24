@@ -1,7 +1,7 @@
 import { cn } from '@/lib/cn'
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function Input({ onChange, className, ...rest }: Props) {

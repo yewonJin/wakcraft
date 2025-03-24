@@ -3,7 +3,6 @@ import { Schema, Model, model, models } from 'mongoose'
 import { type Architect } from '@/types/architect'
 import { PortfolioItem } from '@/types/architect'
 import { Tier, TIER, TIER_LIST } from '@/services/tier'
-import { Category } from '@/services/content'
 
 const PortfolioItemSchema = new Schema<PortfolioItem>({
   type: { type: String },
@@ -55,9 +54,15 @@ interface ArchitectModel extends Model<Architect> {
   ) => Promise<void>
   updatePortfolioYoutubeUrl: (
     architectId: string,
-    category: Category,
+    category: string,
     episode: number,
     youtubeUrl: string,
+  ) => Promise<void>
+  updatePortfolioDescription: (
+    architectId: string,
+    category: string,
+    episode: number,
+    description: string,
   ) => Promise<void>
 }
 
@@ -156,18 +161,40 @@ architectSchema.statics.increaseProWin = function (architectId: string) {
 
 architectSchema.statics.updatePortfolioYoutubeUrl = function (
   architectId: string,
-  category: Category,
+  category: string,
   episode: number,
   youtubeUrl: string,
 ) {
   return this.findOneAndUpdate(
     {
       _id: architectId,
-      'portfolio.category': category,
-      'portfolio.episode': episode,
     },
     {
-      $set: { 'portfolio.$.youtubeUrl': youtubeUrl },
+      $set: { 'portfolio.$[elem].youtubeUrl': youtubeUrl },
+    },
+    {
+      arrayFilters: [{ 'elem.category': category, 'elem.episode': episode }],
+      new: true,
+    },
+  )
+}
+
+architectSchema.statics.updatePortfolioDescription = function (
+  architectId: string,
+  category: string,
+  episode: number,
+  description: string,
+) {
+  return this.findOneAndUpdate(
+    {
+      _id: architectId,
+    },
+    {
+      $set: { 'portfolio.$[elem].description': description },
+    },
+    {
+      arrayFilters: [{ 'elem.category': category, 'elem.episode': episode }],
+      new: true,
     },
   )
 }

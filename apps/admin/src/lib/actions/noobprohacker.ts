@@ -3,6 +3,7 @@
 import mongoose from 'mongoose'
 
 import NoobProHacker from '@/models/noobprohacker'
+import Architect from '@/models/architect'
 import connectMongo from '../db'
 import {
   convertNoobProHackerToPortfolioItems,
@@ -10,8 +11,17 @@ import {
   hasEmptyEntryRanking,
   hasEmptyImageUrl,
   hasEmptyTitle,
+  hasEmptyYoutubeUrl,
 } from '@/services/content'
-import Architect from '@/models/architect'
+
+export const getNoobProHacker = async (episode: number) => {
+  await connectMongo()
+  const noobprohacker = await NoobProHacker.findOne({
+    'contentInfo.episode': episode,
+  })
+
+  return noobprohacker
+}
 
 export const getNoobProHackerLatestEpisode = async () => {
   await connectMongo()
@@ -64,6 +74,48 @@ export const postNoobProHacker = async (payload: NoobProHacker) => {
       }
 
       console.log('눕프핵 추가 및 건축 포트폴리오 push 성공')
+    })
+  } catch (error) {
+    console.log('트랜잭션 실패:', error)
+  } finally {
+    await session.endSession()
+  }
+}
+
+export const updateNoobProHacker = async (payload: NoobProHacker) => {
+  if (hasEmptyYoutubeUrl(payload.workInfo)) {
+    return console.log('유튜브 링크를 모두 입력해주세요')
+  }
+
+  await connectMongo()
+  const session = await mongoose.startSession()
+
+  try {
+    await session.withTransaction(async () => {
+      await NoobProHacker.findOneAndUpdate(
+        { 'contentInfo.episode': payload.contentInfo.episode },
+        { $set: payload },
+      )
+
+      const portfolioItems = convertNoobProHackerToPortfolioItems(payload)
+
+      // 건축가 포트폴리오에 반영
+      for (const { _id, portfolioItem } of portfolioItems) {
+        await Architect.updatePortfolioYoutubeUrl(
+          _id,
+          portfolioItem.category,
+          portfolioItem.episode,
+          portfolioItem.youtubeUrl as string,
+        )
+        await Architect.updatePortfolioDescription(
+          _id,
+          portfolioItem.category,
+          portfolioItem.episode,
+          portfolioItem.description as string,
+        )
+      }
+
+      console.log('눕프핵 수정 및 건축 포트폴리오 수정 성공')
     })
   } catch (error) {
     console.log('트랜잭션 실패:', error)

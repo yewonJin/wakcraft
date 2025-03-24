@@ -55,7 +55,7 @@ export default function LineInfo({
                 <Input
                   className="w-12"
                   name="ranking"
-                  defaultValue={0}
+                  value={line.ranking}
                   onChange={(e) => onLineInfoChange(lineIdx, e)}
                   type="number"
                 />
@@ -82,20 +82,28 @@ export default function LineInfo({
                   }
                 />
                 <div className="flex gap-2">
-                  <SearchArchitectPanel
-                    architects={architects}
-                    onArchitectIdChange={(value: string[]) =>
-                      onLineArchitectIdChange(lineIdx, entryIdx, value)
-                    }
-                  />
+                  {!Boolean(params.episode) ? (
+                    <SearchArchitectPanel
+                      disabled={Boolean(params.episode)}
+                      architects={architects}
+                      onArchitectIdChange={(value: string[]) =>
+                        onLineArchitectIdChange(lineIdx, entryIdx, value)
+                      }
+                    />
+                  ) : (
+                    <Input
+                      value={entry.architectId[0]}
+                      disabled={Boolean(params.episode)}
+                    />
+                  )}
                   <Input
                     type="number"
                     name="ranking"
                     className="w-12"
                     onChange={(e) => onEntryChange(lineIdx, entryIdx, e)}
                     placeholder="순위"
+                    value={entry.ranking}
                     disabled={entry.tier === '눕' ? true : false}
-                    defaultValue={0}
                   />
                 </div>
                 <Input
@@ -108,7 +116,8 @@ export default function LineInfo({
                   name="youtubeUrl"
                   onChange={(e) => onEntryChange(lineIdx, entryIdx, e)}
                   placeholder="유튜브 링크"
-                  disabled={Boolean(params)}
+                  value={entry.youtubeUrl || ''}
+                  disabled={!Boolean(params.episode)}
                 />
               </div>
             ))}

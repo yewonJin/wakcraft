@@ -7,16 +7,20 @@ import ContentSetting from '@/components/organisms/ContentSetting'
 import GridContentForm from '@/components/organisms/GridContentForm'
 
 import { useEventNoobProHacker } from '@/hooks/useEventNoobProHacker'
-import {
-  postGridEventNoobProHacker,
-  postLineEventNoobProHacker,
-} from '@/lib/actions/eventNoobProHacker'
+import { GridEventNoobProHacker, LineEventNoobProHacker } from '@/types/content'
 
 type Props = {
+  actions: {
+    line: (payload: LineEventNoobProHacker) => Promise<void>
+    grid: (payload: GridEventNoobProHacker) => Promise<void>
+  }
   nextEpisode: number
 }
 
-export default function EventNoobProHackerForm({ nextEpisode }: Props) {
+export default function EventNoobProHackerForm({
+  actions,
+  nextEpisode,
+}: Props) {
   const {
     isEnd,
     state,
@@ -41,12 +45,12 @@ export default function EventNoobProHackerForm({ nextEpisode }: Props) {
     <Fragment>
       {state.type === 'line' ? (
         <LineContentForm
-          action={postLineEventNoobProHacker}
+          action={actions.line}
           initialContent={initialLineEventNoobProHacker}
         />
       ) : (
         <GridContentForm
-          action={postGridEventNoobProHacker}
+          action={actions.grid}
           initialContent={intialGridEventNoobProHacker}
         />
       )}

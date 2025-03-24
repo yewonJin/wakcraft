@@ -55,7 +55,8 @@ export default function ContentInfo({
             name="youtubeUrl"
             onChange={onContentInfoChange}
             tabIndex={1}
-            disabled={Boolean(params)}
+            value={contentInfo.youtubeUrl || ''}
+            disabled={!Boolean(params.episode)}
           />
         </div>
       </div>

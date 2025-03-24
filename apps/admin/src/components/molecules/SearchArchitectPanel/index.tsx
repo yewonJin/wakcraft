@@ -5,11 +5,13 @@ import { useSearchArchitect } from '@/hooks/useSearchArchitect'
 import { Architect } from '@/types/architect'
 
 type Props = {
+  disabled?: boolean
   architects: Pick<Architect, 'minecraftId' | 'wakzooId' | '_id'>[]
   onArchitectIdChange: (value: string[]) => void
 }
 
 export default function SearchArchitectPanel({
+  disabled,
   architects,
   onArchitectIdChange,
 }: Props) {
@@ -61,6 +63,7 @@ export default function SearchArchitectPanel({
         className={
           isSelected ? 'bg-success-default border-0 border-success-default' : ''
         }
+        disabled={disabled}
         tabIndex={1}
       />
       {input && filteredArchitect[0]?.wakzooId !== input && (

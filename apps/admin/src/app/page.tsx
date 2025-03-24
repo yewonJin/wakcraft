@@ -1,16 +1,10 @@
-'use client'
-
-import { uploadImages } from '@/lib/actions/aws'
-
-export default function Home() {
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return
-
-    const formData = new FormData()
-    formData.append('file', e.target.files[0])
-
-    uploadImages(formData, 'test', 1).then(console.log)
-  }
-
-  return <input type="file" onChange={onChange} />
+export default async function Home() {
+  return (
+    <div className="flex flex-col gap-4 p-8">
+      <h2 className="text-2xl font-semibold ">어드민</h2>
+      <p>건축가 : 건축가 추가 및 수정 기능</p>
+      <p>눕프로해커 : 눕프핵 추가 및 수정 기능</p>
+      <p>배치고사 : AWS에 이미지 미리 업로드</p>
+    </div>
+  )
 }

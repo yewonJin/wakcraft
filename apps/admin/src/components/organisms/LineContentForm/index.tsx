@@ -1,5 +1,7 @@
 'use client'
 
+import { useParams } from 'next/navigation'
+
 import Divider from '@/components/atoms/Divider'
 import ContentInfo from '@/components/molecules/ContentInfo'
 import LineInfo from '@/components/molecules/LineInfo'
@@ -9,9 +11,6 @@ import { convertLineContentArchitectId } from '@/services/content'
 import { useArchitectsStore } from '@/store/architectStore'
 import { LineEventNoobProHacker, type NoobProHacker } from '@/types/content'
 
-// type : 추가 or 수정
-// 추가 -> disabled : 유튜브 링크
-// 수정 -> disabled : 작품명, 건축가, 순위, 라인 우승
 type Props<T extends NoobProHacker | LineEventNoobProHacker> = {
   action: (payload: T) => Promise<void>
   initialContent: T
@@ -29,11 +28,16 @@ export default function LineContentForm<
     onLineArchitectIdChange,
   } = useContentForm(initialContent)
   const { architects } = useArchitectsStore()
+  const params = useParams()
 
   return (
     <form
       action={() =>
-        action(convertLineContentArchitectId(architects, content) as T)
+        action(
+          !Boolean(params.episode)
+            ? (convertLineContentArchitectId(architects, content) as T)
+            : content,
+        )
       }
       className="flex flex-col gap-8 p-8 max-w-[1920px] mx-auto"
     >
