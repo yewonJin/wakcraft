@@ -1,12 +1,13 @@
+import { useParams } from 'next/navigation'
+import { type LineInfo } from '@repo/types'
+
 import Input from '@/components/atoms/Input'
 import ImageManager from '../ImageManager'
 import ImagePickerModal from '../ImagePickerModal'
 import SearchArchitectPanel from '../SearchArchitectPanel'
 
 import { useArchitectsStore } from '@/store/architectStore'
-import { type LineInfo } from '@/types/content'
 import { useModalStore } from '@/store/modalStore'
-import { useParams } from 'next/navigation'
 
 type Props = {
   lines: LineInfo[]

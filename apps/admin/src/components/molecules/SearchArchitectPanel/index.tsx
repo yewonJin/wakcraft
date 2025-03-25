@@ -1,8 +1,8 @@
 import { useState } from 'react'
+import { type Architect } from '@repo/types'
 
 import Input from '@/components/atoms/Input'
 import { useSearchArchitect } from '@/hooks/useSearchArchitect'
-import { Architect } from '@/types/architect'
 
 type Props = {
   disabled?: boolean

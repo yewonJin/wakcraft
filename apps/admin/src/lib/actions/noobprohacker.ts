@@ -1,10 +1,10 @@
 'use server'
 
 import mongoose from 'mongoose'
+import { connectMongo } from '@repo/database'
 
 import NoobProHacker from '@/models/noobprohacker'
 import Architect from '@/models/architect'
-import connectMongo from '../db'
 import {
   convertNoobProHackerToPortfolioItems,
   hasEmptyArchitectId,

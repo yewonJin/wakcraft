@@ -1,9 +1,9 @@
 'use server'
 
 import mongoose from 'mongoose'
+import { connectMongo } from '@repo/database'
 
 import Architect from '@/models/architect'
-import connectMongo from '../db'
 import { getPlacementTestLatestEpisode } from './placementTest'
 
 export const getArchitectIds = async () => {

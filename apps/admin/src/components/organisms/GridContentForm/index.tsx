@@ -1,6 +1,7 @@
 'use client'
 
 import { useParams } from 'next/navigation'
+import { GridEventNoobProHacker, PlacementTest } from '@repo/types'
 
 import Divider from '@/components/atoms/Divider'
 import ContentInfo from '@/components/molecules/ContentInfo'
@@ -10,7 +11,6 @@ import PlacementTestGridInfo from '@/components/molecules/PlacementTestGridInfo'
 import { useContentForm } from '@/hooks/useContentForm'
 import { convertGridContentArchitectId } from '@/services/content'
 import { useArchitectsStore } from '@/store/architectStore'
-import { GridEventNoobProHacker, PlacementTest } from '@/types/content'
 
 type Props<T extends GridEventNoobProHacker | PlacementTest> = {
   action: (payload: T) => Promise<void>

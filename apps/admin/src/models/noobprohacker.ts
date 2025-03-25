@@ -1,16 +1,10 @@
-import { type NoobProHacker } from '@/types/content'
-import { Schema, Model, model, models } from 'mongoose'
-import { contentInfoSchema, lineInfoSchema } from './content'
+import { model, models } from 'mongoose'
 
-const noobprohackerSchema = new Schema<NoobProHacker>({
-  contentInfo: contentInfoSchema,
-  workInfo: [lineInfoSchema],
-})
-
-interface NoobProHackerModel extends Model<NoobProHacker> {}
+import { noobprohackerSchema } from '@repo/schemas'
+import { type NoobProHacker } from '@repo/types'
 
 const NoobProHacker =
-  (models['NoobProHacker'] as NoobProHackerModel) ||
-  model<NoobProHacker, NoobProHackerModel>('NoobProHacker', noobprohackerSchema)
+  models['NoobProHacker'] ||
+  model<NoobProHacker>('NoobProHacker', noobprohackerSchema)
 
 export default NoobProHacker

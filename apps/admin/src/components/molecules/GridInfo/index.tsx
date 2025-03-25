@@ -1,11 +1,11 @@
 import { useParams } from 'next/navigation'
+import { type GridInfo } from '@repo/types'
 
 import Input from '@/components/atoms/Input'
 import SearchArchitectPanel from '../SearchArchitectPanel'
 import ImageManager from '../ImageManager'
 import ImagePickerModal from '../ImagePickerModal'
 
-import { type GridInfo } from '@/types/content'
 import { useArchitectsStore } from '@/store/architectStore'
 import { useModalStore } from '@/store/modalStore'
 

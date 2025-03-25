@@ -1,4 +1,4 @@
-import { Architect } from '@/types/architect'
+import { Architect } from '@repo/types'
 
 type Props = {
   architects: Pick<Architect, 'minecraftId' | 'wakzooId' | '_id'>[]

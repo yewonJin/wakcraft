@@ -1,10 +1,10 @@
 'use server'
 
 import mongoose from 'mongoose'
+import { connectMongo } from '@repo/database'
+import { GridEventNoobProHacker, LineEventNoobProHacker } from '@repo/types'
 
 import EventNoobProHacker from '@/models/eventNoobProHacker'
-import connectMongo from '../db'
-import { GridEventNoobProHacker, LineEventNoobProHacker } from '@/types/content'
 import {
   convertGridEventNoobProHackerToPortfolioItems,
   convertLineEventNoobProHackerToPortfolioItems,

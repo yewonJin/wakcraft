@@ -6,7 +6,7 @@ import {
   listS3Objects,
   uploadS3Image,
 } from '../aws'
-import { convertImageToWebp } from '../image'
+import { convertImageToWebp } from '../imageConvert'
 
 // TODO: 에러처리
 /** PNG 파일 -> 400p WEBP, 1080p WEBP, PNG 변환 후 3개 이미지 업로드 */

@@ -1,8 +1,8 @@
 import { useParams } from 'next/navigation'
+import { type ContentInfo } from '@repo/types'
 
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
-import { type ContentInfo } from '@/types/content'
 
 type Props = {
   contentInfo: ContentInfo

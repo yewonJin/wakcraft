@@ -1,4 +1,4 @@
-import { cn } from '@/lib/cn'
+import { cn } from '@repo/utils'
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: string[] | number[]

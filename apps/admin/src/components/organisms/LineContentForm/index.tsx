@@ -1,6 +1,7 @@
 'use client'
 
 import { useParams } from 'next/navigation'
+import { LineEventNoobProHacker, NoobProHacker } from '@repo/types'
 
 import Divider from '@/components/atoms/Divider'
 import ContentInfo from '@/components/molecules/ContentInfo'
@@ -9,7 +10,6 @@ import LineInfo from '@/components/molecules/LineInfo'
 import { useContentForm } from '@/hooks/useContentForm'
 import { convertLineContentArchitectId } from '@/services/content'
 import { useArchitectsStore } from '@/store/architectStore'
-import { LineEventNoobProHacker, type NoobProHacker } from '@/types/content'
 
 type Props<T extends NoobProHacker | LineEventNoobProHacker> = {
   action: (payload: T) => Promise<void>

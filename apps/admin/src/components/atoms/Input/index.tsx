@@ -1,4 +1,4 @@
-import { cn } from '@/lib/cn'
+import { cn } from '@repo/utils'
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void

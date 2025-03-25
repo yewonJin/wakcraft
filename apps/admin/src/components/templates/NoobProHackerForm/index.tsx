@@ -1,13 +1,14 @@
 'use client'
 
-import LineContentForm from '@/components/organisms/LineContentForm'
 import {
   BASE_ENTRY_LENGTH,
   BASE_LINE_TIERS,
   BASE_WORKINFO_LENGTH,
-  makeInitialNoobProHackerContent,
-} from '@/services/content'
-import { NoobProHacker } from '@/types/content'
+} from '@repo/constants'
+import { type NoobProHacker } from '@repo/types'
+
+import LineContentForm from '@/components/organisms/LineContentForm'
+import { makeInitialNoobProHackerContent } from '@/services/content'
 
 type Props = {
   action: (payload: NoobProHacker) => Promise<void>

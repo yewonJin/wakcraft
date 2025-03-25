@@ -1,9 +1,11 @@
 import { useState } from 'react'
-
 import {
   BASE_ENTRY_LENGTH,
   BASE_LINE_TIERS,
   BASE_WORKINFO_LENGTH,
+} from '@repo/constants'
+
+import {
   makeInitialGridEventNoobProHackerContent,
   makeInitialLineEventNoobProHackerContent,
 } from '@/services/content'

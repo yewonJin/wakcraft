@@ -1,4 +1,4 @@
-import { cn } from '@/lib/cn'
+import { cn } from '@repo/utils'
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void

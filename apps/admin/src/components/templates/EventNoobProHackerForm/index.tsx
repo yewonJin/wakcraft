@@ -1,13 +1,13 @@
 'use client'
 
 import { Fragment } from 'react'
+import { GridEventNoobProHacker, LineEventNoobProHacker } from '@repo/types'
 
 import LineContentForm from '@/components/organisms/LineContentForm'
 import ContentSetting from '@/components/organisms/ContentSetting'
 import GridContentForm from '@/components/organisms/GridContentForm'
 
 import { useEventNoobProHacker } from '@/hooks/useEventNoobProHacker'
-import { GridEventNoobProHacker, LineEventNoobProHacker } from '@/types/content'
 
 type Props = {
   actions: {

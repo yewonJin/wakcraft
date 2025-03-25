@@ -1,12 +1,12 @@
 'use server'
 
 import mongoose from 'mongoose'
+import { connectMongo } from '@repo/database'
+import { Tier } from '@repo/types'
 
 import PlacementTest from '@/models/placementTest'
-import connectMongo from '../db'
-import { convertPlacementTestToPortfolioItems } from '@/services/content'
 import Architect from '@/models/architect'
-import { Tier } from '@/services/tier'
+import { convertPlacementTestToPortfolioItems } from '@/services/content'
 
 export const getPlacementTestLatestEpisode = async () => {
   await connectMongo()
