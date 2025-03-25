@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "wakcraft",
   "private": true,
   "scripts": {
     "build": "turbo run build",
