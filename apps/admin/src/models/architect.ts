@@ -2,7 +2,7 @@ import { Model, model, models } from 'mongoose'
 
 import { architectSchema } from '@repo/schemas'
 import { type Tier, type Architect } from '@repo/types'
-import { TIER_LIST } from '@repo/constants'
+import { TIER_GROUP } from '@repo/constants'
 
 interface ArchitectModel extends Model<Architect> {
   updateWakzooId: (architectId: string, wakzooId: string) => Promise<void>
@@ -12,7 +12,7 @@ interface ArchitectModel extends Model<Architect> {
     season: number,
     tier: Tier,
   ) => Promise<void>
-  updateAllArchitectsTierToUnranked: () => Promise<void>
+  updateAllArchitectsTierToUnranked: (season: number) => Promise<void>
   increaseParticipation: (architectId: string) => Promise<void>
   increaseWin: (architectId: string) => Promise<void>
   increaseHackerWin: (architectId: string) => Promise<void>
@@ -53,16 +53,25 @@ architectSchema.statics.updateSeasonTier = function (
   return this.updateOne(
     { _id: architectId },
     {
-      $set: { [`tier.${season - 1}`]: tier },
+      $push: {
+        tier: { season: season, isPortfolioPlacementTest: false, result: tier },
+      },
+      $set: { curTier: '언랭' },
     },
   )
 }
 
-architectSchema.statics.updateAllArchitectsTierToUnranked = function () {
+architectSchema.statics.updateAllArchitectsTierToUnranked = function (
+  season: number,
+) {
   return this.updateMany(
-    { tier: { $nin: TIER_LIST['눕'] } },
+    { curTier: { $nin: TIER_GROUP['눕'] } },
     {
-      $push: { tier: '언랭' },
+      $push: {
+        season: season,
+        isPortfolioPlacementTest: false,
+        result: '언랭',
+      },
       $set: { curTier: '언랭' },
     },
   )
