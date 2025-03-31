@@ -11,13 +11,14 @@
     --text-stronger: var(--color-black);
     --text-strong: var(--color-neutral-900);
     --text-default: var(--color-neutral-800);
-    --text-subtle: var(--color-neutral-700);
-    --text-subtler: var(--color-neutral-600);
+    --text-subtle: var(--color-neutral-600);
+    --text-subtler: var(--color-neutral-500);
 
     --fill-strong: var(--color-neutral-50);
-    --fill-default: var(--color-neutral-100);
+    --fill-default: var(--color-neutral-150);
     --fill-subtle: var(--color-neutral-200);
 
+    --border-strong: var(--color-neutral-300);
     --border-default: var(--color-neutral-200);
 
     @variant dark {
@@ -28,19 +29,24 @@
       --text-stronger: var(--color-white);
       --text-strong: var(--color-neutral-50);
       --text-default: var(--color-neutral-100);
-      --text-subtle: var(--color-neutral-200);
-      --text-subtler: var(--color-neutral-300);
+      --text-subtle: var(--color-neutral-350);
+      --text-subtler: var(--color-neutral-400);
 
       --fill-strong: var(--color-neutral-900);
-      --fill-default: var(--color-neutral-800);
+      --fill-default: var(--color-neutral-850);
       --fill-subtle: var(--color-neutral-700);
 
+      --border-strong: var(--color-neutral-600);
       --border-default: var(--color-neutral-700);
     }
   }
 }
 
 @theme {
+  --color-neutral-150: oklch(0.95 0 0);
+  --color-neutral-350: oklch(0.82 0 0);
+  --color-neutral-850: oklch(0.255 0 0);
+
   --color-background-strong: var(--background-strong);
   --color-background-default: var(--background-default);
   --color-background-subtle: var(--background-subtle);
@@ -54,6 +60,21 @@
   --color-fill-strong: var(--fill-strong);
   --color-fill-default: var(--fill-default);
   --color-fill-subtle: var(--fill-subtle);
+
+  --color-border-strong: var(--border-strong);
+  --color-border-default: var(--border-default);
+
+  --animate-fadeIn: fadeIn 0.5s;
+
+  @keyframes fadeIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      opacity: 100;
+    }
+  }
 }
 
 body {

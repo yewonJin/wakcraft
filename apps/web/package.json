@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "lucide-react": "^0.483.0"
+    "lucide-react": "^0.483.0",
+    "typescript-cookie": "^1.0.6"
   },
   "devDependencies": {}
 }

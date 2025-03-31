@@ -23,15 +23,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="kr" suppressHydrationWarning={true}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: setInitialThemeMode }} />
       </head>
       <body className={`${NotoSansKR.className} antialiased`}>
         <GlobalNav />
-        <main className="mx-auto flex max-w-[1200px] flex-col gap-24 px-4 pt-16 pb-20 md:gap-40 xl:px-0">
-          {children}
-        </main>
+        <main className="px-4 pt-16 pb-20 md:gap-40 xl:px-0">{children}</main>
       </body>
     </html>
   )
