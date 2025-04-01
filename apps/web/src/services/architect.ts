@@ -42,7 +42,10 @@ export const sortByRecentDate = (portfolio: PortfolioItem[]) => {
   )
 }
 
-export const sortByTier = (a: Architect, b: Architect) => {
+export const sortByTier = (
+  a: Omit<Architect, 'portfolio'>,
+  b: Omit<Architect, 'portfolio'>,
+) => {
   const tierDiff = TIER.indexOf(a.curTier) - TIER.indexOf(b.curTier)
 
   if (tierDiff !== 0) return tierDiff

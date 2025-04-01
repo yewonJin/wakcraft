@@ -109,6 +109,7 @@ export const makeInitialLineInfo = (entryLength: number, tiers: string[]) => {
 export const makeInitialEntry = (tier: string) => {
   const entry: LineInfo['entries'][number] = {
     tier: tier,
+    title: '',
     description: '',
     architectId: [],
     imageUrl: '',
