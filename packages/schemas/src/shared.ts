@@ -1,5 +1,5 @@
-import { Schema } from "mongoose";
-import { ContentInfo, GridInfo, LineInfo, PortfolioItem } from "@repo/types";
+import { Schema } from 'mongoose'
+import { ContentInfo, GridInfo, LineInfo, PortfolioItem } from '@repo/types'
 
 export const PortfolioItemSchema = new Schema<PortfolioItem>({
   type: { type: String },
@@ -11,7 +11,7 @@ export const PortfolioItemSchema = new Schema<PortfolioItem>({
   youtubeUrl: { type: String, default: null },
   date: { type: String, required: true },
   description: { type: String },
-});
+})
 
 export const contentInfoSchema = new Schema<ContentInfo>({
   episode: { type: Number, required: true, unique: true },
@@ -19,7 +19,7 @@ export const contentInfoSchema = new Schema<ContentInfo>({
   date: { type: String, required: true, default: new Date().toISOString() },
   youtubeUrl: { type: String, default: null },
   isTribute: { type: Boolean },
-});
+})
 
 export const lineInfoSchema = new Schema<LineInfo>({
   title: { type: String, required: true },
@@ -27,6 +27,7 @@ export const lineInfoSchema = new Schema<LineInfo>({
   entries: [
     {
       tier: { type: String, required: true },
+      title: { type: String },
       description: { type: String },
       architectId: { type: [String] },
       imageUrl: { type: String },
@@ -34,7 +35,7 @@ export const lineInfoSchema = new Schema<LineInfo>({
       ranking: { type: Number },
     },
   ],
-});
+})
 
 export const gridInfoSchema = new Schema<GridInfo>({
   order: { type: Number, required: true },
@@ -44,4 +45,4 @@ export const gridInfoSchema = new Schema<GridInfo>({
   title: { type: String },
   youtubeUrl: { type: String, default: null },
   ranking: { type: Number },
-});
+})
