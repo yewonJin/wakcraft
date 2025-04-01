@@ -48,7 +48,7 @@ export default function ContentCardItem({
           />
         )}
         {contentInfo.isTribute && (
-          <span className="absolute top-2 left-2 rounded-md bg-green-700/80 px-2 py-1 text-sm">
+          <span className="absolute top-2 left-2 rounded-md bg-green-700/80 px-2 py-1 text-sm text-neutral-200">
             조공 컨텐츠
           </span>
         )}
