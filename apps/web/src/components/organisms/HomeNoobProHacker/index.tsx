@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { ChevronLeft, Link2 } from 'lucide-react'
+import Link from 'next/link'
 import { LineInfo, NoobProHacker } from '@repo/types'
 import { cn, renamePngToWebp } from '@repo/utils'
 
@@ -67,18 +68,18 @@ function HomeRecentWinEntries({
                       onClick={() =>
                         window.open(hackerEntry.youtubeUrl || '', '_blank')
                       }
-                      className="text-text-subtle hover:text-text-strong hover:cursor-pointer"
+                      className="text-neutral-400 hover:cursor-pointer hover:text-neutral-300"
                     />
                   )}
                   <span>
                     {noobprohacker.contentInfo.episode}회 : {hackerWinTitle}
                   </span>
-                  <a
+                  <Link
                     href={`/architect/${hackerEntry?.architectId}`}
-                    className="text-text-subtle hover:text-text-default"
+                    className="text-neutral-400 hover:text-neutral-300"
                   >
                     {hackerEntry?.architectId}
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="relative aspect-video w-full rounded-3xl hover:cursor-pointer md:w-2/5 [&>img]:rounded-3xl">
@@ -96,18 +97,18 @@ function HomeRecentWinEntries({
                       onClick={() =>
                         window.open(proEntry.youtubeUrl || '', '_blank')
                       }
-                      className="text-text-subtle hover:text-text-strong hover:cursor-pointer"
+                      className="text-neutral-400 hover:cursor-pointer hover:text-neutral-300"
                     />
                   )}
                   <span>
                     {noobprohacker.contentInfo.episode}회 : {proWinTitle}
                   </span>
-                  <a
+                  <Link
                     href={`/architect/${proEntry?.architectId}`}
-                    className="text-text-subtle hover:text-text-default"
+                    className="text-neutral-400 hover:text-neutral-300"
                   >
                     {proEntry?.architectId}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
