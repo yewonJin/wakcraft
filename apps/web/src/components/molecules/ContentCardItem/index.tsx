@@ -1,16 +1,19 @@
-import Image from 'next/image'
-import { Category, ContentInfo } from '@repo/types'
-import { renamePngToWebp } from '@repo/utils'
+'use client'
 
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Link2 } from 'lucide-react'
 import Link from 'next/link'
+import { Category, ContentInfo } from '@repo/types'
+import { cn } from '@repo/utils'
+
 import { getDetailContentTitle } from '@/services/content'
 
 type Props = {
   category: Category
   contentInfo: ContentInfo
-  winnerImageUrl: string
-  lines: string[]
+  contentUrl: string
+  lines: string[] | null
 }
 
 const getYoutubeThumbnailImageUrl = (youtube_url: string) => {
@@ -20,22 +23,30 @@ const getYoutubeThumbnailImageUrl = (youtube_url: string) => {
 export default function ContentCardItem({
   category,
   contentInfo,
-  winnerImageUrl,
+  contentUrl,
   lines,
 }: Props) {
+  const router = useRouter()
+
   return (
-    <div className="group overflow-hidden rounded-t-xl duration-300 hover:-translate-y-2 hover:cursor-pointer">
-      <div className="relative aspect-video">
-        <Image
-          className="rounded-t-xl bg-blend-darken brightness-50 duration-300 group-hover:scale-105 group-hover:brightness-100"
-          fill
-          alt="유튜브 썸네일 이미지"
-          src={
-            contentInfo.youtubeUrl
-              ? getYoutubeThumbnailImageUrl(contentInfo.youtubeUrl)
-              : renamePngToWebp(winnerImageUrl as string)
-          }
-        />
+    <Link
+      href={contentUrl}
+      className="group overflow-hidden rounded-t-xl duration-300 hover:-translate-y-2 hover:cursor-pointer"
+    >
+      <div
+        className={cn(
+          'relative aspect-video',
+          !contentInfo.youtubeUrl && 'bg-fill-subtle',
+        )}
+      >
+        {contentInfo.youtubeUrl && (
+          <Image
+            className="rounded-t-xl bg-blend-darken brightness-50 duration-300 group-hover:scale-105 group-hover:brightness-100"
+            fill
+            alt="유튜브 썸네일 이미지"
+            src={getYoutubeThumbnailImageUrl(contentInfo.youtubeUrl)}
+          />
+        )}
         {contentInfo.isTribute && (
           <span className="absolute top-2 left-2 rounded-md bg-green-700/80 px-2 py-1 text-sm">
             조공 컨텐츠
@@ -50,33 +61,46 @@ export default function ContentCardItem({
             contentInfo.title,
           )}
         </h3>
-        <div className="text-text-subtler mt-4 flex flex-wrap gap-2">
-          {lines.map((line) => (
-            <span
-              key={line}
-              className="bg-fill-strong hover:bg-fill-subtle rounded-md px-2 py-1 text-sm hover:cursor-pointer"
-            >
-              {`#${line}`}
-            </span>
-          ))}
-        </div>
+        {lines && (
+          <div className="text-text-subtler mt-4 flex flex-wrap gap-2 truncate">
+            {lines.map((line) => (
+              <span
+                onClick={(e) => {
+                  e.preventDefault()
+                  router.push(`${contentUrl}#${line}`)
+                }}
+                key={line}
+                className="bg-fill-strong hover:bg-fill-subtle rounded-md px-2 py-1 text-sm hover:cursor-pointer"
+              >
+                {`#${line}`}
+              </span>
+            ))}
+          </div>
+        )}
         <div className="bg-fill-subtle my-4 h-[1px] w-full"></div>
-        <div className="flex justify-between">
+        <div
+          className={cn(
+            'flex justify-between',
+            !contentInfo.youtubeUrl && 'justify-end',
+          )}
+        >
           {contentInfo.youtubeUrl && (
-            <Link
-              target="_blank"
-              href={contentInfo.youtubeUrl}
+            <div
+              onClick={(e) => {
+                e.preventDefault()
+                window.open(contentInfo.youtubeUrl as string)
+              }}
               className="bg-fill-strong hover:bg-fill-subtle text-text-subtler flex items-center gap-1 rounded-md px-2 py-1 text-sm"
             >
               <Link2 width={18} height={18} className="pt-[1px]" />
               <span>유튜브</span>
-            </Link>
+            </div>
           )}
           <span className="text-text-subtler text-sm">
             {new Date(contentInfo.date).toISOString().split('T')[0]}
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

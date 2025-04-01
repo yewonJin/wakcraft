@@ -1,6 +1,5 @@
 import ContentCardItem from '@/components/molecules/ContentCardItem'
 import { getNoobProHackers } from '@/libs/actions/noobprohacker'
-import { getHackerWinLine } from '@/services/content'
 
 export default async function Page() {
   const noobprohackers = await getNoobProHackers()
@@ -23,9 +22,7 @@ export default async function Page() {
               key={noobprohacker.contentInfo.date}
               category="눕프로해커"
               contentInfo={noobprohacker.contentInfo}
-              winnerImageUrl={
-                getHackerWinLine(noobprohacker)?.entries[2]?.imageUrl ?? ''
-              }
+              contentUrl={`noobprohacker/${noobprohacker.contentInfo.episode}`}
               lines={noobprohacker.workInfo.map((line) => line.title)}
             />
           ))}
