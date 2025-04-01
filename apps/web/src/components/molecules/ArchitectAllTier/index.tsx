@@ -1,4 +1,4 @@
-import { getTierTextColor } from '@/libs/architect'
+import { getTierTextColor } from '@/services/architect'
 import { PlacementTestTierInfo } from '@repo/types'
 import { cn } from '@repo/utils'
 

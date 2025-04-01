@@ -7,8 +7,8 @@ import { DESCRIPTION } from '@repo/constants'
 
 import TierBox from '@/components/atoms/TierBox'
 import { groupArchitectTierBySeason } from '@/services/content'
-import { getTierTextColor } from '@/libs/architect'
 import { formatDateToKorean, getDaysBetween } from '@/utils/date'
+import { getTierTextColor } from '@/services/architect'
 
 type Props = {
   placementTestsWithoutWorkInfo: Omit<PlacementTest, 'workInfo'>[]

@@ -9,13 +9,13 @@ import { cn } from '@repo/utils'
 import ArchitectProfile from '@/components/molecules/ArchitectProfile'
 import ArchitectStatistics from '@/components/molecules/ArchitectStatistics'
 
-import { getTierBackgroundColor } from '@/libs/architect'
 import { SortBy, useArchitectHome } from '@/hooks/useArchitectHome'
 import {
   ArchitectWithMatchingIndices,
   useSearchArchitect,
 } from '@/hooks/useSearchArchitect'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
+import { getTierBackgroundColor } from '@/services/architect'
 
 type Props = {
   architects: Omit<Architect, 'portfolio'>[]
