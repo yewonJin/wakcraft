@@ -37,7 +37,7 @@
       --fill-subtle: var(--color-neutral-700);
 
       --border-strong: var(--color-neutral-600);
-      --border-default: var(--color-neutral-700);
+      --border-default: var(--color-neutral-750);
     }
   }
 }
@@ -45,6 +45,7 @@
 @theme {
   --color-neutral-150: oklch(0.95 0 0);
   --color-neutral-350: oklch(0.82 0 0);
+  --color-neutral-750: oklch(0.32 0 0);
   --color-neutral-850: oklch(0.255 0 0);
 
   --color-background-strong: var(--background-strong);
