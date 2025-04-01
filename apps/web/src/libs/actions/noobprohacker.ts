@@ -24,6 +24,24 @@ export const getLatestNoobProHacker = async () => {
   }
 }
 
+export const getNoobProHacker = async (episode: number) => {
+  await connectMongo()
+
+  const noobprohacker = (await NoobProHacker.findOne({
+    'contentInfo.episode': episode,
+  }).lean()) as unknown as NoobProHacker
+
+  if (!noobprohacker) return null
+
+  const architectIds = getArchitectIds(noobprohacker.workInfo)
+  const architectInfos = await getArchitectInfos(architectIds)
+
+  return {
+    ...noobprohacker,
+    workInfo: populateWakzooId(noobprohacker.workInfo, architectInfos),
+  }
+}
+
 export const getNoobProHackers = async () => {
   await connectMongo()
 
