@@ -4,6 +4,7 @@ import './globals.css'
 
 import { setInitialThemeMode } from '@/utils/theme'
 import GlobalNav from '@/components/organisms/GlobalNav'
+import ScrollToTop from '@/components/organisms/ScrollToTop'
 
 const NotoSansKR = Noto_Sans_KR({
   variable: '--font-noto-sans',
@@ -29,6 +30,7 @@ export default function RootLayout({
       </head>
       <body className={`${NotoSansKR.className} antialiased`}>
         <GlobalNav />
+        <ScrollToTop />
         <main className="pt-16 pb-20 md:gap-40">{children}</main>
       </body>
     </html>
