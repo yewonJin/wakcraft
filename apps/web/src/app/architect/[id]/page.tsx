@@ -1,7 +1,18 @@
 import { cookies } from 'next/headers'
 
 import ArchitectDetail from '@/components/templates/ArchitectDetail'
-import { getArchitectById } from '@/libs/actions/architect'
+import {
+  getArchitectById,
+  getArchitectsWithoutPortfolio,
+} from '@/libs/actions/architect'
+
+export async function generateStaticParams() {
+  const architects = await getArchitectsWithoutPortfolio()
+  return [
+    ...architects.map((architect) => ({ id: String(architect.wakzooId) })),
+    ...architects.map((architect) => ({ id: String(architect.minecraftId) })),
+  ]
+}
 
 export default async function Page({
   params,
