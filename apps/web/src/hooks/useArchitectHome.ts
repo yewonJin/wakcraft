@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import { Architect, Tier } from '@repo/types'
 import { TIER } from '@repo/constants'
+import { useQueryString } from './useQueryString'
 
 export type SortBy = 'tier' | 'participation' | 'win' | 'hackerWin' | 'proWin'
-export type SelectedTier = '전부' | Tier
 
 export const useArchitectHome = () => {
   const [sortKey, setSortKey] = useState<SortBy>('tier')
   const [isDescending, setIsDescending] = useState(true)
-  const [selectedTier, setSelectedTier] = useState<SelectedTier>('전부')
+  const {
+    queryString: selectedTier,
+    setQueryString,
+    resetQueryString,
+  } = useQueryString<Tier>('tier')
 
   const handleSortClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const value = e.currentTarget.dataset['value'] as SortBy
@@ -25,7 +29,11 @@ export const useArchitectHome = () => {
   const handleTierClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const value = e.currentTarget.dataset['value'] as Tier
 
-    setSelectedTier((prev) => (prev === value ? '전부' : value))
+    if (value === selectedTier) {
+      return resetQueryString()
+    }
+
+    setQueryString(value)
   }
 
   const compareArchitects = (
@@ -52,7 +60,7 @@ export const useArchitectHome = () => {
   }
 
   const filterArchitectsByTier = (architect: Omit<Architect, 'portfolio'>) => {
-    return selectedTier === '전부' || architect.curTier === selectedTier
+    return selectedTier === null || architect.curTier === selectedTier
   }
 
   return {

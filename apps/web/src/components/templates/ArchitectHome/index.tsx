@@ -3,18 +3,14 @@
 import Link from 'next/link'
 import { LucideArrowDown, Search } from 'lucide-react'
 import { TIER } from '@repo/constants'
-import { Architect } from '@repo/types'
+import { Architect, Tier } from '@repo/types'
 import { cn } from '@repo/utils'
 
 import ArchitectProfile from '@/components/molecules/ArchitectProfile'
 import ArchitectStatistics from '@/components/molecules/ArchitectStatistics'
 
 import { getTierBackgroundColor } from '@/libs/architect'
-import {
-  SelectedTier,
-  SortBy,
-  useArchitectHome,
-} from '@/hooks/useArchitectHome'
+import { SortBy, useArchitectHome } from '@/hooks/useArchitectHome'
 import {
   ArchitectWithMatchingIndices,
   useSearchArchitect,
@@ -138,7 +134,7 @@ function SortKey({
 }
 
 type FilterTierProps = {
-  selectedTier: SelectedTier
+  selectedTier: Tier | null
   handleTierClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
