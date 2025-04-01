@@ -175,8 +175,8 @@ function ArchitectItem({ architect, order }: ArchitectItemProps) {
 
   return (
     <Link
-      key={architect.minecraftId}
-      href={`/architect/${architect.minecraftId}`}
+      key={architect.wakzooId}
+      href={`/architect/${architect.wakzooId.replaceAll(' ', '-')}`}
       ref={observerRef}
     >
       {isIntersecting ? (
