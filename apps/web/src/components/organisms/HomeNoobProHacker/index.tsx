@@ -19,12 +19,14 @@ export default function HomeNoobProHacker({
   sweepLines,
 }: Props) {
   return (
-    <div className="pt-24">
-      <h2 className="text-text-strong mb-8 text-4xl font-bold">눕프로해커</h2>
-      <p className="text-text-subtle mb-2 text-lg">
+    <div className="px-4 pt-12 md:pt-24 xl:px-0">
+      <h2 className="text-text-strong mb-8 text-3xl font-bold md:text-4xl">
+        눕프로해커
+      </h2>
+      <p className="text-text-subtle mb-2 md:text-lg">
         유튜버 우왁굳의 마인크래프트 치즐 모드 컨텐츠이다.
       </p>
-      <p className="text-text-subtle text-lg">
+      <p className="text-text-subtle md:text-lg">
         눕, 프로, 해커가 한 라인이 되어 주제를 선정해 작품을 건축하면 우왁굳이
         감상하고 평가한다.
       </p>
@@ -43,7 +45,7 @@ function HomeRecentWinEntries({
 }: HomeRecentWinEntriesProps) {
   return (
     <div className="mt-16">
-      <h3 className="text-3xl font-semibold">최근 우승 작품</h3>
+      <h3 className="text-xl font-semibold md:text-3xl">최근 우승 작품</h3>
       <div className="relative mt-6 flex flex-wrap gap-5 gap-y-8 md:[&>div:nth-child(2)]:flex-row-reverse">
         {recentNoobProHackers.map((noobprohacker) => {
           const hackerWinTitle = getHackerWinLine(noobprohacker)?.title
@@ -137,8 +139,10 @@ function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
   return (
     <div className="relative mt-32">
       <div className="mb-8 flex items-end gap-3">
-        <h3 className="text-3xl font-semibold">싹쓸이 라인</h3>
-        <p className="text-text-subtle">(프로 1등, 해커 1등, 라인 1등)</p>
+        <h3 className="text-2xl font-semibold md:text-3xl">싹쓸이 라인</h3>
+        <p className="text-text-subtle text-sm md:text-base">
+          (프로 1등, 해커 1등, 라인 1등)
+        </p>
       </div>
       <div className="flex flex-col">
         <div className="mb-4 flex gap-2">
@@ -153,9 +157,12 @@ function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
           </span>
           <span className="text-xl font-medium">{sweepLines[page].title}</span>
         </div>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {sweepLines[page].entries.map((entry) => (
-            <div key={entry.imageUrl} className="group relative aspect-3/4">
+            <div
+              key={entry.imageUrl}
+              className="group relative aspect-video md:aspect-3/4"
+            >
               <Image
                 className="rounded-xl"
                 fill
@@ -178,22 +185,18 @@ function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
           ))}
         </div>
       </div>
-      <div className="absolute top-0 right-0 flex gap-8">
+      <div className="absolute top-12 right-0 flex md:top-0 md:gap-8">
         <ChevronLeft
           onClick={moveToPrevPage}
-          width={52}
-          height={52}
           className={cn(
-            'hover:bg-fill-default rounded-full p-1.5 hover:cursor-pointer',
+            'hover:bg-fill-default h-10 w-10 rounded-full p-1.5 hover:cursor-pointer md:h-13 md:w-13',
             page === 0 && 'invisible',
           )}
         />
         <ChevronLeft
           onClick={moveToNextPage}
-          width={52}
-          height={52}
           className={cn(
-            'hover:bg-fill-default rotate-180 rounded-full p-1.5 hover:cursor-pointer',
+            'hover:bg-fill-default h-10 w-10 rotate-180 rounded-full p-1.5 hover:cursor-pointer md:h-13 md:w-13',
             page === sweepLines.length - 1 && 'invisible',
           )}
         />

@@ -1,17 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft } from 'lucide-react'
-import { LineEventNoobProHacker, NoobProHacker } from '@repo/types'
+import { ChevronLeft, Users } from 'lucide-react'
+import { LineEventNoobProHacker, LineInfo, NoobProHacker } from '@repo/types'
 import { cn, renamePngTo1080Webp } from '@repo/utils'
 
+import { useSlider } from '@/hooks/useSlider'
+
 type Props = {
+  isMobile: boolean
   content: NoobProHacker | LineEventNoobProHacker
 }
 
-export default function ContentLine({ content }: Props) {
+export default function ContentLine({ isMobile, content }: Props) {
   const [page, setPage] = useState(new Array(content.workInfo.length).fill(0))
 
   const handleButtonClick = (lineIndex: number, entryIndex: number) => {
@@ -67,15 +70,19 @@ export default function ContentLine({ content }: Props) {
   return (
     <div className="overflow-hidden">
       <div className="mx-auto max-w-[1300px] pt-12">
-        <h2 className="text-text-subtler mb-2 text-xl">{getSubTitle()}</h2>
-        <h1 className="mb-14 text-4xl font-semibold">{getTitle()}</h1>
+        <h2 className="text-text-subtler mb-2 px-4 text-xl xl:px-0">
+          {getSubTitle()}
+        </h2>
+        <h1 className="mb-14 px-4 text-4xl font-semibold xl:px-0">
+          {getTitle()}
+        </h1>
         <div className="flex flex-col gap-32">
           {content.workInfo.map((line, lineIndex) => (
             <div key={line.title}>
-              <div className="flex items-center gap-2">
+              <div className="mb-4 flex items-center gap-2 px-4 xl:px-0">
                 <span className="text-text-subtle">{`${lineIndex + 1}라인`}</span>
                 <h3
-                  className="scroll-mt-[15vh] text-2xl font-medium"
+                  className="scroll-mt-[15vh] text-lg font-medium md:text-2xl"
                   id={line.title}
                 >
                   {line.title}
@@ -87,95 +94,219 @@ export default function ContentLine({ content }: Props) {
                   <span className="text-lg">{`${line.ranking}위`}</span>
                 )}
               </div>
-              <div
-                className="relative mx-auto mt-8 flex h-[50vh] w-full gap-12 duration-500 ease-in-out md:max-w-[1300px]"
-                style={{
-                  transform: `translateX(calc(${-page[lineIndex] * 50 * (16 / 9)}vh - ${page[lineIndex] * 3}rem))`,
-                }}
-              >
-                {line.entries.map((entry) => (
-                  <div
-                    key={entry.imageUrl}
-                    className="group relative aspect-video h-full hover:cursor-pointer [&>img]:rounded-xl"
-                  >
-                    <Image
-                      fill
-                      alt="작품 이미지"
-                      src={renamePngTo1080Webp(entry.imageUrl)}
-                    />
-                    <div className="absolute top-8 left-8 rounded-md px-4 py-2">
-                      <div className="mb-2 flex items-center gap-3">
-                        <p className="text-2xl font-semibold text-white [text-shadow:_1px_1px_0_#000]">
-                          {entry.tier || entry.title}
-                        </p>
-                        <div className="mt-1 flex gap-2">
-                          {entry.ranking !== null && entry.ranking !== 0 && (
-                            <p className="rounded-md bg-neutral-800/80 px-3 py-1 text-neutral-300">
-                              {entry.ranking}위
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      {entry.architectId.length === 1 ? (
-                        <Link
-                          href={`/architect/${entry.architectId}`}
-                          className="text-lg text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
-                        >
-                          {entry.architectId[0].replaceAll('-', ' ')}
-                        </Link>
-                      ) : (
-                        <div className="mt-3 flex flex-col gap-1.5">
-                          {entry.architectId.map((id) => (
-                            <Link
-                              key={id}
-                              href={`/architect/${id}`}
-                              className="text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
-                            >
-                              {id}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="bg-fill-default relative mx-auto mt-12 flex w-fit gap-4 rounded-full px-10 py-6">
-                <ChevronLeft
-                  onClick={() => moveToPrevPage(lineIndex)}
-                  width={52}
-                  height={52}
-                  className={cn(
-                    'hover:bg-fill-default absolute top-1 -left-16 rounded-full p-1.5 hover:cursor-pointer',
-                    page[lineIndex] === 0 && 'invisible',
-                  )}
-                />
-                {new Array(content.workInfo[lineIndex].entries.length)
-                  .fill(0)
-                  .map((item, entryIndex) => (
-                    <button
-                      key={entryIndex}
-                      onClick={() => handleButtonClick(lineIndex, entryIndex)}
-                      className={cn(
-                        'bg-text-subtler h-3 w-3 rounded-full duration-300 hover:cursor-pointer',
-                        page[lineIndex] === entryIndex && 'w-12',
-                      )}
-                    ></button>
+              {isMobile ? (
+                <CarouselMobileContainer length={line.entries.length}>
+                  {line.entries.map((entry) => (
+                    <ContentLineItem key={entry.imageUrl} entry={entry} />
                   ))}
-                <ChevronLeft
-                  onClick={() => moveToNextPage(lineIndex, line.entries.length)}
-                  width={52}
-                  height={52}
-                  className={cn(
-                    'hover:bg-fill-default absolute top-1 -right-16 rotate-180 rounded-full p-1.5 hover:cursor-pointer',
-                    page[lineIndex] === line.entries.length - 1 && 'invisible',
-                  )}
+                </CarouselMobileContainer>
+              ) : (
+                <CarouselContainer page={page} index={lineIndex}>
+                  {line.entries.map((entry) => (
+                    <ContentLineItem key={entry.imageUrl} entry={entry} />
+                  ))}
+                </CarouselContainer>
+              )}
+              {!isMobile && (
+                <CarouselSlider
+                  page={page}
+                  lineIndex={lineIndex}
+                  entryLength={line.entries.length}
+                  moveToNextPage={moveToNextPage}
+                  moveToPrevPage={moveToPrevPage}
+                  handleButtonClick={handleButtonClick}
                 />
-              </div>
+              )}
             </div>
           ))}
         </div>
       </div>
+    </div>
+  )
+}
+
+function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
+  return (
+    <div
+      key={entry.imageUrl}
+      className="group relative aspect-video h-full hover:cursor-pointer"
+    >
+      <Image
+        className="rounded-none xl:rounded-xl"
+        fill
+        alt="작품 이미지"
+        src={renamePngTo1080Webp(entry.imageUrl)}
+      />
+      <div className="absolute top-2 left-2 rounded-md px-4 py-2 md:top-8 md:left-8">
+        <div className="mb-2 flex items-center gap-3">
+          <p className="text-xl font-semibold text-white [text-shadow:_1px_1px_0_#000] md:text-2xl">
+            {entry.tier || entry.title}
+          </p>
+          <div className="mt-1 flex gap-2">
+            {entry.ranking !== null && entry.ranking !== 0 && (
+              <p className="rounded-md bg-neutral-800/80 px-3 py-1 text-sm text-neutral-300 md:text-base">
+                {entry.ranking}위
+              </p>
+            )}
+          </div>
+        </div>
+        {entry.architectId.length < 5 ? (
+          <Link
+            href={`/architect/${entry.architectId}`}
+            className="text-lg text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
+          >
+            {entry.architectId[0].replaceAll('-', ' ')}
+          </Link>
+        ) : (
+          <ContentArchitects entry={entry} />
+        )}
+      </div>
+    </div>
+  )
+}
+
+function ContentArchitects({ entry }: { entry: LineInfo['entries'][number] }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleUserClick = () => {
+    setIsOpen((prev) => !prev)
+  }
+
+  return (
+    <div className="relative mt-3">
+      <Users
+        className="text-neutral-400 hover:text-neutral-300"
+        onClick={handleUserClick}
+      />
+      {isOpen && (
+        <div className="right-0 grid grid-cols-3 gap-1 bg-neutral-900/90">
+          {entry.architectId.map((id) => (
+            <Link
+              key={id}
+              href={`/architect/${id}`}
+              className="px-3 py-2 text-sm text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
+            >
+              {id}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+type CarouselMobileContainerProps = {
+  length: number
+  children: React.ReactNode
+}
+
+function CarouselMobileContainer({
+  length,
+  children,
+}: CarouselMobileContainerProps) {
+  const { scrollX, isOnScroll, ref, onTouchStart, onTouchMove, onTouchEnd } =
+    useSlider(length)
+
+  return (
+    <div
+      className="flex aspect-video w-full"
+      ref={ref}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      style={{
+        transform: `translateX(${scrollX}px)`,
+        transitionDuration: isOnScroll ? '0ms' : '400ms',
+      }}
+    >
+      {children};
+    </div>
+  )
+}
+
+type CarouselContainerProps = {
+  page: number[]
+  index: number
+  children: React.ReactNode
+}
+
+function CarouselContainer({ page, index, children }: CarouselContainerProps) {
+  const [isLargeScreen, setIsLargeScreen] = useState(false)
+
+  console.log(isLargeScreen)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 1280)
+    }
+
+    handleResize()
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  return (
+    <div
+      className="relative mx-auto mt-8 flex aspect-video h-full w-[100vw] gap-12 duration-500 ease-in-out md:max-w-[1300px] xl:h-[50vh] xl:w-full"
+      style={{
+        transform: isLargeScreen
+          ? `translateX(calc(${-page[index] * 50 * (16 / 9)}vh - ${page[index] * 3}rem))`
+          : `translateX(calc(${-page[index] * 100}vw - ${page[index] * 3}rem))`,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+type CarouselSliderProps = {
+  page: number[]
+  lineIndex: number
+  entryLength: number
+  moveToPrevPage: (lineIndex: number) => void
+  handleButtonClick: (lineIndex: number, entryIndex: number) => void
+  moveToNextPage: (lineIndex: number, entryLength: number) => void
+}
+
+function CarouselSlider({
+  page,
+  lineIndex,
+  entryLength,
+  moveToNextPage,
+  moveToPrevPage,
+  handleButtonClick,
+}: CarouselSliderProps) {
+  return (
+    <div className="bg-fill-default relative mx-auto mt-12 flex w-fit gap-4 rounded-full px-10 py-6">
+      <ChevronLeft
+        onClick={() => moveToPrevPage(lineIndex)}
+        width={52}
+        height={52}
+        className={cn(
+          'hover:bg-fill-default absolute top-1 -left-16 rounded-full p-1.5 hover:cursor-pointer',
+          page[lineIndex] === 0 && 'invisible',
+        )}
+      />
+      {new Array(entryLength).fill(0).map((item, entryIndex) => (
+        <button
+          key={entryIndex}
+          onClick={() => handleButtonClick(lineIndex, entryIndex)}
+          className={cn(
+            'bg-text-subtler h-3 w-3 rounded-full duration-300 hover:cursor-pointer',
+            page[lineIndex] === entryIndex && 'w-12',
+          )}
+        ></button>
+      ))}
+      <ChevronLeft
+        onClick={() => moveToNextPage(lineIndex, entryLength)}
+        width={52}
+        height={52}
+        className={cn(
+          'hover:bg-fill-default absolute top-1 -right-16 rotate-180 rounded-full p-1.5 hover:cursor-pointer',
+          page[lineIndex] === entryLength - 1 && 'invisible',
+        )}
+      />
     </div>
   )
 }

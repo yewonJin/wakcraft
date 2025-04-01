@@ -8,7 +8,7 @@ type Props = {
 
 export default function ArchitectAllTier({ tier }: Props) {
   return (
-    <div className="mb-6 flex gap-2">
+    <div className="mb-6 flex flex-wrap gap-2 px-4 xl:px-0">
       {tier.map((item) => {
         if (item.result === '언랭') return null
 

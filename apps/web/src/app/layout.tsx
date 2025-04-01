@@ -29,7 +29,7 @@ export default function RootLayout({
       </head>
       <body className={`${NotoSansKR.className} antialiased`}>
         <GlobalNav />
-        <main className="px-4 pt-16 pb-20 md:gap-40 xl:px-0">{children}</main>
+        <main className="pt-16 pb-20 md:gap-40">{children}</main>
       </body>
     </html>
   )

@@ -40,31 +40,34 @@ export default function HomeSeasonInfo({
   )
 
   return (
-    <div className="mb-32 pt-24">
-      <h2 className="text-text-strong mb-8 text-4xl font-bold">
+    <div className="mb-12 px-4 pt-24 md:mb-32 xl:px-0">
+      <h2 className="text-text-strong mb-8 text-2xl font-bold md:text-4xl">
         시즌 별 건축가 티어
       </h2>
-      <div className="flex gap-6">
-        {placementTestsWithoutWorkInfo
-          .map((x) => x.contentInfo.episode)
-          .sort((a, b) => b - a)
-          .map((season) => (
-            <button
-              onClick={() => changeCurrentSeason(season)}
-              key={season}
-              className={cn(
-                'bg-fill-default border-border-default rounded-md border-2 px-5 py-2 text-lg hover:cursor-pointer',
-                currentSeason === season && 'bg-text-default text-fill-default',
-              )}
-            >
-              {`시즌 ${season}`}
-            </button>
-          ))}
+      <div className="w-full overflow-x-scroll md:w-auto md:overflow-auto">
+        <div className="flex gap-4 md:flex-wrap md:gap-6">
+          {placementTestsWithoutWorkInfo
+            .map((x) => x.contentInfo.episode)
+            .sort((a, b) => b - a)
+            .map((season) => (
+              <button
+                onClick={() => changeCurrentSeason(season)}
+                key={season}
+                className={cn(
+                  'bg-fill-default border-border-default min-w-max rounded-md border-2 px-5 py-2 text-sm hover:cursor-pointer md:w-auto md:text-lg',
+                  currentSeason === season &&
+                    'bg-text-default text-fill-default',
+                )}
+              >
+                {`시즌 ${season}`}
+              </button>
+            ))}
+        </div>
       </div>
       {currentPlacementTest && (
-        <div className="mt-8 flex flex-col gap-8">
+        <div className="mt-8 flex flex-col gap-6 md:gap-8">
           <div className="flex h-[40px] items-center gap-2">
-            <p className="text-text-subtle text-lg">
+            <p className="text-text-subtle text-md md:text-lg">
               {`${formatDateToKorean(currentPlacementTest.contentInfo.date)} ~
             ${
               nextPlecementTest
@@ -73,7 +76,7 @@ export default function HomeSeasonInfo({
             }`}
             </p>
             {nextPlecementTest && (
-              <span className="text-lg">
+              <span className="text-md md:text-lg">
                 (
                 {getDaysBetween(
                   currentPlacementTest.contentInfo.date,
@@ -85,7 +88,7 @@ export default function HomeSeasonInfo({
           </div>
           <div
             key={currentPlacementTest.contentInfo.episode}
-            className="flex flex-wrap gap-16"
+            className="grid grid-cols-2 gap-y-12 md:flex md:flex-wrap md:gap-16"
           >
             {groupArchitectTierBySeason(
               architectsWithTier.flatMap((architect) => architect.tier),
@@ -107,23 +110,24 @@ export default function HomeSeasonInfo({
                       명
                     </p>
                   </div>
-                  <div className="border-border-default flex flex-col gap-6 rounded-xl border-2 p-4 pr-5">
+                  <div className="md:border-border-default flex flex-col gap-6 rounded-xl md:border-2 md:p-4 md:pr-5">
                     {item.tiers.map((tierObj, index) => {
                       const [tierName, count] = Object.entries(tierObj)[0]
                       return (
                         <div
                           key={index}
-                          className="relative flex flex-col items-center gap-2"
+                          className="relative flex items-center gap-2 md:flex-col"
                         >
-                          <div className="group relative h-full duration-300">
+                          <div className="group relative hidden h-full duration-300 md:block">
                             <TierBox tier={tierName as AllTier} />
                             <div className="bg-fill-default animate-fadeIn text-text-subtle absolute z-10 hidden w-max max-w-[300px] rounded-md px-4 py-3 group-hover:block">
                               {DESCRIPTION[tierName as AllTier]}
                             </div>
                           </div>
+                          <span className="block md:hidden">{tierName}</span>
                           <span
                             className={cn(
-                              'text-text-default bg-fill-default border-border-default absolute -right-4 flex items-center justify-center rounded-full border-2 px-2 py-1 text-sm',
+                              'text-text-default bg-fill-default border-border-default flex items-center justify-center rounded-full border-2 px-2 py-1 text-sm md:absolute md:-right-4',
                               getTierTextColor(tierName as AllTier),
                             )}
                           >

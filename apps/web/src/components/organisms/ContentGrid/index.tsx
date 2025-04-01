@@ -26,17 +26,22 @@ export default function ContentGrid({ content }: Props) {
 
   return (
     <div className="mx-auto max-w-[1300px] pt-12">
-      <h2 className="text-text-subtler mb-2 text-xl">{getSubTitle()}</h2>
-      <h1 className="mb-14 text-4xl font-semibold">{getTitle()}</h1>
+      <h2 className="text-text-subtler mb-2 px-4 text-xl xl:px-0">
+        {getSubTitle()}
+      </h2>
+      <h1 className="mb-14 px-4 text-4xl font-semibold xl:px-0">
+        {getTitle()}
+      </h1>
       <div className="mt-16 grid grid-cols-1 gap-6 gap-y-12 md:grid-cols-2 2xl:w-[1400px] 2xl:grid-cols-3">
         {content.workInfo
           .sort((a, b) => a.order - b.order)
           .map((entry) => (
             <div
               key={entry.imageUrl}
-              className="group relative aspect-video h-full hover:cursor-pointer [&>img]:rounded-xl"
+              className="group [&>img]: relative aspect-video h-full hover:cursor-pointer"
             >
               <Image
+                className="rounded-none xl:rounded-xl"
                 fill
                 alt="작품 이미지"
                 src={renamePngToWebp(entry.imageUrl)}

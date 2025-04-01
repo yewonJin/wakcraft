@@ -30,41 +30,43 @@ export default function HomeCarousel({ latestNoobProHacker }: Props) {
   )
 
   return (
-    <div className="md:h-[100vh]">
+    <div className="mt-8 md:mt-0 md:h-[100vh]">
       <div
-        className="absolute top-0 left-0 z-[-1] h-full w-full bg-[rgba(0,0,0,0.5)] bg-cover bg-center bg-no-repeat bg-blend-darken"
+        className="absolute top-0 left-0 z-[-1] hidden h-full w-full bg-[rgba(0,0,0,0.5)] bg-cover bg-center bg-no-repeat bg-blend-darken md:block"
         style={{
           backgroundImage: `url("${renamePngTo1080Webp(getHackerWinLine(latestNoobProHacker)?.entries[2]?.imageUrl as string)}")`,
         }}
       ></div>
-      <div className="flex w-full max-w-[1200px] flex-col items-center justify-center gap-10 md:h-[90vh]">
+      <div className="flex w-full max-w-[1200px] flex-col items-center justify-center gap-5 overflow-x-hidden md:h-[90vh] md:gap-10">
         <div className="flex flex-col items-center gap-4">
-          <h1 className="text-5xl font-bold text-neutral-100">
+          <h1 className="text-3xl font-bold text-neutral-100 md:text-5xl">
             {`눕프로해커 : ${latestNoobProHacker.contentInfo.title} 편`}
           </h1>
-          <h2 className="text-4xl font-semibold text-neutral-400">
+          <h2 className="text-2xl font-semibold text-neutral-400 md:text-4xl">
             {latestNoobProHacker.contentInfo.episode + '회'}
           </h2>
         </div>
-        <div className="flex justify-center gap-4">
-          {latestNoobProHacker.workInfo.map((line, lineIndex) => (
-            <button
-              onMouseOver={() => resetAutoScroll()}
-              onMouseOut={() => startAutoScroll()}
-              onClick={() => handleCategoryClick(lineIndex)}
-              key={line.title}
-              className={cn(
-                'rounded-lg bg-neutral-900/80 px-4 py-2 text-lg text-neutral-200 hover:cursor-pointer',
-                carouselIndex === lineIndex
-                  ? 'text-white'
-                  : 'opacity-50 hover:opacity-80',
-              )}
-            >
-              {line.title}
-            </button>
-          ))}
+        <div className="w-full overflow-x-scroll px-4 md:w-auto md:overflow-auto xl:px-0">
+          <div className="flex w-max gap-3 md:justify-center md:gap-4">
+            {latestNoobProHacker.workInfo.map((line, lineIndex) => (
+              <button
+                onMouseOver={() => resetAutoScroll()}
+                onMouseOut={() => startAutoScroll()}
+                onClick={() => handleCategoryClick(lineIndex)}
+                key={line.title}
+                className={cn(
+                  'bg-fill-default border-border-default w-max rounded-lg border-2 px-4 py-2 hover:cursor-pointer md:border-none md:bg-neutral-900/80 md:text-lg md:text-neutral-200',
+                  carouselIndex === lineIndex
+                    ? 'text-white'
+                    : 'opacity-50 hover:opacity-80',
+                )}
+              >
+                {line.title}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="w-full overflow-hidden">
+        <div className="w-full overflow-hidden px-4 xl:px-0">
           <div
             className="flex gap-8 duration-500"
             style={{

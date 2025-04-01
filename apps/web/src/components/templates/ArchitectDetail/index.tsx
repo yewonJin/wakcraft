@@ -38,9 +38,9 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
   }, [])
 
   return (
-    <div className="mx-auto w-[1300px] pt-12">
+    <div className="mx-auto pt-12 xl:w-[1300px]">
       <div className="flex flex-col justify-center rounded-md">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between px-4 xl:px-0">
           <ArchitectProfile
             curTier={architect.curTier}
             minecraftId={architect.minecraftId}
@@ -50,13 +50,13 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
         </div>
         <ArchitectAllTier tier={architect.tier} />
         <div className="bg-fill-default mb-6 h-[1px] w-full"></div>
-        <div className="mb-6 flex justify-between">
+        <div className="mb-6 flex justify-between overflow-x-scroll px-4 sm:overflow-x-hidden xl:px-0">
           <div className="flex gap-4">
             {['전체보기', '눕프로해커', '예능 눕프핵', '배치고사'].map(
               (item) => (
                 <button
                   className={cn(
-                    'bg-fill-default cursor-pointer rounded-md px-4 py-2 duration-300',
+                    'bg-fill-default min-w-max cursor-pointer rounded-md px-4 py-2 duration-300 md:min-w-auto',
                     category === item
                       ? 'bg-text-subtle text-fill-default'
                       : 'hover:bg-fill-subtle',
@@ -71,14 +71,16 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
               ),
             )}
           </div>
-          <Switch
-            isOn={currentView === 'single'}
-            label="하나씩 보기"
-            onClick={toggleView}
-          />
+          <div className="hidden items-center md:flex">
+            <Switch
+              isOn={currentView === 'single'}
+              label="하나씩 보기"
+              onClick={toggleView}
+            />
+          </div>
         </div>
         {currentView === 'grid' ? (
-          <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-12 px-4 xl:px-0">
             {Object.entries(
               devideByYear(
                 filterByCategory(
@@ -94,7 +96,7 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
                     <h3 className="min-w-fit text-2xl font-medium">{year}년</h3>
                     <div className="bg-fill-subtle h-[1px] w-full"></div>
                   </div>
-                  <div className="grid grid-cols-3 gap-8 gap-y-12">
+                  <div className="grid gap-8 gap-y-12 md:grid-cols-2 xl:grid-cols-3">
                     {yearItems.map((item) => (
                       <ArchitectPortfolioGridItem key={item.date} item={item} />
                     ))}

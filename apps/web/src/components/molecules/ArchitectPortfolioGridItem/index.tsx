@@ -12,7 +12,7 @@ export default function ArchitectPortfolioGridItem({ item }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div
-        className="group/image relative aspect-video rounded-xl shadow-md shadow-neutral-700/80 hover:cursor-pointer dark:shadow-neutral-800/90"
+        className="group/image dark:shadow-neutral-850/90 relative aspect-video rounded-xl shadow-md shadow-neutral-700/80 hover:cursor-pointer"
         onClick={() => window.open(renamePngTo1080Webp(item.imageUrl))}
       >
         <Image

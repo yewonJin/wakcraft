@@ -12,6 +12,7 @@ export default async function Page({
   const architect = await getArchitectById(
     decodeURIComponent(id.replaceAll('-', ' ')),
   )
+
   const cookieStore = await cookies()
   const view = cookieStore.get('architect-view')?.value as
     | 'single'
