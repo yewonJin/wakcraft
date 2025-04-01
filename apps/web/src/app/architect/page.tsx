@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import ArchitectHome from '@/components/templates/ArchitectHome'
 
 import { getArchitectsWithoutPortfolio } from '@/libs/actions/architect'
@@ -8,8 +10,10 @@ export default async function Page() {
   const sortedArchitectsByTier = architects.sort(sortByTier)
 
   return (
-    <ArchitectHome
-      architects={JSON.parse(JSON.stringify(sortedArchitectsByTier))}
-    />
+    <Suspense>
+      <ArchitectHome
+        architects={JSON.parse(JSON.stringify(sortedArchitectsByTier))}
+      />
+    </Suspense>
   )
 }
