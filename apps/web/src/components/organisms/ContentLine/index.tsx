@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, Users } from 'lucide-react'
+import { ChevronLeft, Link2, Users } from 'lucide-react'
 import { LineEventNoobProHacker, LineInfo, NoobProHacker } from '@repo/types'
 import { cn, renamePngTo1080Webp } from '@repo/utils'
 
@@ -73,9 +73,20 @@ export default function ContentLine({ isMobile, content }: Props) {
         <h2 className="text-text-subtler mb-2 px-4 text-xl xl:px-0">
           {getSubTitle()}
         </h2>
-        <h1 className="mb-14 px-4 text-4xl font-semibold xl:px-0">
+        <h1 className="mb-6 px-4 text-4xl font-semibold xl:px-0">
           {getTitle()}
         </h1>
+        {content.contentInfo.youtubeUrl && (
+          <div
+            onClick={() =>
+              window.open(content.contentInfo.youtubeUrl as string)
+            }
+            className="text-text-subtle bg-fill-default hover:bg-fill-subtle mb-8 ml-4 flex w-fit items-center gap-2 rounded-md px-4 py-2 text-sm hover:cursor-pointer xl:ml-0"
+          >
+            <Link2 width={20} height={20} />
+            유튜브로 이동
+          </div>
+        )}
         <div className="flex flex-col gap-32">
           {content.workInfo.map((line, lineIndex) => (
             <div key={line.title}>
@@ -128,6 +139,10 @@ export default function ContentLine({ isMobile, content }: Props) {
 function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
   return (
     <div
+      onClick={() => {
+        if (!entry.youtubeUrl) return
+        window.open(entry.youtubeUrl)
+      }}
       key={entry.imageUrl}
       className="group relative h-full min-w-[100%] hover:cursor-pointer xl:aspect-video xl:min-w-auto"
     >
@@ -161,6 +176,11 @@ function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
           <ContentArchitects entry={entry} />
         )}
       </div>
+      {entry.youtubeUrl && (
+        <div className="invisible absolute right-2 bottom-2 rounded-md bg-neutral-800/80 px-3 py-2 group-hover:visible">
+          클릭하여 유튜브로 이동
+        </div>
+      )}
     </div>
   )
 }
