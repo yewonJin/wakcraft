@@ -23,12 +23,14 @@ interface ArchitectModel extends Model<Architect> {
   ) => Promise<void>
   updatePortfolioYoutubeUrl: (
     architectId: string,
+    title: string,
     category: string,
     episode: number,
     youtubeUrl: string,
   ) => Promise<void>
   updatePortfolioDescription: (
     architectId: string,
+    title: string,
     category: string,
     episode: number,
     description: string,
@@ -139,6 +141,7 @@ architectSchema.statics.increaseProWin = function (architectId: string) {
 
 architectSchema.statics.updatePortfolioYoutubeUrl = function (
   architectId: string,
+  title: string,
   category: string,
   episode: number,
   youtubeUrl: string,
@@ -151,7 +154,13 @@ architectSchema.statics.updatePortfolioYoutubeUrl = function (
       $set: { 'portfolio.$[elem].youtubeUrl': youtubeUrl },
     },
     {
-      arrayFilters: [{ 'elem.category': category, 'elem.episode': episode }],
+      arrayFilters: [
+        {
+          'elem.title': title,
+          'elem.category': category,
+          'elem.episode': episode,
+        },
+      ],
       new: true,
     },
   )
@@ -159,6 +168,7 @@ architectSchema.statics.updatePortfolioYoutubeUrl = function (
 
 architectSchema.statics.updatePortfolioDescription = function (
   architectId: string,
+  title: string,
   category: string,
   episode: number,
   description: string,
@@ -171,7 +181,13 @@ architectSchema.statics.updatePortfolioDescription = function (
       $set: { 'portfolio.$[elem].description': description },
     },
     {
-      arrayFilters: [{ 'elem.category': category, 'elem.episode': episode }],
+      arrayFilters: [
+        {
+          'elem.title': title,
+          'elem.category': category,
+          'elem.episode': episode,
+        },
+      ],
       new: true,
     },
   )

@@ -103,12 +103,14 @@ export const updateNoobProHacker = async (payload: NoobProHacker) => {
       for (const { _id, portfolioItem } of portfolioItems) {
         await Architect.updatePortfolioYoutubeUrl(
           _id,
+          portfolioItem.title as string,
           portfolioItem.category,
           portfolioItem.episode,
           portfolioItem.youtubeUrl as string,
         )
         await Architect.updatePortfolioDescription(
           _id,
+          portfolioItem.title as string,
           portfolioItem.category,
           portfolioItem.episode,
           portfolioItem.description as string,

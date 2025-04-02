@@ -147,12 +147,14 @@ export const updateLineEventNoobProHacker = async (
       for (const { _id, portfolioItem } of portfolioItems) {
         await Architect.updatePortfolioYoutubeUrl(
           _id,
+          portfolioItem.title as string,
           portfolioItem.category,
           portfolioItem.episode,
           portfolioItem.youtubeUrl as string,
         )
         await Architect.updatePortfolioDescription(
           _id,
+          portfolioItem.title as string,
           portfolioItem.category,
           portfolioItem.episode,
           portfolioItem.description as string,
@@ -192,12 +194,14 @@ export const updateGridEventNoobProHacker = async (
       for (const { _id, portfolioItem } of portfolioItems) {
         await Architect.updatePortfolioYoutubeUrl(
           _id,
+          portfolioItem.title as string,
           portfolioItem.category,
           portfolioItem.episode,
           portfolioItem.youtubeUrl as string,
         )
         await Architect.updatePortfolioDescription(
           _id,
+          portfolioItem.title as string,
           portfolioItem.category,
           portfolioItem.episode,
           portfolioItem.description as string,
