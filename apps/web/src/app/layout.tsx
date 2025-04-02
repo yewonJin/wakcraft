@@ -1,9 +1,11 @@
 import { Noto_Sans_KR } from 'next/font/google'
-import './globals.css'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
-import { setInitialThemeMode } from '@/utils/theme'
+import './globals.css'
 import GlobalNav from '@/components/organisms/GlobalNav'
 import ScrollToTop from '@/components/organisms/ScrollToTop'
+import { setInitialThemeMode } from '@/utils/theme'
 
 const NotoSansKR = Noto_Sans_KR({
   variable: '--font-noto-sans',
@@ -23,6 +25,8 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: setInitialThemeMode }} />
       </head>
       <body className={`${NotoSansKR.className} antialiased`}>
+        <SpeedInsights />
+        <GoogleAnalytics gaId={process.env.GA_TRACKING_ID as string} />
         <GlobalNav />
         <ScrollToTop />
         <main className="pt-16 pb-20 md:gap-40">{children}</main>

@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": [
-    "DATABASE_URL"
+    "DATABASE_URL", "GA_TRACKING_ID"
   ],
   "ui": "tui",
   "tasks": {
