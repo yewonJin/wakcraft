@@ -36,7 +36,7 @@ export default function ContentInfo({
             onChange={onContentInfoChange}
             placeholder="자유"
             tabIndex={1}
-            defaultValue={contentInfo.title}
+            defaultValue={contentInfo.title || ''}
           />
         </div>
         <div className="w-36 flex flex-col gap-2">
@@ -45,7 +45,10 @@ export default function ContentInfo({
             name="date"
             onChange={onContentInfoChange}
             type="date"
-            defaultValue={new Date().toISOString().split('T')[0]}
+            value={
+              contentInfo.date.split('T')[0] ||
+              new Date().toISOString().split('T')[0]
+            }
             tabIndex={1}
           />
         </div>

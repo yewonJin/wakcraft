@@ -56,7 +56,7 @@ export default function LineInfo({
                 <Input
                   className="w-12"
                   name="ranking"
-                  value={line.ranking}
+                  value={line.ranking || 0}
                   onChange={(e) => onLineInfoChange(lineIdx, e)}
                   type="number"
                 />
@@ -111,13 +111,13 @@ export default function LineInfo({
                   name="title"
                   onChange={(e) => onEntryChange(lineIdx, entryIdx, e)}
                   placeholder="세부 작품명"
-                  value={entry.title}
+                  value={entry.title || ''}
                 />
                 <Input
                   name="description"
                   onChange={(e) => onEntryChange(lineIdx, entryIdx, e)}
                   placeholder="추가 설명"
-                  value={entry.description}
+                  value={entry.description || ''}
                 />
                 <Input
                   name="youtubeUrl"
