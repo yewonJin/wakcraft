@@ -68,6 +68,7 @@ export const postNoobProHacker = async (payload: NoobProHacker) => {
 
         if (portfolioItem.ranking === 1 && portfolioItem.type === '해커') {
           await Architect.increaseHackerWin(_id)
+          await Architect.increaseWin(_id)
         }
 
         await Architect.increaseParticipation(_id)
