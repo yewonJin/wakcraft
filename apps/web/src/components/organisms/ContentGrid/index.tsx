@@ -80,6 +80,7 @@ export default function ContentGrid({ content }: Props) {
                 </div>
                 {entry.architectId.length === 1 ? (
                   <Link
+                    onClick={(e) => e.stopPropagation()}
                     href={`/architect/${entry.architectId}`}
                     className="text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
                   >
@@ -89,6 +90,7 @@ export default function ContentGrid({ content }: Props) {
                   <div className="mt-3 flex flex-col gap-1.5">
                     {entry.architectId.map((id) => (
                       <Link
+                        onClick={(e) => e.stopPropagation()}
                         key={id}
                         href={`/architect/${id}`}
                         className="text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"

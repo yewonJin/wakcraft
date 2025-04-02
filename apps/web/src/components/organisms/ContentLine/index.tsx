@@ -78,9 +78,10 @@ export default function ContentLine({ isMobile, content }: Props) {
         </h1>
         {content.contentInfo.youtubeUrl && (
           <div
-            onClick={() =>
+            onClick={(e) => {
+              e.stopPropagation()
               window.open(content.contentInfo.youtubeUrl as string)
-            }
+            }}
             className="text-text-subtle bg-fill-default hover:bg-fill-subtle mb-8 ml-4 flex w-fit items-center gap-2 rounded-md px-4 py-2 text-sm hover:cursor-pointer xl:ml-0"
           >
             <Link2 width={20} height={20} />
@@ -167,6 +168,7 @@ function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
         </div>
         {entry.architectId.length < 5 ? (
           <Link
+            onClick={(e) => e.stopPropagation()}
             href={`/architect/${entry.architectId}`}
             className="text-lg text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
           >
