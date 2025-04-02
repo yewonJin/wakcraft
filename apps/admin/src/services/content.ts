@@ -216,7 +216,7 @@ export const convertLineEventNoobProHackerToPortfolioItems = (
         youtubeUrl: entry.youtubeUrl,
         type: entry.tier,
         ranking: entry.ranking,
-        title: line.title,
+        title: entry.title || line.title,
       }
 
       entry.architectId.forEach((_id) => {

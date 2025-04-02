@@ -108,6 +108,12 @@ export default function LineInfo({
                   />
                 </div>
                 <Input
+                  name="title"
+                  onChange={(e) => onEntryChange(lineIdx, entryIdx, e)}
+                  placeholder="세부 작품명"
+                  value={entry.title}
+                />
+                <Input
                   name="description"
                   onChange={(e) => onEntryChange(lineIdx, entryIdx, e)}
                   placeholder="추가 설명"
