@@ -42,9 +42,9 @@ export default function HomeSeasonInfo({
   return (
     <div className="mb-12 px-4 pt-24 md:mb-32 xl:px-0">
       <h2 className="text-text-strong mb-8 text-2xl font-bold md:text-4xl">
-        시즌 별 건축가 티어
+        시즌별 건축가 티어
       </h2>
-      <div className="w-full overflow-x-scroll md:w-auto md:overflow-auto">
+      <div className="w-full overflow-x-scroll pb-4 md:w-auto md:overflow-auto md:pb-0">
         <div className="flex gap-4 md:flex-wrap md:gap-6">
           {placementTestsWithoutWorkInfo
             .map((x) => x.contentInfo.episode)
@@ -88,7 +88,7 @@ export default function HomeSeasonInfo({
           </div>
           <div
             key={currentPlacementTest.contentInfo.episode}
-            className="grid grid-cols-2 gap-y-12 md:flex md:flex-wrap md:gap-16"
+            className="grid grid-cols-3 gap-y-12 md:flex md:flex-wrap md:gap-16"
           >
             {groupArchitectTierBySeason(
               architectsWithTier.flatMap((architect) => architect.tier),
@@ -124,13 +124,16 @@ export default function HomeSeasonInfo({
                               {DESCRIPTION[tierName as AllTier]}
                             </div>
                           </div>
-                          <span className="block md:hidden">{tierName}</span>
+
                           <span
                             className={cn(
-                              'text-text-default bg-fill-default border-border-default flex items-center justify-center rounded-full border-2 px-2 py-1 text-sm md:absolute md:-right-4',
+                              'text-text-default bg-fill-default border-border-default flex items-center justify-center rounded-sm border-2 px-2 py-1 text-sm md:absolute md:-right-4 md:rounded-full',
                               getTierTextColor(tierName as AllTier),
                             )}
                           >
+                            <span className="block md:hidden">
+                              {`${tierName}: `}
+                            </span>
                             {count}명
                           </span>
                         </div>

@@ -69,7 +69,7 @@ export default function ContentLine({ isMobile, content }: Props) {
 
   return (
     <div className="overflow-hidden">
-      <div className="mx-auto max-w-[1300px] pt-12">
+      <div className="mx-auto max-w-[1300px] pt-6 md:pt-12">
         <h2 className="text-text-subtler mb-2 px-4 text-xl xl:px-0">
           {getSubTitle()}
         </h2>
@@ -129,7 +129,7 @@ function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
   return (
     <div
       key={entry.imageUrl}
-      className="group relative aspect-video h-full hover:cursor-pointer"
+      className="group relative h-full min-w-[100%] hover:cursor-pointer xl:aspect-video xl:min-w-auto"
     >
       <Image
         className="rounded-none xl:rounded-xl"
@@ -215,7 +215,7 @@ function CarouselMobileContainer({
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
       style={{
-        transform: `translateX(${scrollX}px)`,
+        transform: `translate3d(${scrollX}px, 0,0)`,
         transitionDuration: isOnScroll ? '0ms' : '400ms',
       }}
     >
@@ -233,8 +233,6 @@ type CarouselContainerProps = {
 function CarouselContainer({ page, index, children }: CarouselContainerProps) {
   const [isLargeScreen, setIsLargeScreen] = useState(false)
 
-  console.log(isLargeScreen)
-
   useEffect(() => {
     const handleResize = () => {
       setIsLargeScreen(window.innerWidth >= 1280)
@@ -248,11 +246,11 @@ function CarouselContainer({ page, index, children }: CarouselContainerProps) {
 
   return (
     <div
-      className="relative mx-auto mt-8 flex aspect-video h-full w-[100vw] gap-12 duration-500 ease-in-out md:max-w-[1300px] xl:h-[50vh] xl:w-full"
+      className="w-vh relative mx-auto mt-8 flex aspect-video h-full w-[100%] gap-12 duration-500 ease-in-out md:max-w-[1300px] xl:h-[50vh] xl:w-full"
       style={{
         transform: isLargeScreen
           ? `translateX(calc(${-page[index] * 50 * (16 / 9)}vh - ${page[index] * 3}rem))`
-          : `translateX(calc(${-page[index] * 100}vw - ${page[index] * 3}rem))`,
+          : `translateX(calc(${-page[index] * 100}% - ${page[index] * 3}rem))`,
       }}
     >
       {children}

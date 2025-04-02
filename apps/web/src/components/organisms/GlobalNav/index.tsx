@@ -38,7 +38,7 @@ export default function GlobalNav() {
   }
 
   return (
-    <nav className="bg-fill-strong/95 fixed z-20 mx-auto h-16 w-full px-4 xl:px-0">
+    <nav className="bg-fill-strong/95 fixed z-20 mx-auto h-14 w-full px-4 md:h-16 xl:px-0">
       <div className="mx-auto flex h-full max-w-[1200px] items-center justify-between">
         <div className="flex items-center gap-32">
           <Link className="text-xl font-semibold" href={'/'}>
@@ -53,29 +53,38 @@ export default function GlobalNav() {
             }}
             className={cn(
               isOpen &&
-                'fixed top-16 right-0 h-[100vh] w-full bg-[rgba(0,0,0,0.8)]',
+                'fixed top-14 right-0 h-[100vh] w-full bg-[rgba(0,0,0,0.8)]',
             )}
           >
             <div
               className={cn(
                 'text-text-subtle hidden flex-col text-sm md:flex md:flex-row md:gap-16',
                 isOpen &&
-                  'bg-background-default text-text-default absolute top-0 left-0 z-20 flex w-full items-center gap-8 rounded-b-3xl p-8 text-lg',
+                  'bg-background-default text-text-default absolute top-0 left-0 z-20 flex w-full gap-4 rounded-b-3xl p-8 text-lg',
               )}
             >
-              <Link className="hover:text-text-strong" href={'/architect'}>
+              <Link
+                className="hover:text-text-strong w-full py-2 text-center md:w-auto md:py-0 md:text-start"
+                href={'/architect'}
+              >
                 건축가
               </Link>
-              <Link className="hover:text-text-strong" href={'/noobprohacker'}>
+              <Link
+                className="hover:text-text-strong w-full py-2 text-center md:w-auto md:py-0 md:text-start"
+                href={'/noobprohacker'}
+              >
                 눕프로해커
               </Link>
               <Link
-                className="hover:text-text-strong"
+                className="hover:text-text-strong w-full py-2 text-center md:w-auto md:py-0 md:text-start"
                 href={'/event_noobprohacker'}
               >
                 예능 눕프핵
               </Link>
-              <Link className="hover:text-text-strong" href={'/placement_test'}>
+              <Link
+                className="hover:text-text-strong w-full py-2 text-center md:w-auto md:py-0 md:text-start"
+                href={'/placement_test'}
+              >
                 배치고사
               </Link>
             </div>

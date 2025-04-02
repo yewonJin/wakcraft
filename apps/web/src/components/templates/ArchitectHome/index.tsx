@@ -39,13 +39,13 @@ export default function ArchitectHome({ architects }: Props) {
   } = useSearchArchitect()
 
   return (
-    <div className="mx-auto max-w-[1200px] px-4 pt-12 xl:px-0">
+    <div className="mx-auto max-w-[1200px] px-4 pt-6 md:pt-12 xl:px-0">
       <h1 className="mb-4 text-3xl font-semibold">건축가</h1>
       <h2 className="text-text-subtler mb-6">
         마인크래프트 건축가들의 포트폴리오를 볼 수 있다.
       </h2>
-      <div className="mb-4 justify-between md:flex">
-        <div className="relative mb-6 flex items-center md:mb-0">
+      <div className="mb-4 flex flex-col-reverse justify-between gap-4 md:flex-row">
+        <div className="relative flex items-center">
           <input
             className="border-border-default h-[40px] w-full rounded-md border-2 pl-3 outline-none md:w-auto"
             placeholder="검색하세요..."
@@ -105,7 +105,7 @@ function SortKey({
   } as const
 
   return (
-    <div className="flex flex-wrap gap-4 md:flex-nowrap">
+    <div className="flex flex-wrap gap-4 text-sm md:flex-nowrap md:text-base">
       {Object.entries(SORT_KEYS).map(([key, label]) => (
         <button
           key={key}

@@ -170,7 +170,7 @@ function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
                 alt="작품 이미지"
                 style={{ objectFit: 'cover' }}
               />
-              <div className="invisible absolute bottom-2 z-10 flex w-full justify-center text-lg text-[white] group-hover:visible hover:cursor-default">
+              <div className="absolute bottom-2 z-10 flex w-full justify-center text-lg text-[white] group-hover:visible hover:cursor-default md:invisible">
                 <div className="group-hover:animate-fadeIn flex w-fit gap-4 rounded-2xl bg-[#121212] px-6 py-2">
                   <a
                     href={`/architect/${entry.architectId}`}

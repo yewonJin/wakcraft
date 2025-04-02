@@ -38,9 +38,9 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
   }, [])
 
   return (
-    <div className="mx-auto pt-12 xl:w-[1300px]">
+    <div className="mx-auto pt-6 md:pt-12 xl:w-[1300px]">
       <div className="flex flex-col justify-center rounded-md">
-        <div className="mb-4 flex items-center justify-between px-4 xl:px-0">
+        <div className="mb-6 flex flex-col gap-4 px-4 md:flex-row md:items-center md:justify-between xl:px-0">
           <ArchitectProfile
             curTier={architect.curTier}
             minecraftId={architect.minecraftId}
@@ -50,7 +50,7 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
         </div>
         <ArchitectAllTier tier={architect.tier} />
         <div className="bg-fill-default mb-6 h-[1px] w-full"></div>
-        <div className="mb-6 flex justify-between overflow-x-scroll px-4 sm:overflow-x-hidden xl:px-0">
+        <div className="mb-6 flex justify-between overflow-x-scroll px-4 pb-4 sm:overflow-x-hidden md:pb-0 xl:px-0">
           <div className="flex gap-4">
             {['전체보기', '눕프로해커', '예능 눕프핵', '배치고사'].map(
               (item) => (

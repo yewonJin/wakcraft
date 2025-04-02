@@ -25,7 +25,7 @@ export default function ContentGrid({ content }: Props) {
   }
 
   return (
-    <div className="mx-auto max-w-[1300px] pt-12">
+    <div className="mx-auto max-w-[1300px] pt-6 md:pt-12">
       <h2 className="text-text-subtler mb-2 px-4 text-xl xl:px-0">
         {getSubTitle()}
       </h2>

@@ -5,7 +5,7 @@ export default async function Page() {
   const noobprohackers = await getNoobProHackers()
 
   return (
-    <div className="mx-auto max-w-[1200px] px-4 pt-12 xl:px-0">
+    <div className="mx-auto max-w-[1200px] px-4 pt-6 md:pt-12 xl:px-0">
       <h1 className="mb-4 text-3xl font-semibold">눕프로해커</h1>
       <h2 className="text-text-subtler mb-6">
         마인크래프트 눕프로해커 컨텐츠를 볼 수 있다.
