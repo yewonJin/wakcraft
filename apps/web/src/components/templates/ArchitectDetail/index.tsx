@@ -105,7 +105,7 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
               ))}
           </div>
         ) : (
-          <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-12 px-4 xl:px-0">
             {Object.entries(
               devideByYear(
                 filterByCategory(
