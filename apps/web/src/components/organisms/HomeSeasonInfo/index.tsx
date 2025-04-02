@@ -99,7 +99,10 @@ export default function HomeSeasonInfo({
                   TIER_ORDER.indexOf(b.group) - TIER_ORDER.indexOf(a.group),
               )
               .map((item) => (
-                <div key={item.group} className="">
+                <div
+                  key={item.group}
+                  className={cn(item.group === '국밥' && 'col-span-2')}
+                >
                   <div className="mb-4 flex items-center gap-2">
                     <p className="text-xl font-medium">{item.group}</p>
                     <p className="bg-fill-default rounded-md px-2 py-1.5">
@@ -110,7 +113,7 @@ export default function HomeSeasonInfo({
                       명
                     </p>
                   </div>
-                  <div className="md:border-border-default flex flex-col gap-6 rounded-xl md:border-2 md:p-4 md:pr-5">
+                  <div className="md:border-border-default flex flex-col gap-4 rounded-xl md:gap-6 md:border-2 md:p-4 md:pr-5">
                     {item.tiers.map((tierObj, index) => {
                       const [tierName, count] = Object.entries(tierObj)[0]
                       return (
@@ -124,10 +127,9 @@ export default function HomeSeasonInfo({
                               {DESCRIPTION[tierName as AllTier]}
                             </div>
                           </div>
-
                           <span
                             className={cn(
-                              'text-text-default bg-fill-default border-border-default flex items-center justify-center rounded-sm border-2 px-2 py-1 text-sm md:absolute md:-right-4 md:rounded-full',
+                              'text-text-default bg-fill-default border-border-default flex flex-wrap rounded-sm border-2 px-1.5 py-1 text-sm md:absolute md:-right-4 md:items-center md:justify-center md:rounded-full',
                               getTierTextColor(tierName as AllTier),
                             )}
                           >
