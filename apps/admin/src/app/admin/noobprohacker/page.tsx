@@ -13,7 +13,7 @@ export default async function Page() {
 
   return (
     <DataProvider
-      category="noobProHacker"
+      category="noobprohacker"
       episode={nextEpisode}
       architects={JSON.parse(JSON.stringify(architects))}
     >

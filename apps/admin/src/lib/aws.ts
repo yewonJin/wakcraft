@@ -12,9 +12,9 @@ const awsS3Bucket = process.env.MY_AWS_S3_BUCKET as string
 const awsS3BucketRegion = process.env.MY_AWS_S3_BUCKET_REGION as string
 
 export type AWSDirectory =
-  | 'noobProHacker'
-  | 'placementTest'
-  | 'eventNoobProHacker'
+  | 'noobprohacker'
+  | 'placement_test'
+  | 'event_noobprohacker'
 
 export const AWS_BASE_URL = 'https://wakcraft.s3.ap-northeast-2.amazonaws.com/'
 
