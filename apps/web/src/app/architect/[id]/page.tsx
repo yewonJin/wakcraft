@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 
 import ArchitectDetail from '@/components/templates/ArchitectDetail'
+import NotFound from '@/components/organisms/NotFound'
 import {
   getArchitectById,
   getArchitectsWithoutPortfolio,
@@ -28,7 +29,7 @@ export async function generateMetadata({
   )
 
   return {
-    title: architect.wakzooId
+    title: architect?.wakzooId
       ? `왁크래프트 | ${architect.wakzooId}`
       : '왁크래프트 | 건축가',
     description: '유튜버 우왁굳의 마인크래프트 눕프로해커 건축가',
@@ -51,7 +52,7 @@ export default async function Page({
     | 'grid'
     | undefined
 
-  if (!architect) return <div>해당 건축가가 없습니다.</div>
+  if (!architect) return <NotFound />
 
   return (
     <ArchitectDetail

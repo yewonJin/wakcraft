@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 
 import ContentGrid from '@/components/organisms/ContentGrid'
 import ContentLine from '@/components/organisms/ContentLine'
+import NotFound from '@/components/organisms/NotFound'
 
 import { getEventNoobProHacker } from '@/libs/actions/eventNoobProHacker'
 import { isMobile } from '@/utils/shared'
@@ -36,7 +37,7 @@ export default async function Page({
 
   const eventNoobProHacker = await getEventNoobProHacker(Number(episode))
 
-  if (!eventNoobProHacker) return <h2>해당 컨텐츠가 없습니다.</h2>
+  if (!eventNoobProHacker) return <NotFound />
 
   if (eventNoobProHacker.type === 'grid') {
     return (
