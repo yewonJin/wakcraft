@@ -39,7 +39,11 @@ export const addArchitect = async (formData: FormData) => {
       await Architect.create({
         minecraftId,
         wakzooId,
-        tier: Array.from({ length: season }, () => '언랭'),
+        tier: Array.from({ length: season }, (_, i) => ({
+          season: i + 1,
+          isPortfolioPlacementTest: false,
+          result: '언랭',
+        })),
         curTier: '언랭',
       })
 
