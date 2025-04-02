@@ -1,4 +1,3 @@
-import type { Metadata } from 'next'
 import { Noto_Sans_KR } from 'next/font/google'
 import './globals.css'
 
@@ -12,11 +11,6 @@ const NotoSansKR = Noto_Sans_KR({
   style: 'normal',
   subsets: ['latin'],
 })
-
-export const metadata: Metadata = {
-  title: '왁크래프트 | 홈',
-  description: '유튜버 우왁굳의 마인크래프트 컨텐츠 웹사이트',
-}
 
 export default function RootLayout({
   children,

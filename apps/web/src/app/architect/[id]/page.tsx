@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 
 import ArchitectDetail from '@/components/templates/ArchitectDetail'
@@ -12,6 +13,26 @@ export async function generateStaticParams() {
     ...architects.map((architect) => ({ id: String(architect.wakzooId) })),
     ...architects.map((architect) => ({ id: String(architect.minecraftId) })),
   ]
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}): Promise<Metadata> {
+  // read route params
+  const { id } = await params
+
+  const architect = await getArchitectById(
+    decodeURIComponent(id.replaceAll('-', ' ')),
+  )
+
+  return {
+    title: architect.wakzooId
+      ? `왁크래프트 | ${architect.wakzooId}`
+      : '왁크래프트 | 건축가',
+    description: '유튜버 우왁굳의 마인크래프트 눕프로해커 건축가',
+  }
 }
 
 export default async function Page({

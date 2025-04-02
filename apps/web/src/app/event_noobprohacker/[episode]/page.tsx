@@ -1,8 +1,29 @@
+import { Metadata } from 'next'
+import { headers } from 'next/headers'
+
 import ContentGrid from '@/components/organisms/ContentGrid'
 import ContentLine from '@/components/organisms/ContentLine'
+
 import { getEventNoobProHacker } from '@/libs/actions/eventNoobProHacker'
 import { isMobile } from '@/utils/shared'
-import { headers } from 'next/headers'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ episode: string }>
+}): Promise<Metadata> {
+  // read route params
+  const { episode } = await params
+
+  const eventNoobProHacker = await getEventNoobProHacker(Number(episode))
+
+  return {
+    title: eventNoobProHacker
+      ? `왁크래프트 | ${eventNoobProHacker.contentInfo.title}`
+      : '왁크래프트 | 예능 눕프핵',
+    description: '유튜버 우왁굳의 마인크래프트 컨텐츠 - 예능 눕프핵',
+  }
+}
 
 export default async function Page({
   params,
