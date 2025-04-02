@@ -1,7 +1,10 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { GridEventNoobProHacker, PlacementTest } from '@repo/types'
 import { renamePngToWebp } from '@repo/utils'
+import { Link2 } from 'lucide-react'
 
 type Props = {
   content: GridEventNoobProHacker | PlacementTest
@@ -29,16 +32,27 @@ export default function ContentGrid({ content }: Props) {
       <h2 className="text-text-subtler mb-2 px-4 text-xl xl:px-0">
         {getSubTitle()}
       </h2>
-      <h1 className="mb-14 px-4 text-4xl font-semibold xl:px-0">
-        {getTitle()}
-      </h1>
-      <div className="mt-16 grid grid-cols-1 gap-6 gap-y-12 md:grid-cols-2 2xl:w-[1400px] 2xl:grid-cols-3">
+      <h1 className="mb-6 px-4 text-4xl font-semibold xl:px-0">{getTitle()}</h1>
+      {content.contentInfo.youtubeUrl && (
+        <div
+          onClick={() => window.open(content.contentInfo.youtubeUrl as string)}
+          className="text-text-subtle bg-fill-default hover:bg-fill-subtle mb-8 ml-4 flex w-fit items-center gap-2 rounded-md px-4 py-2 text-sm hover:cursor-pointer xl:ml-0"
+        >
+          <Link2 width={20} height={20} />
+          유튜브로 이동
+        </div>
+      )}
+      <div className="mt-8 grid grid-cols-1 gap-6 gap-y-12 md:grid-cols-2 2xl:w-[1400px] 2xl:grid-cols-3">
         {content.workInfo
           .sort((a, b) => a.order - b.order)
           .map((entry) => (
             <div
+              onClick={() => {
+                if (!entry.youtubeUrl) return
+                window.open(entry.youtubeUrl)
+              }}
               key={entry.imageUrl}
-              className="group [&>img]: relative aspect-video h-full hover:cursor-pointer"
+              className="group relative aspect-video h-full hover:cursor-pointer"
             >
               <Image
                 className="rounded-none xl:rounded-xl"
@@ -46,6 +60,11 @@ export default function ContentGrid({ content }: Props) {
                 alt="작품 이미지"
                 src={renamePngToWebp(entry.imageUrl)}
               />
+              {entry.youtubeUrl && (
+                <div className="invisible absolute right-2 bottom-2 rounded-md bg-neutral-800/80 px-3 py-2 group-hover:visible">
+                  클릭하여 유튜브로 이동
+                </div>
+              )}
               <div className="absolute top-4 left-4 rounded-md px-4 py-2">
                 <div className="mb-2 flex items-center gap-3">
                   <p className="text-lg font-semibold text-white [text-shadow:_1px_1px_0_#000]">
