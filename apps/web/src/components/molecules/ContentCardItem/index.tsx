@@ -82,10 +82,10 @@ export default function ContentCardItem({
             ))}
           </div>
         )}
-        <div className="bg-fill-subtle my-4 h-[1px] w-full"></div>
+        <div className="bg-fill-subtle mt-4 mb-3 h-[1px] w-full"></div>
         <div
           className={cn(
-            'flex justify-between',
+            'flex items-center justify-between',
             !contentInfo.youtubeUrl && 'justify-end',
           )}
         >
