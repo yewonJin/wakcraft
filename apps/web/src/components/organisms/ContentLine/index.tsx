@@ -10,6 +10,8 @@ import { cn, renamePngTo1080Webp } from '@repo/utils'
 import Button from '@/components/atoms/Button'
 
 import { useSlider } from '@/hooks/useSlider'
+import InfoBox from '@/components/atoms/InfoBox'
+import Tooltip from '@/components/atoms/Tooltip'
 
 type Props = {
   isMobile: boolean
@@ -155,7 +157,10 @@ function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
         alt="작품 이미지"
         src={renamePngTo1080Webp(entry.imageUrl)}
       />
-      <div className="absolute top-2 left-2 rounded-md px-4 py-2 md:top-8 md:left-8">
+      <InfoBox
+        position="top-left"
+        className="top-[5%] left-[3%] flex-col bg-transparent"
+      >
         <div className="mb-2 flex items-center gap-3">
           <p className="text-xl font-semibold text-white [text-shadow:_1px_1px_0_#000] md:text-2xl">
             {entry.tier || entry.title}
@@ -179,11 +184,14 @@ function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
         ) : (
           <ContentArchitects entry={entry} />
         )}
-      </div>
+      </InfoBox>
       {entry.youtubeUrl && (
-        <div className="invisible absolute right-2 bottom-2 rounded-md bg-neutral-800/80 px-3 py-2 group-hover:visible">
+        <Tooltip
+          position="bottom-right"
+          className="group-hover:visible md:right-2 md:bottom-2 md:px-4 md:py-2"
+        >
           클릭하여 유튜브로 이동
-        </div>
+        </Tooltip>
       )}
     </div>
   )

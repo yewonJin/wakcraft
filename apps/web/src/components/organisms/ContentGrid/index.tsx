@@ -6,6 +6,9 @@ import { GridEventNoobProHacker, PlacementTest } from '@repo/types'
 import { renamePngToWebp } from '@repo/utils'
 import { Link2 } from 'lucide-react'
 
+import InfoBox from '@/components/atoms/InfoBox'
+import Tooltip from '@/components/atoms/Tooltip'
+
 type Props = {
   content: GridEventNoobProHacker | PlacementTest
 }
@@ -61,11 +64,17 @@ export default function ContentGrid({ content }: Props) {
                 src={renamePngToWebp(entry.imageUrl)}
               />
               {entry.youtubeUrl && (
-                <div className="invisible absolute right-2 bottom-2 rounded-md bg-neutral-800/80 px-3 py-2 group-hover:visible">
+                <Tooltip
+                  position="bottom-right"
+                  className="group-hover:visible"
+                >
                   클릭하여 유튜브로 이동
-                </div>
+                </Tooltip>
               )}
-              <div className="absolute top-4 left-4 rounded-md px-4 py-2">
+              <InfoBox
+                position="top-left"
+                className="top-[6%] left-[4%] flex-col bg-transparent text-base"
+              >
                 <div className="mb-2 flex items-center gap-3">
                   <p className="text-lg font-semibold text-white [text-shadow:_1px_1px_0_#000]">
                     {entry.title}
@@ -100,7 +109,7 @@ export default function ContentGrid({ content }: Props) {
                     ))}
                   </div>
                 )}
-              </div>
+              </InfoBox>
             </div>
           ))}
       </div>

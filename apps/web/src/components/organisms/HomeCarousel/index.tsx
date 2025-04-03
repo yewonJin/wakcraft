@@ -9,6 +9,7 @@ import Button from '@/components/atoms/Button'
 
 import { useCarousel } from '@/hooks/useCarousel'
 import { getHackerWinLine } from '@/services/content'
+import Tooltip from '@/components/atoms/Tooltip'
 
 type Props = {
   latestNoobProHacker: NoobProHacker
@@ -94,19 +95,18 @@ export default function HomeCarousel({ latestNoobProHacker }: Props) {
                       src={renamePngToWebp(entry.imageUrl)}
                       alt="작품 이미지"
                     />
-                    <div
-                      onClick={(e) => e.stopPropagation()}
-                      className="absolute bottom-2 z-10 flex w-full justify-center text-lg text-[white] group-hover:visible hover:cursor-default md:invisible"
+                    <Tooltip
+                      onClick={(e) => e.preventDefault()}
+                      position="bottom"
+                      className="md:group-hover:animate-fadeIn visible flex w-fit gap-4 rounded-2xl px-6 py-2 md:invisible md:group-hover:visible"
                     >
-                      <div className="group-hover:animate-fadeIn flex w-fit gap-4 rounded-2xl bg-[#121212] px-6 py-2">
-                        <Link href={`/architect/${entry.architectId[0]}`}>
-                          <p className="text-[#aaa] hover:cursor-pointer hover:text-[white]">
-                            {entry.architectId[0]}
-                          </p>
-                        </Link>
-                        <p>{entry.tier}</p>
-                      </div>
-                    </div>
+                      <Link href={`/architect/${entry.architectId[0]}`}>
+                        <p className="text-[#aaa] hover:cursor-pointer hover:text-[white]">
+                          {entry.architectId[0]}
+                        </p>
+                      </Link>
+                      <p>{entry.tier}</p>
+                    </Tooltip>
                   </div>
                 ))}
               </div>

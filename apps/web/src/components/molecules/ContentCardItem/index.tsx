@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { Category, ContentInfo } from '@repo/types'
 import { cn } from '@repo/utils'
 
+import InfoBox from '@/components/atoms/InfoBox'
+
 import { getDetailContentTitle } from '@/services/content'
 
 type Props = {
@@ -48,9 +50,12 @@ export default function ContentCardItem({
           />
         )}
         {contentInfo.isTribute && (
-          <span className="absolute top-2 left-2 rounded-md bg-green-700/80 px-2 py-1 text-sm text-neutral-200">
+          <InfoBox
+            position="top-left"
+            className="rounded-md bg-green-700/80 px-2 py-1 text-sm text-neutral-200"
+          >
             조공 컨텐츠
-          </span>
+          </InfoBox>
         )}
       </div>
       <div className="bg-fill-default rounded-b-xl px-4 py-6">

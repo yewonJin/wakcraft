@@ -1,13 +1,16 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
-import { ChevronLeft, Link2 } from 'lucide-react'
 import Link from 'next/link'
+import { ChevronLeft, Link2 } from 'lucide-react'
 import { LineInfo, NoobProHacker } from '@repo/types'
 import { cn, renamePngToWebp } from '@repo/utils'
 
+import InfoBox from '@/components/atoms/InfoBox'
+import Tooltip from '@/components/atoms/Tooltip'
+
 import { getHackerWinLine, getProWinLine } from '@/services/content'
-import { useState } from 'react'
 
 type Props = {
   recentNoobProHackers: NoobProHacker[]
@@ -64,7 +67,10 @@ function HomeRecentWinEntries({
                   fill
                   src={renamePngToWebp(hackerEntry?.imageUrl || '')}
                 />
-                <div className="absolute bottom-4 left-[50%] z-10 flex w-max translate-x-[-50%] items-center gap-4 rounded-lg bg-[rgba(0,0,0,0.7)] px-4 py-2 text-[white] hover:cursor-auto">
+                <InfoBox
+                  position="bottom"
+                  className="flex w-max items-center gap-4 rounded-lg bg-black/80 px-4 py-2 text-base"
+                >
                   {hackerEntry?.youtubeUrl && (
                     <Link2
                       onClick={() =>
@@ -82,7 +88,7 @@ function HomeRecentWinEntries({
                   >
                     {hackerEntry?.architectId}
                   </Link>
-                </div>
+                </InfoBox>
               </div>
               <div className="relative aspect-video w-full rounded-3xl hover:cursor-pointer md:w-2/5 [&>img]:rounded-3xl">
                 <Image
@@ -93,7 +99,10 @@ function HomeRecentWinEntries({
                     getProWinLine(noobprohacker)?.entries[1].imageUrl || '',
                   )}
                 />
-                <div className="absolute bottom-4 left-[50%] z-10 flex w-max translate-x-[-50%] items-center gap-4 rounded-lg bg-[rgba(0,0,0,0.7)] px-4 py-2 text-[white] hover:cursor-auto">
+                <InfoBox
+                  position="bottom"
+                  className="flex w-max items-center gap-4 rounded-lg bg-black/80 px-4 py-2 text-base"
+                >
                   {proEntry?.youtubeUrl && (
                     <Link2
                       onClick={() =>
@@ -111,7 +120,7 @@ function HomeRecentWinEntries({
                   >
                     {proEntry?.architectId}
                   </Link>
-                </div>
+                </InfoBox>
               </div>
             </div>
           )
@@ -170,17 +179,18 @@ function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
                 alt="작품 이미지"
                 style={{ objectFit: 'cover' }}
               />
-              <div className="absolute bottom-2 z-10 flex w-full justify-center text-lg text-[white] group-hover:visible hover:cursor-default md:invisible">
-                <div className="group-hover:animate-fadeIn flex w-fit gap-4 rounded-2xl bg-[#121212] px-6 py-2">
-                  <a
-                    href={`/architect/${entry.architectId}`}
-                    className="text-text-subtle hover:text-text-default"
-                  >
-                    {entry.architectId}
-                  </a>
-                  <p>{entry.tier}</p>
-                </div>
-              </div>
+              <Tooltip
+                position="bottom"
+                className="md:group-hover:animate-fadeIn visible flex w-max gap-4 rounded-2xl bg-[#121212] px-6 py-2 md:invisible md:group-hover:visible"
+              >
+                <Link
+                  href={`/architect/${entry.architectId}`}
+                  className="text-text-subtle hover:text-text-default"
+                >
+                  {entry.architectId}
+                </Link>
+                <p>{entry.tier}</p>
+              </Tooltip>
             </div>
           ))}
         </div>

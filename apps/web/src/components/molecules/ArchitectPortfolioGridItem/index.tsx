@@ -2,6 +2,10 @@ import Image from 'next/image'
 import { Clapperboard } from 'lucide-react'
 import { Architect } from '@repo/types'
 import { renamePngTo1080Webp, renamePngToWebp } from '@repo/utils'
+
+import Tooltip from '@/components/atoms/Tooltip'
+import InfoBox from '@/components/atoms/InfoBox'
+
 import { getDetailCategory } from '@/services/architect'
 
 type Props = {
@@ -44,18 +48,17 @@ export default function ArchitectPortfolioGridItem({ item }: Props) {
             </p>
           </div>
         )}
-        <div className="invisible absolute right-2 bottom-2 bg-neutral-900 px-[10px] py-1 text-sm text-[white] group-hover/image:visible peer-hover:invisible">
+        <Tooltip
+          position="bottom-right"
+          className="text-sm group-hover/image:visible peer-hover:invisible"
+        >
           클릭하여 원본 이미지 보기
-        </div>
+        </Tooltip>
         {item.description && (
-          <span className="absolute top-[6px] left-[6px] rounded-md bg-neutral-800/85 px-2.5 py-1.5 text-sm text-neutral-50">
-            {item.description}
-          </span>
+          <InfoBox position="top-left">{item.description}</InfoBox>
         )}
         {item.type && (
-          <span className="absolute bottom-[6px] left-[6px] rounded-md bg-neutral-800/85 px-2.5 py-1.5 text-sm text-neutral-50">
-            {item.type} 라인
-          </span>
+          <InfoBox position="bottom-left">{item.type} 라인</InfoBox>
         )}
       </div>
       <div className="relative flex justify-center">
