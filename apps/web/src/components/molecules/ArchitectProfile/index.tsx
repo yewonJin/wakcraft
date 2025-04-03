@@ -1,6 +1,6 @@
 import { Tier } from '@repo/types'
 
-import TierBox from '@/components/atoms/TierBox'
+import { TierBox } from '@/components/atoms'
 
 type Props = {
   curTier: Tier

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 
-import Home from '@/components/templates/Home'
+import { Home } from '@/components/templates'
+
 import { getArchitectsWithTier } from '@/libs/actions/architect'
 import {
   getLatestNoobProHacker,

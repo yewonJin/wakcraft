@@ -1,4 +1,4 @@
-import NotFound from '@/components/organisms/NotFound'
+import { NotFound } from '@/components/organisms'
 
 export default function Page() {
   return <NotFound />

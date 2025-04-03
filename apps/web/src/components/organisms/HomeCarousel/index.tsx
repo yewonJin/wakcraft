@@ -1,27 +1,24 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
 import { NoobProHacker } from '@repo/types'
-import { cn, renamePngTo1080Webp, renamePngToWebp } from '@repo/utils'
 
-import Button from '@/components/atoms/Button'
-import Tooltip from '@/components/atoms/Tooltip'
+import { HomeCarouselBackground } from './Background'
+import { HomeCarouselTitle } from './Title'
+import { HomeCarouselNavigator } from './Navigator'
+import { HomeCarouselContent } from './Content'
 
-import { useCarousel } from '@/hooks/useCarousel'
-import { getHackerWinLine } from '@/services/content'
+import { useCarousel } from '@/hooks'
 
 type Props = {
   latestNoobProHacker: NoobProHacker
 }
 
-// TODO: services로 이동
-const getWinnerLineIndex = (noobprohacker: NoobProHacker) => {
-  return noobprohacker.workInfo.findIndex((line) => line.ranking === 1)
-}
-
 // TODO: 나중에 예능 눕프핵, 배치고사도 지원하면 좋을듯
 export default function HomeCarousel({ latestNoobProHacker }: Props) {
+  const getWinnerLineIndex = (noobprohacker: NoobProHacker) => {
+    return noobprohacker.workInfo.findIndex((line) => line.ranking === 1)
+  }
+
   const {
     carouselIndex,
     resetAutoScroll,
@@ -34,85 +31,22 @@ export default function HomeCarousel({ latestNoobProHacker }: Props) {
 
   return (
     <div className="mt-8 md:mt-0 md:h-[100vh]">
-      <div
-        className="absolute top-0 left-0 z-[-1] hidden h-full w-full bg-[rgba(0,0,0,0.5)] bg-cover bg-center bg-no-repeat bg-blend-darken md:block"
-        style={{
-          backgroundImage: `url("${renamePngTo1080Webp(getHackerWinLine(latestNoobProHacker)?.entries[2]?.imageUrl as string)}")`,
-        }}
-      ></div>
+      <HomeCarouselBackground latestNoobProHacker={latestNoobProHacker} />
       <div className="flex w-full max-w-[1200px] flex-col items-center justify-center gap-5 overflow-x-hidden md:h-[90vh] md:gap-10">
-        <div className="flex flex-col items-center gap-4">
-          <h1 className="text-text-strong text-3xl font-bold md:text-5xl md:text-neutral-100">
-            {`눕프로해커 : ${latestNoobProHacker.contentInfo.title} 편`}
-          </h1>
-          <h2 className="text-text-subtle text-2xl font-semibold md:text-4xl md:text-neutral-400">
-            {latestNoobProHacker.contentInfo.episode + '회'}
-          </h2>
-        </div>
-        <div className="w-full overflow-x-scroll px-4 pb-4 md:w-auto md:overflow-auto md:pb-0 xl:px-0">
-          <div className="flex w-max gap-3 md:justify-center md:gap-4">
-            {latestNoobProHacker.workInfo.map((line, lineIndex) => (
-              <Button
-                onMouseOver={() => resetAutoScroll()}
-                onMouseOut={() => startAutoScroll()}
-                onClick={() => handleCategoryClick(lineIndex)}
-                key={line.title}
-                className={cn(
-                  'border-border-default border-2 md:border-none md:bg-neutral-900/80 md:text-lg md:text-neutral-200',
-                  carouselIndex === lineIndex
-                    ? 'text-text-default md:text-white'
-                    : 'opacity-50 hover:opacity-80',
-                )}
-              >
-                {line.title}
-              </Button>
-            ))}
-          </div>
-        </div>
-        <div className="w-full overflow-hidden px-4 xl:px-0">
-          <div
-            className="flex gap-8 duration-500"
-            style={{
-              transform: `translateX(calc(${-carouselIndex} * (100% + 32px)))`,
-            }}
-          >
-            {latestNoobProHacker.workInfo.map((line) => (
-              <div
-                key={line.title}
-                className="flex w-full flex-col justify-center gap-6 md:flex-row md:gap-8"
-              >
-                {line.entries.map((entry) => (
-                  <div
-                    key={entry.imageUrl}
-                    onMouseOver={() => resetAutoScroll()}
-                    onMouseOut={() => startAutoScroll()}
-                    className="group relative h-[60vw] max-h-[480px] w-[calc(100vw-32px)] overflow-hidden hover:cursor-pointer md:h-[45vh] md:w-[30vw] [&>img]:duration-[500ms] [&>img]:hover:scale-105"
-                  >
-                    <Image
-                      fill
-                      priority
-                      style={{ objectFit: 'cover' }}
-                      src={renamePngToWebp(entry.imageUrl)}
-                      alt="작품 이미지"
-                    />
-                    <Tooltip
-                      onClick={(e) => e.preventDefault()}
-                      position="bottom"
-                      className="md:group-hover:animate-fadeIn visible flex gap-4 rounded-2xl px-6 py-2 md:invisible md:group-hover:visible"
-                    >
-                      <Link href={`/architect/${entry.architectId[0]}`}>
-                        <p className="text-[#aaa] hover:cursor-pointer hover:text-[white]">
-                          {entry.architectId[0]}
-                        </p>
-                      </Link>
-                      <p>{entry.tier}</p>
-                    </Tooltip>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
+        <HomeCarouselTitle latestNoobProHacker={latestNoobProHacker} />
+        <HomeCarouselNavigator
+          latestNoobProHacker={latestNoobProHacker}
+          carouselIndex={carouselIndex}
+          onCategoryClick={handleCategoryClick}
+          onMouseOver={resetAutoScroll}
+          onMouseOut={startAutoScroll}
+        />
+        <HomeCarouselContent
+          latestNoobProHacker={latestNoobProHacker}
+          carouselIndex={carouselIndex}
+          onMouseOver={resetAutoScroll}
+          onMouseOut={startAutoScroll}
+        />
       </div>
     </div>
   )

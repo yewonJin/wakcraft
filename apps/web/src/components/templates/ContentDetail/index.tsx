@@ -5,10 +5,9 @@ import {
   PlacementTest,
 } from '@repo/types'
 
-import ContentYoutubeLink from '@/components/atoms/ContentYoutubeLink'
-import ContentDetailTitle from '@/components/molecules/ContentDetailTitle'
-import ContentGrid from '@/components/organisms/ContentGrid'
-import ContentLine from '@/components/organisms/ContentLine'
+import { ContentYoutubeLink } from '@/components/atoms'
+import { ContentDetailTitle } from '@/components/molecules'
+import { ContentGrid, ContentLine } from '@/components/organisms'
 
 type Props = {
   category: Category

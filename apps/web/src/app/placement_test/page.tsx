@@ -1,7 +1,8 @@
 import { Metadata } from 'next'
 
+import { ContentMain } from '@/components/templates'
+
 import { getPlacementTests } from '@/libs/actions/placementTest'
-import ContentMain from '@/components/templates/ContentMain'
 
 export const metadata: Metadata = {
   title: '왁크래프트 | 배치고사',

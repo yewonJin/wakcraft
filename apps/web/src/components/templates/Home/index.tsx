@@ -1,8 +1,10 @@
 import { Architect, LineInfo, NoobProHacker, PlacementTest } from '@repo/types'
 
-import HomeCarousel from '@/components/organisms/HomeCarousel'
-import HomeSeasonInfo from '@/components/organisms/HomeSeasonInfo'
-import HomeNoobProHacker from '@/components/organisms/HomeNoobProHacker'
+import {
+  HomeCarousel,
+  HomeSeasonInfo,
+  HomeNoobProHacker,
+} from '@/components/organisms'
 
 type Props = {
   latestNoobProHacker: NoobProHacker

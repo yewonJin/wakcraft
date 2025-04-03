@@ -1,0 +1,5 @@
+export { default as ArchitectProfile } from './ArchitectProfile'
+export { default as ArchitectStatistics } from './ArchitectStatistics'
+export { default as ContentCardItem } from './ContentCardItem'
+export { default as ContentDetailTitle } from './ContentDetailTitle'
+export { default as MainPageTitle } from './MainPageTitle'

@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import ContentMain from '@/components/templates/ContentMain'
+import { ContentMain } from '@/components/templates'
 
 import { getNoobProHackers } from '@/libs/actions/noobprohacker'
 

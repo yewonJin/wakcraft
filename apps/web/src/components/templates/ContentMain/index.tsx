@@ -1,5 +1,4 @@
-import ContentCardItem from '@/components/molecules/ContentCardItem'
-import MainPageTitle from '@/components/molecules/MainPageTitle'
+import { ContentCardItem, MainPageTitle } from '@/components/molecules'
 
 import { compareByDateDescending, getContentUrl } from '@/services/content'
 import {

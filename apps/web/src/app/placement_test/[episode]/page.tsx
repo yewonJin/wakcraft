@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 import { headers } from 'next/headers'
 
-import ContentDetail from '@/components/templates/ContentDetail'
-import NotFound from '@/components/organisms/NotFound'
+import { NotFound } from '@/components/organisms'
+import { ContentDetail } from '@/components/templates'
 
 import { getPlacementTest } from '@/libs/actions/placementTest'
 import { isMobile } from '@/utils/shared'

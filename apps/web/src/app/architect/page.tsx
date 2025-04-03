@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { Suspense } from 'react'
 
-import ArchitectMain from '@/components/templates/ArchitectMain'
+import { ArchitectMain } from '@/components/templates'
 
 import { getArchitectsWithoutPortfolio } from '@/libs/actions/architect'
 import { sortByTier } from '@/services/architect'

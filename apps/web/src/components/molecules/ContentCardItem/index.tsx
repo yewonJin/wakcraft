@@ -6,8 +6,7 @@ import Link from 'next/link'
 import { Category, ContentInfo } from '@repo/types'
 import { cn } from '@repo/utils'
 
-import ContentYoutubeLink from '@/components/atoms/ContentYoutubeLink'
-import InfoBox from '@/components/atoms/InfoBox'
+import { ContentYoutubeLink, InfoBox } from '@/components/atoms'
 
 import { getContentMainTitle } from '@/services/content'
 

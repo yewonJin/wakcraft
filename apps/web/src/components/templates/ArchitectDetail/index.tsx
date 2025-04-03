@@ -1,23 +1,14 @@
 'use client'
 
-import { Fragment } from 'react'
-import { Architect, Category } from '@repo/types'
-import { cn } from '@repo/utils'
+import { Architect } from '@repo/types'
 
-import Button from '@/components/atoms/Button'
-import Switch from '@/components/atoms/Switch'
-import ArchitectProfile from '@/components/molecules/ArchitectProfile'
-import ArchitectStatistics from '@/components/molecules/ArchitectStatistics'
-import ArchitectAllTier from '@/components/molecules/ArchitectAllTier'
-import ArchitectPortfolioGridItem from '@/components/molecules/ArchitectPortfolioGridItem'
-import ArchitectPortfolioSingleItem from '@/components/molecules/ArchitectPortfolioSingleItem'
+import { ArchitectDetailHeader } from './Header'
+import { ArchitectDetailAllTier } from './AllTier'
+import { Separator } from '@/components/atoms'
+import { ArchitectDetailControls } from './Controls'
+import { ArchitectDetailPortfolioList } from './PortfolioList'
 
-import {
-  devideByYear,
-  filterByCategory,
-  sortByRecentDate,
-} from '@/services/architect'
-import { useArchitectDetail } from '@/hooks/useArchitectDetail'
+import { useArchitectDetail } from '@/hooks'
 
 type Props = {
   architect: Architect
@@ -30,79 +21,20 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
 
   return (
     <div className="mx-auto pt-6 md:pt-12 xl:w-[1300px]">
-      <div className="flex flex-col justify-center rounded-md">
-        <div className="mb-6 flex flex-col gap-4 px-4 sm:flex-row sm:justify-between md:items-center xl:px-0">
-          <ArchitectProfile
-            curTier={architect.curTier}
-            minecraftId={architect.minecraftId}
-            wakzooId={architect.wakzooId}
-          />
-          <ArchitectStatistics statistics={architect.statistics} />
-        </div>
-        <ArchitectAllTier tier={architect.tier} />
-        <div className="bg-fill-default mb-6 h-[1px] w-full"></div>
-        <div className="mb-6 flex justify-between overflow-x-scroll px-4 pb-4 sm:overflow-x-hidden md:pb-0 xl:px-0">
-          <div className="flex gap-4">
-            {['전체보기', '눕프로해커', '예능 눕프핵', '배치고사'].map(
-              (item) => (
-                <Button
-                  className={cn(
-                    'duration-300',
-                    category === item
-                      ? 'bg-text-subtle text-fill-default'
-                      : 'hover:bg-fill-subtle',
-                  )}
-                  key={item}
-                  onClick={() =>
-                    handleCategoryClick(item as '전체보기' | Category)
-                  }
-                >
-                  {item}
-                </Button>
-              ),
-            )}
-          </div>
-          <div className="hidden items-center md:flex">
-            <Switch
-              isOn={currentView === 'single'}
-              label="하나씩 보기"
-              onClick={toggleView}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col gap-12 px-4 xl:px-0">
-          {Object.entries(
-            devideByYear(
-              filterByCategory(category, sortByRecentDate(architect.portfolio)),
-            ),
-          )
-            .reverse()
-            .map(([year, yearItems]) => (
-              <Fragment key={year}>
-                <div className="mt-2 flex items-center gap-4">
-                  <h3 className="min-w-fit text-2xl font-medium">{year}년</h3>
-                  <div className="bg-fill-subtle h-[1px] w-full"></div>
-                </div>
-                {currentView === 'grid' ? (
-                  <div className="grid gap-8 gap-y-12 md:grid-cols-2 xl:grid-cols-3">
-                    {yearItems.map((item) => (
-                      <ArchitectPortfolioGridItem key={item.date} item={item} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-8 gap-y-12">
-                    {yearItems.map((item) => (
-                      <ArchitectPortfolioSingleItem
-                        key={item.date}
-                        item={item}
-                      />
-                    ))}
-                  </div>
-                )}
-              </Fragment>
-            ))}
-        </div>
-      </div>
+      <ArchitectDetailHeader architect={architect} />
+      <ArchitectDetailAllTier tier={architect.tier} />
+      <Separator className="mb-6" />
+      <ArchitectDetailControls
+        category={category}
+        currentView={currentView}
+        onCategoryClick={handleCategoryClick}
+        onViewToggle={toggleView}
+      />
+      <ArchitectDetailPortfolioList
+        architect={architect}
+        category={category}
+        currentView={currentView}
+      />
     </div>
   )
 }

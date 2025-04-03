@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 
-import ArchitectDetail from '@/components/templates/ArchitectDetail'
-import NotFound from '@/components/organisms/NotFound'
+import { NotFound } from '@/components/organisms'
+import { ArchitectDetail } from '@/components/templates'
 import {
   getArchitectById,
   getArchitectsWithoutPortfolio,

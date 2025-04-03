@@ -2,7 +2,7 @@
 
 import { ArrowUpToLine } from 'lucide-react'
 
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms'
 
 export default function ScrollToTop() {
   const scrollToTop = () => {

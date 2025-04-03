@@ -3,8 +3,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
 
 import './globals.css'
-import GlobalNav from '@/components/organisms/GlobalNav'
-import ScrollToTop from '@/components/organisms/ScrollToTop'
+import { GlobalNav, ScrollToTop } from '@/components/organisms'
+
 import { setInitialThemeMode } from '@/utils/theme'
 
 const NotoSansKR = Noto_Sans_KR({
