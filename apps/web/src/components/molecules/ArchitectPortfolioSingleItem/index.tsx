@@ -2,8 +2,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Architect } from '@repo/types'
 import { renamePngTo1080Webp } from '@repo/utils'
-import { Clapperboard } from 'lucide-react'
 
+import ArchitectYoutubeLink from '@/components/atoms/ArchitectYoutubeLink'
 import InfoBox from '@/components/atoms/InfoBox'
 import Tooltip from '@/components/atoms/Tooltip'
 
@@ -28,29 +28,7 @@ export default function ArchitectPortfolioSingleItem({ item }: Props) {
           src={renamePngTo1080Webp(item.imageUrl)}
           alt="작품 이미지"
         />
-        {item.youtubeUrl && (
-          <div
-            className="group/youtube peer absolute top-10 right-10 z-10 flex flex-col items-center rounded-lg fill-[#fff] p-[3px] text-left opacity-80 hover:cursor-pointer hover:rounded-l-none hover:opacity-100"
-            onClick={(e) => {
-              e.stopPropagation()
-              window.open(item.youtubeUrl as string)
-            }}
-          >
-            <Clapperboard
-              className="absolute text-neutral-800/50"
-              width={32}
-              height={32}
-            />
-            <Clapperboard
-              className="absolute text-white"
-              width={34}
-              height={34}
-            />
-            <p className="invisible absolute top-0 right-9 flex h-10 w-max items-center pr-[6px] pb-[1px] pl-[10px] text-[white] [text-shadow:_1px_1px_0_#000] group-hover/youtube:visible group-hover/youtube:rounded-l-lg">
-              유튜브로 이동
-            </p>
-          </div>
-        )}
+        <ArchitectYoutubeLink type="single" youtubeUrl={item.youtubeUrl} />
         <Tooltip
           position="bottom-right"
           className="px-3 py-2 group-hover/image:visible peer-hover:invisible"

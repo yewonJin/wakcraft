@@ -2,11 +2,11 @@
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Link2 } from 'lucide-react'
 import Link from 'next/link'
 import { Category, ContentInfo } from '@repo/types'
 import { cn } from '@repo/utils'
 
+import ContentYoutubeLink from '@/components/atoms/ContentYoutubeLink'
 import InfoBox from '@/components/atoms/InfoBox'
 
 import { getContentHomeTitle } from '@/services/content'
@@ -89,18 +89,10 @@ export default function ContentCardItem({
             !contentInfo.youtubeUrl && 'justify-end',
           )}
         >
-          {contentInfo.youtubeUrl && (
-            <div
-              onClick={(e) => {
-                e.preventDefault()
-                window.open(contentInfo.youtubeUrl as string)
-              }}
-              className="bg-fill-strong hover:bg-fill-subtle text-text-subtler flex items-center gap-1 rounded-md px-2 py-1 text-sm"
-            >
-              <Link2 width={18} height={18} className="pt-[1px]" />
-              <span>유튜브</span>
-            </div>
-          )}
+          <ContentYoutubeLink
+            youtubeUrl={contentInfo.youtubeUrl}
+            className="bg-fill-strong text-text-subtler gap-1.5 px-2 py-1 text-sm"
+          />
           <span className="text-text-subtler text-sm">
             {new Date(contentInfo.date).toISOString().split('T')[0]}
           </span>

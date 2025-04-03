@@ -6,10 +6,10 @@ import { NoobProHacker } from '@repo/types'
 import { cn, renamePngTo1080Webp, renamePngToWebp } from '@repo/utils'
 
 import Button from '@/components/atoms/Button'
+import Tooltip from '@/components/atoms/Tooltip'
 
 import { useCarousel } from '@/hooks/useCarousel'
 import { getHackerWinLine } from '@/services/content'
-import Tooltip from '@/components/atoms/Tooltip'
 
 type Props = {
   latestNoobProHacker: NoobProHacker

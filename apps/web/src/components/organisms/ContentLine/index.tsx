@@ -3,20 +3,18 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, Link2, Users } from 'lucide-react'
+import { ChevronLeft, Users } from 'lucide-react'
 import { LineEventNoobProHacker, LineInfo, NoobProHacker } from '@repo/types'
 import { cn, renamePngTo1080Webp } from '@repo/utils'
 
 import Button from '@/components/atoms/Button'
+import ContentYoutubeLink from '@/components/atoms/ContentYoutubeLink'
 import InfoBox from '@/components/atoms/InfoBox'
 import Tooltip from '@/components/atoms/Tooltip'
+import ContentDetailTitle from '@/components/molecules/ContentDetailTitle'
 
 import { useSlider } from '@/hooks/useSlider'
 import { useContentLine } from '@/hooks/useContentLine'
-import {
-  getContentDetailSubTitle,
-  getContentDetailTitle,
-} from '@/services/content'
 
 type Props = {
   isMobile: boolean
@@ -30,48 +28,19 @@ export default function ContentLine({ isMobile, content }: Props) {
   return (
     <div className="overflow-hidden">
       <div className="mx-auto max-w-[1300px] pt-6 md:pt-12">
-        <h2 className="text-text-subtler mb-2 px-4 text-xl xl:px-0">
-          {getContentDetailSubTitle(
-            'type' in content ? '예능 눕프핵' : '눕프로해커',
-            content.contentInfo.episode,
-          )}
-        </h2>
-        <h1 className="mb-6 px-4 text-3xl font-semibold sm:text-4xl xl:px-0">
-          {getContentDetailTitle(
-            'type' in content ? '예능 눕프핵' : '눕프로해커',
-            content.contentInfo.title,
-          )}
-        </h1>
-        {content.contentInfo.youtubeUrl && (
-          <div
-            onClick={(e) => {
-              e.stopPropagation()
-              window.open(content.contentInfo.youtubeUrl as string)
-            }}
-            className="text-text-subtle bg-fill-default hover:bg-fill-subtle ml-4 flex w-fit items-center gap-2 rounded-md px-4 py-2 text-sm hover:cursor-pointer xl:ml-0"
-          >
-            <Link2 width={20} height={20} />
-            유튜브로 이동
-          </div>
-        )}
+        <ContentDetailTitle
+          category={'type' in content ? '예능 눕프핵' : '눕프로해커'}
+          episode={content.contentInfo.episode}
+          title={content.contentInfo.title}
+        />
+        <div className="px-4 xl:px-0">
+          <ContentYoutubeLink youtubeUrl={content.contentInfo.youtubeUrl} />
+        </div>
+
         <div className="mt-12 flex flex-col gap-32">
           {content.workInfo.map((line, lineIndex) => (
             <div key={line.title}>
-              <div className="mb-4 flex items-center gap-2 px-4 xl:px-0">
-                <span className="text-text-subtle">{`${lineIndex + 1}라인`}</span>
-                <h3
-                  className="scroll-mt-[15vh] text-lg font-medium md:text-2xl"
-                  id={line.title}
-                >
-                  {line.title}
-                </h3>
-                {line.ranking !== null && line.ranking !== 0 && (
-                  <div className="bg-fill-subtle mx-2 h-6 w-[2px]"></div>
-                )}
-                {line.ranking !== null && line.ranking !== 0 && (
-                  <span className="text-lg">{`${line.ranking}위`}</span>
-                )}
-              </div>
+              <ContentLineInfo line={line} lineIndex={lineIndex} />
               {isMobile ? (
                 <CarouselMobileContainer length={line.entries.length}>
                   {line.entries.map((entry) => (
@@ -99,6 +68,32 @@ export default function ContentLine({ isMobile, content }: Props) {
           ))}
         </div>
       </div>
+    </div>
+  )
+}
+
+function ContentLineInfo({
+  line,
+  lineIndex,
+}: {
+  line: LineInfo
+  lineIndex: number
+}) {
+  return (
+    <div className="mb-4 flex items-center gap-2 px-4 xl:px-0">
+      <span className="text-text-subtle">{`${lineIndex + 1}라인`}</span>
+      <h3
+        className="scroll-mt-[15vh] text-lg font-medium md:text-2xl"
+        id={line.title}
+      >
+        {line.title}
+      </h3>
+      {line.ranking !== null && line.ranking !== 0 && (
+        <div className="bg-fill-subtle mx-2 h-6 w-[2px]"></div>
+      )}
+      {line.ranking !== null && line.ranking !== 0 && (
+        <span className="text-lg">{`${line.ranking}위`}</span>
+      )}
     </div>
   )
 }
@@ -144,7 +139,7 @@ function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
             {entry.architectId[0].replaceAll('-', ' ')}
           </Link>
         ) : (
-          <ContentArchitects entry={entry} />
+          <ContentArchitects architectIds={entry.architectId} />
         )}
       </InfoBox>
       {entry.youtubeUrl && (
@@ -159,7 +154,7 @@ function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
   )
 }
 
-function ContentArchitects({ entry }: { entry: LineInfo['entries'][number] }) {
+function ContentArchitects({ architectIds }: { architectIds: string[] }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleUserClick = () => {
@@ -174,7 +169,7 @@ function ContentArchitects({ entry }: { entry: LineInfo['entries'][number] }) {
       />
       {isOpen && (
         <div className="right-0 grid grid-cols-3 gap-1 bg-neutral-900/90">
-          {entry.architectId.map((id) => (
+          {architectIds.map((id) => (
             <Link
               key={id}
               href={`/architect/${id}`}

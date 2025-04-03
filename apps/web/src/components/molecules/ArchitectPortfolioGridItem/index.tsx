@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Clapperboard } from 'lucide-react'
 import { Architect } from '@repo/types'
 import { renamePngTo1080Webp, renamePngToWebp } from '@repo/utils'
 
+import ArchitectYoutubeLink from '@/components/atoms/ArchitectYoutubeLink'
 import Tooltip from '@/components/atoms/Tooltip'
 import InfoBox from '@/components/atoms/InfoBox'
 
@@ -27,29 +27,7 @@ export default function ArchitectPortfolioGridItem({ item }: Props) {
           src={renamePngToWebp(item.imageUrl)}
           alt="작품 이미지"
         />
-        {item.youtubeUrl && (
-          <div
-            className="group/youtube peer absolute top-2 right-2 z-10 w-8 rounded-lg fill-[#fff] p-[3px] text-left opacity-90 hover:cursor-pointer hover:rounded-l-none hover:opacity-100"
-            onClick={(e) => {
-              e.stopPropagation()
-              window.open(item.youtubeUrl as string)
-            }}
-          >
-            <Clapperboard
-              className="absolute text-neutral-800/50"
-              width={25}
-              height={25}
-            />
-            <Clapperboard
-              className="absolute text-white"
-              width={24}
-              height={24}
-            />
-            <p className="invisible absolute top-0 right-8 flex h-8 w-max items-center pr-[6px] pb-[1px] pl-[10px] text-sm text-[white] [text-shadow:_1px_1px_0_#000] group-hover/youtube:visible group-hover/youtube:rounded-l-lg">
-              유튜브로 이동
-            </p>
-          </div>
-        )}
+        <ArchitectYoutubeLink type="grid" youtubeUrl={item.youtubeUrl} />
         <Tooltip
           position="bottom-right"
           className="text-sm group-hover/image:visible peer-hover:invisible"
