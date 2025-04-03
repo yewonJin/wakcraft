@@ -4,9 +4,11 @@ import {
   AllTierGroup,
   Architect,
   Category,
+  EventNoobProHacker,
   GridInfo,
   LineInfo,
   NoobProHacker,
+  PlacementTest,
 } from '@repo/types'
 
 export const getArchitectIds = <T extends LineInfo[] | GridInfo[]>(
@@ -175,3 +177,10 @@ export const groupArchitectTierBySeason = (
       .map(([tier, count]) => ({ [tier]: count })),
   }))
 }
+
+export const compareByDateDescending = (
+  a: NoobProHacker | EventNoobProHacker | PlacementTest,
+  b: NoobProHacker | EventNoobProHacker | PlacementTest,
+) =>
+  new Date(b.contentInfo.date).getTime() -
+  new Date(a.contentInfo.date).getTime()

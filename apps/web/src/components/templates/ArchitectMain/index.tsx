@@ -9,6 +9,7 @@ import { cn } from '@repo/utils'
 import Button from '@/components/atoms/Button'
 import ArchitectProfile from '@/components/molecules/ArchitectProfile'
 import ArchitectStatistics from '@/components/molecules/ArchitectStatistics'
+import MainPageTitle from '@/components/molecules/MainPageTitle'
 
 import { SortBy, useArchitectMain } from '@/hooks/useArchitectMain'
 import {
@@ -41,10 +42,10 @@ export default function ArchitectMain({ architects }: Props) {
 
   return (
     <div className="mx-auto max-w-[1200px] px-4 pt-6 md:pt-12 xl:px-0">
-      <h1 className="mb-4 text-3xl font-semibold">건축가</h1>
-      <h2 className="text-text-subtler mb-6">
-        마인크래프트 건축가들의 포트폴리오를 볼 수 있다.
-      </h2>
+      <MainPageTitle
+        title="건축가"
+        description="마인크래프트 건축가들의 포트폴리오를 볼 수 있다."
+      />
       <div className="mb-4 flex flex-col-reverse justify-between gap-4 lg:flex-row">
         <div className="relative flex items-center">
           <input

@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import NoobProHackerMain from '@/components/templates/NoobProHackerMain'
+import ContentMain from '@/components/templates/ContentMain'
 
 import { getNoobProHackers } from '@/libs/actions/noobprohacker'
 
@@ -13,8 +13,10 @@ export default async function Page() {
   const noobprohackers = await getNoobProHackers()
 
   return (
-    <NoobProHackerMain
-      noobprohackers={JSON.parse(JSON.stringify(noobprohackers))}
+    <ContentMain
+      category="눕프로해커"
+      description="마인크래프트 눕프로해커 컨텐츠를 볼 수 있다."
+      contents={JSON.parse(JSON.stringify(noobprohackers))}
     />
   )
 }

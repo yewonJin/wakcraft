@@ -5,7 +5,7 @@ type Props = {
   description: string
 }
 
-export default function ContentMainTitle({ title, description }: Props) {
+export default function MainPageTitle({ title, description }: Props) {
   return (
     <Fragment>
       <h1 className="mb-4 text-3xl font-semibold">{title}</h1>
