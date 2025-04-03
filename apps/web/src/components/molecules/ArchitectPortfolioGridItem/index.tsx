@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import { Clapperboard } from 'lucide-react'
 import { Architect } from '@repo/types'
@@ -7,6 +8,7 @@ import Tooltip from '@/components/atoms/Tooltip'
 import InfoBox from '@/components/atoms/InfoBox'
 
 import { getDetailCategory } from '@/services/architect'
+import { getContentUrl } from '@/services/content'
 
 type Props = {
   item: Architect['portfolio'][number]
@@ -63,9 +65,12 @@ export default function ArchitectPortfolioGridItem({ item }: Props) {
       </div>
       <div className="relative flex justify-center">
         <div className="flex flex-col items-center gap-1">
-          <p className="text-text-subtler">
+          <Link
+            href={getContentUrl(item.category, item.episode)}
+            className="text-text-subtler hover:text-text-subtle"
+          >
             {getDetailCategory(item.category, item.episode)}
-          </p>
+          </Link>
           <p className="font-medium">{item.title}</p>
         </div>
         {item.ranking !== null && item.ranking !== 0 && (

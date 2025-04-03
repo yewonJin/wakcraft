@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import { Architect } from '@repo/types'
 import { renamePngTo1080Webp } from '@repo/utils'
@@ -7,6 +8,7 @@ import InfoBox from '@/components/atoms/InfoBox'
 import Tooltip from '@/components/atoms/Tooltip'
 
 import { getDetailCategory } from '@/services/architect'
+import { getContentUrl } from '@/services/content'
 
 type Props = {
   item: Architect['portfolio'][number]
@@ -59,9 +61,13 @@ export default function ArchitectPortfolioSingleItem({ item }: Props) {
           position="top-left"
           className="top-9 left-9 flex-col items-center gap-1 bg-transparent text-base"
         >
-          <p className="text-neutral-400 [text-shadow:_1px_1px_0_#555]">
+          <Link
+            onClick={(e) => e.stopPropagation()}
+            href={getContentUrl(item.category, item.episode)}
+            className="text-neutral-400 [text-shadow:_1px_1px_0_#555] hover:text-neutral-200"
+          >
             {getDetailCategory(item.category, item.episode)}
-          </p>
+          </Link>
           <p className="text-2xl font-semibold text-white [text-shadow:_1px_1px_0_#000]">
             {item.title}
           </p>

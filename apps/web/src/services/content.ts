@@ -90,6 +90,19 @@ export const getDetailContentTitle = (
   }
 }
 
+export const getContentUrl = (category: string, episode: number) => {
+  switch (category) {
+    case '눕프로해커':
+      return `/noobprohacker/${episode}`
+
+    case '배치고사':
+      return `/placement_test/${episode}`
+
+    default:
+      return `/event_noobprohacker/${episode}`
+  }
+}
+
 export const groupArchitectTierBySeason = (
   tiers: Architect['tier'],
   season: number,
