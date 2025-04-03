@@ -41,7 +41,7 @@ export default function ContentLine({ isMobile, content }: Props) {
               ))}
             </CarouselContainer>
           )}
-          {!isMobile && (
+          {!isMobile && line.entries.length > 1 && (
             <CarouselSlider
               page={page}
               lineIndex={lineIndex}
