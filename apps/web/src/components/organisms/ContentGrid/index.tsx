@@ -9,33 +9,30 @@ import { Link2 } from 'lucide-react'
 import InfoBox from '@/components/atoms/InfoBox'
 import Tooltip from '@/components/atoms/Tooltip'
 
+import {
+  getContentDetailSubTitle,
+  getContentDetailTitle,
+} from '@/services/content'
+
 type Props = {
   content: GridEventNoobProHacker | PlacementTest
 }
 
 export default function ContentGrid({ content }: Props) {
-  const getSubTitle = () => {
-    if ('type' in content) {
-      return `예능 눕프핵 ${content.contentInfo.episode}회 `
-    } else {
-      return `시즌 ${content.contentInfo.episode}`
-    }
-  }
-
-  const getTitle = () => {
-    if ('type' in content) {
-      return content.contentInfo.title
-    } else {
-      return `배치고사`
-    }
-  }
-
   return (
     <div className="mx-auto max-w-[1300px] pt-6 md:pt-12">
       <h2 className="text-text-subtler mb-2 px-4 text-xl xl:px-0">
-        {getSubTitle()}
+        {getContentDetailSubTitle(
+          'type' in content ? '예능 눕프핵' : '배치고사',
+          content.contentInfo.episode,
+        )}
       </h2>
-      <h1 className="mb-6 px-4 text-4xl font-semibold xl:px-0">{getTitle()}</h1>
+      <h1 className="mb-6 px-4 text-4xl font-semibold xl:px-0">
+        {getContentDetailTitle(
+          'type' in content ? '예능 눕프핵' : '배치고사',
+          content.contentInfo.title,
+        )}
+      </h1>
       {content.contentInfo.youtubeUrl && (
         <div
           onClick={() => window.open(content.contentInfo.youtubeUrl as string)}

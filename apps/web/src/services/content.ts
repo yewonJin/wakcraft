@@ -73,7 +73,36 @@ export const getProWinLine = (noobprohacker: NoobProHacker) => {
   )
 }
 
-export const getDetailContentTitle = (
+export const getContentDetailSubTitle = (
+  category: Category,
+  episode: number,
+) => {
+  switch (category) {
+    case '눕프로해커':
+      return `제 ${episode}회`
+
+    case '배치고사':
+      return `시즌 ${episode}`
+
+    default:
+      return `예능 눕프핵 ${episode}회 `
+  }
+}
+
+export const getContentDetailTitle = (category: Category, title: string) => {
+  switch (category) {
+    case '눕프로해커':
+      return `눕프로해커 : ${title}편`
+
+    case '배치고사':
+      return `배치고사`
+
+    default:
+      return title
+  }
+}
+
+export const getContentHomeTitle = (
   category: Category,
   episode: number,
   title: string,

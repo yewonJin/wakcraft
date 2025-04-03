@@ -9,7 +9,7 @@ import { cn } from '@repo/utils'
 
 import InfoBox from '@/components/atoms/InfoBox'
 
-import { getDetailContentTitle } from '@/services/content'
+import { getContentHomeTitle } from '@/services/content'
 
 type Props = {
   category: Category
@@ -60,7 +60,7 @@ export default function ContentCardItem({
       </div>
       <div className="bg-fill-default rounded-b-xl px-4 py-6">
         <h3 className="text-text-stronger text-xl font-medium">
-          {getDetailContentTitle(
+          {getContentHomeTitle(
             category,
             contentInfo.episode,
             contentInfo.title,

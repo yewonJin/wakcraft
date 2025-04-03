@@ -13,6 +13,11 @@ import { useSlider } from '@/hooks/useSlider'
 import InfoBox from '@/components/atoms/InfoBox'
 import Tooltip from '@/components/atoms/Tooltip'
 
+import {
+  getContentDetailSubTitle,
+  getContentDetailTitle,
+} from '@/services/content'
+
 type Props = {
   isMobile: boolean
   content: NoobProHacker | LineEventNoobProHacker
@@ -75,10 +80,16 @@ export default function ContentLine({ isMobile, content }: Props) {
     <div className="overflow-hidden">
       <div className="mx-auto max-w-[1300px] pt-6 md:pt-12">
         <h2 className="text-text-subtler mb-2 px-4 text-xl xl:px-0">
-          {getSubTitle()}
+          {getContentDetailSubTitle(
+            'type' in content ? '예능 눕프핵' : '눕프로해커',
+            content.contentInfo.episode,
+          )}
         </h2>
         <h1 className="mb-6 px-4 text-4xl font-semibold xl:px-0">
-          {getTitle()}
+          {getContentDetailTitle(
+            'type' in content ? '예능 눕프핵' : '눕프로해커',
+            content.contentInfo.title,
+          )}
         </h1>
         {content.contentInfo.youtubeUrl && (
           <div
@@ -86,13 +97,13 @@ export default function ContentLine({ isMobile, content }: Props) {
               e.stopPropagation()
               window.open(content.contentInfo.youtubeUrl as string)
             }}
-            className="text-text-subtle bg-fill-default hover:bg-fill-subtle mb-8 ml-4 flex w-fit items-center gap-2 rounded-md px-4 py-2 text-sm hover:cursor-pointer xl:ml-0"
+            className="text-text-subtle bg-fill-default hover:bg-fill-subtle ml-4 flex w-fit items-center gap-2 rounded-md px-4 py-2 text-sm hover:cursor-pointer xl:ml-0"
           >
             <Link2 width={20} height={20} />
             유튜브로 이동
           </div>
         )}
-        <div className="flex flex-col gap-32">
+        <div className="mt-12 flex flex-col gap-32">
           {content.workInfo.map((line, lineIndex) => (
             <div key={line.title}>
               <div className="mb-4 flex items-center gap-2 px-4 xl:px-0">
