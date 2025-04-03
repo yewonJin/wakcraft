@@ -63,7 +63,7 @@ export default function GlobalNav() {
         <div className="flex gap-4">
           <Button
             onClick={toggleTheme}
-            className="hover:text-text-strong text-text-subtle p-0"
+            className="hover:text-text-strong text-text-subtle bg-transparent p-0"
           >
             <Moon className="hidden dark:block" width={20} height={20} />
             <Sun className="block dark:hidden" width={20} height={20} />

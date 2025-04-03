@@ -27,7 +27,7 @@ export default function ContentGrid({ content }: Props) {
           content.contentInfo.episode,
         )}
       </h2>
-      <h1 className="mb-6 px-4 text-4xl font-semibold xl:px-0">
+      <h1 className="mb-6 px-4 text-3xl font-semibold sm:text-4xl xl:px-0">
         {getContentDetailTitle(
           'type' in content ? '예능 눕프핵' : '배치고사',
           content.contentInfo.title,
