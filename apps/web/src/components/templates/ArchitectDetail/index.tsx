@@ -35,7 +35,9 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
   }
 
   useEffect(() => {
-    setView(defaultView)
+    if (!view) {
+      setView(defaultView)
+    }
   }, [])
 
   return (
