@@ -147,7 +147,7 @@ function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
 
   return (
     <div className="relative mt-32">
-      <div className="mb-8 flex items-end gap-3">
+      <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end">
         <h3 className="text-2xl font-semibold md:text-3xl">싹쓸이 라인</h3>
         <p className="text-text-subtle text-sm md:text-base">
           (프로 1등, 해커 1등, 라인 1등)
@@ -195,7 +195,7 @@ function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
           ))}
         </div>
       </div>
-      <div className="absolute top-12 right-0 flex md:top-0 md:gap-8">
+      <div className="absolute top-[90px] right-0 flex sm:top-0 md:gap-8">
         <ChevronLeft
           onClick={moveToPrevPage}
           className={cn(

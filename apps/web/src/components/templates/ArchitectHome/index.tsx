@@ -45,10 +45,10 @@ export default function ArchitectHome({ architects }: Props) {
       <h2 className="text-text-subtler mb-6">
         마인크래프트 건축가들의 포트폴리오를 볼 수 있다.
       </h2>
-      <div className="mb-4 flex flex-col-reverse justify-between gap-4 md:flex-row">
+      <div className="mb-4 flex flex-col-reverse justify-between gap-4 lg:flex-row">
         <div className="relative flex items-center">
           <input
-            className="border-border-default h-[40px] w-full rounded-md border-2 pl-3 outline-none md:w-auto"
+            className="border-border-default h-[40px] w-full rounded-md border-2 pl-3 outline-none lg:w-auto"
             placeholder="검색하세요..."
             value={input}
             onChange={handleInputChange}
@@ -106,7 +106,7 @@ function SortKey({
   } as const
 
   return (
-    <div className="flex flex-wrap gap-4 text-sm md:flex-nowrap md:text-base">
+    <div className="flex flex-wrap gap-2 text-sm md:flex-nowrap md:gap-4 md:text-base">
       {Object.entries(SORT_KEYS).map(([key, label]) => (
         <Button
           key={key}
@@ -141,14 +141,14 @@ type FilterTierProps = {
 
 function FilterTier({ selectedTier, handleTierClick }: FilterTierProps) {
   return (
-    <div className="bg-fill-default mb-4 overflow-x-scroll rounded-md md:overflow-x-auto">
-      <div className="flex w-full gap-4 p-2 md:flex-wrap">
+    <div className="bg-fill-default mb-4 overflow-x-scroll rounded-md pb-1.5 md:overflow-x-auto xl:pb-0">
+      <div className="flex w-full gap-2 p-2 md:flex-wrap md:gap-3 xl:gap-4">
         {TIER.map((tier) => (
           <Button
             data-value={tier}
             key={tier}
             className={cn(
-              'bg-fill-strong relative',
+              'bg-fill-strong relative min-w-max text-sm md:text-base',
               selectedTier === tier
                 ? `${getTierBackgroundColor(tier)} text-white`
                 : 'hover:bg-fill-subtle',
@@ -180,7 +180,7 @@ function ArchitectItem({ architect, order }: ArchitectItemProps) {
     >
       {isIntersecting ? (
         <div className="bg-fill-default hover:bg-fill-subtle flex flex-col justify-center gap-2 rounded-md p-4">
-          <div className="flex items-center justify-between md:pr-8">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center sm:gap-0 md:pr-8">
             <ArchitectProfile
               curTier={architect.curTier}
               minecraftId={architect.minecraftId}
@@ -188,9 +188,7 @@ function ArchitectItem({ architect, order }: ArchitectItemProps) {
               wakzooIdMatchingIndex={architect.wakzooIdMatchingIndex}
               minecraftIdMatchingIndex={architect.minecraftIdMatchingIndex}
             />
-            <div className="hidden sm:block">
-              <ArchitectStatistics statistics={architect.statistics} />
-            </div>
+            <ArchitectStatistics statistics={architect.statistics} />
           </div>
         </div>
       ) : (

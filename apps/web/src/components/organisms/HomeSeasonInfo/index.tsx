@@ -107,7 +107,7 @@ export default function HomeSeasonInfo({
                 >
                   <div className="mb-4 flex items-center gap-2">
                     <p className="text-xl font-medium">{item.group}</p>
-                    <p className="bg-fill-default rounded-md px-2 py-1.5">
+                    <p className="bg-fill-default rounded-md px-2 py-1.5 text-sm md:text-base">
                       {item.tiers.reduce(
                         (sum, tierObj) => sum + Object.values(tierObj)[0],
                         0,

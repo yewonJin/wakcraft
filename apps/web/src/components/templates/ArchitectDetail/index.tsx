@@ -31,7 +31,7 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
   return (
     <div className="mx-auto pt-6 md:pt-12 xl:w-[1300px]">
       <div className="flex flex-col justify-center rounded-md">
-        <div className="mb-6 flex flex-col gap-4 px-4 md:flex-row md:items-center md:justify-between xl:px-0">
+        <div className="mb-6 flex flex-col gap-4 px-4 sm:flex-row sm:justify-between md:items-center xl:px-0">
           <ArchitectProfile
             curTier={architect.curTier}
             minecraftId={architect.minecraftId}

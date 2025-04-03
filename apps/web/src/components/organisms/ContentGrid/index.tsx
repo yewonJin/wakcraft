@@ -36,13 +36,13 @@ export default function ContentGrid({ content }: Props) {
       {content.contentInfo.youtubeUrl && (
         <div
           onClick={() => window.open(content.contentInfo.youtubeUrl as string)}
-          className="text-text-subtle bg-fill-default hover:bg-fill-subtle mb-8 ml-4 flex w-fit items-center gap-2 rounded-md px-4 py-2 text-sm hover:cursor-pointer xl:ml-0"
+          className="text-text-subtle bg-fill-default hover:bg-fill-subtle ml-4 flex w-fit items-center gap-2 rounded-md px-4 py-2 text-sm hover:cursor-pointer xl:ml-0"
         >
           <Link2 width={20} height={20} />
           유튜브로 이동
         </div>
       )}
-      <div className="mt-8 grid grid-cols-1 gap-6 gap-y-12 md:grid-cols-2 2xl:w-[1400px] 2xl:grid-cols-3">
+      <div className="mt-12 grid grid-cols-1 gap-6 gap-y-12 md:grid-cols-2 2xl:w-[1400px] 2xl:grid-cols-3">
         {content.workInfo
           .sort((a, b) => a.order - b.order)
           .map((entry) => (
