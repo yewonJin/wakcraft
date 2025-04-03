@@ -116,13 +116,18 @@ function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
           </div>
         </div>
         {entry.architectId.length < 5 ? (
-          <Link
-            onClick={(e) => e.stopPropagation()}
-            href={`/architect/${entry.architectId}`}
-            className="text-lg text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
-          >
-            {entry.architectId[0].replaceAll('-', ' ')}
-          </Link>
+          <div className="flex flex-col gap-2">
+            {entry.architectId.map((id) => (
+              <Link
+                key={id}
+                onClick={(e) => e.stopPropagation()}
+                href={`/architect/${id}`}
+                className="text-lg text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
+              >
+                {id.replaceAll('-', ' ')}
+              </Link>
+            ))}
+          </div>
         ) : (
           <ContentArchitects architectIds={entry.architectId} />
         )}
