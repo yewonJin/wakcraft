@@ -162,6 +162,7 @@ function ContentArchitects({ architectIds }: { architectIds: string[] }) {
         <div className="right-0 grid grid-cols-3 gap-1 bg-neutral-900/90">
           {architectIds.map((id) => (
             <Link
+              onClick={(e) => e.stopPropagation()}
               key={id}
               href={`/architect/${id}`}
               className="px-3 py-2 text-sm text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
