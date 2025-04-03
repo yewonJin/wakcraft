@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Architect, Tier } from '@repo/types'
 import { TIER } from '@repo/constants'
-import { useQueryString } from './useQueryString'
+
+import { useQueryString } from '@/hooks'
 
 export type SortBy = 'tier' | 'participation' | 'win' | 'hackerWin' | 'proWin'
 
