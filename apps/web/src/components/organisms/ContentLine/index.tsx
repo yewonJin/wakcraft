@@ -8,10 +8,8 @@ import { LineEventNoobProHacker, LineInfo, NoobProHacker } from '@repo/types'
 import { cn, renamePngTo1080Webp } from '@repo/utils'
 
 import Button from '@/components/atoms/Button'
-import ContentYoutubeLink from '@/components/atoms/ContentYoutubeLink'
 import InfoBox from '@/components/atoms/InfoBox'
 import Tooltip from '@/components/atoms/Tooltip'
-import ContentDetailTitle from '@/components/molecules/ContentDetailTitle'
 
 import { useSlider } from '@/hooks/useSlider'
 import { useContentLine } from '@/hooks/useContentLine'
@@ -26,48 +24,35 @@ export default function ContentLine({ isMobile, content }: Props) {
     useContentLine(content)
 
   return (
-    <div className="overflow-hidden">
-      <div className="mx-auto max-w-[1300px] pt-6 md:pt-12">
-        <ContentDetailTitle
-          category={'type' in content ? '예능 눕프핵' : '눕프로해커'}
-          episode={content.contentInfo.episode}
-          title={content.contentInfo.title}
-        />
-        <div className="px-4 xl:px-0">
-          <ContentYoutubeLink youtubeUrl={content.contentInfo.youtubeUrl} />
+    <div className="mt-12 flex flex-col gap-32">
+      {content.workInfo.map((line, lineIndex) => (
+        <div key={line.title}>
+          <ContentLineInfo line={line} lineIndex={lineIndex} />
+          {isMobile ? (
+            <CarouselMobileContainer length={line.entries.length}>
+              {line.entries.map((entry) => (
+                <ContentLineItem key={entry.imageUrl} entry={entry} />
+              ))}
+            </CarouselMobileContainer>
+          ) : (
+            <CarouselContainer page={page} index={lineIndex}>
+              {line.entries.map((entry) => (
+                <ContentLineItem key={entry.imageUrl} entry={entry} />
+              ))}
+            </CarouselContainer>
+          )}
+          {!isMobile && (
+            <CarouselSlider
+              page={page}
+              lineIndex={lineIndex}
+              entryLength={line.entries.length}
+              moveToNextPage={moveToNextPage}
+              moveToPrevPage={moveToPrevPage}
+              handleButtonClick={handleButtonClick}
+            />
+          )}
         </div>
-
-        <div className="mt-12 flex flex-col gap-32">
-          {content.workInfo.map((line, lineIndex) => (
-            <div key={line.title}>
-              <ContentLineInfo line={line} lineIndex={lineIndex} />
-              {isMobile ? (
-                <CarouselMobileContainer length={line.entries.length}>
-                  {line.entries.map((entry) => (
-                    <ContentLineItem key={entry.imageUrl} entry={entry} />
-                  ))}
-                </CarouselMobileContainer>
-              ) : (
-                <CarouselContainer page={page} index={lineIndex}>
-                  {line.entries.map((entry) => (
-                    <ContentLineItem key={entry.imageUrl} entry={entry} />
-                  ))}
-                </CarouselContainer>
-              )}
-              {!isMobile && (
-                <CarouselSlider
-                  page={page}
-                  lineIndex={lineIndex}
-                  entryLength={line.entries.length}
-                  moveToNextPage={moveToNextPage}
-                  moveToPrevPage={moveToPrevPage}
-                  handleButtonClick={handleButtonClick}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+      ))}
     </div>
   )
 }

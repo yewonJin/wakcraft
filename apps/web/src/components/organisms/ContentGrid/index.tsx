@@ -8,31 +8,18 @@ import { renamePngToWebp } from '@repo/utils'
 import InfoBox from '@/components/atoms/InfoBox'
 import Tooltip from '@/components/atoms/Tooltip'
 
-import ContentDetailTitle from '@/components/molecules/ContentDetailTitle'
-import ContentYoutubeLink from '@/components/atoms/ContentYoutubeLink'
-
 type Props = {
   content: GridEventNoobProHacker | PlacementTest
 }
 
 export default function ContentGrid({ content }: Props) {
   return (
-    <div className="mx-auto max-w-[1300px] pt-6 md:pt-12">
-      <ContentDetailTitle
-        category={'type' in content ? '예능 눕프핵' : '배치고사'}
-        episode={content.contentInfo.episode}
-        title={content.contentInfo.title}
-      />
-      <div className="px-4 xl:px-0">
-        <ContentYoutubeLink youtubeUrl={content.contentInfo.youtubeUrl} />
-      </div>
-      <div className="mt-12 grid grid-cols-1 gap-6 gap-y-12 md:grid-cols-2 2xl:w-[1400px] 2xl:grid-cols-3">
-        {content.workInfo
-          .sort((a, b) => a.order - b.order)
-          .map((entry) => (
-            <ContentGridItem key={entry.imageUrl} entry={entry} />
-          ))}
-      </div>
+    <div className="mt-12 grid grid-cols-1 gap-6 gap-y-12 md:grid-cols-2 2xl:w-[1400px] 2xl:grid-cols-3">
+      {content.workInfo
+        .sort((a, b) => a.order - b.order)
+        .map((entry) => (
+          <ContentGridItem key={entry.imageUrl} entry={entry} />
+        ))}
     </div>
   )
 }

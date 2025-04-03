@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@repo/utils'
 import { Link2 } from 'lucide-react'
 

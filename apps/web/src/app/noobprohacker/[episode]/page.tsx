@@ -1,8 +1,9 @@
 import { Metadata } from 'next'
 import { headers } from 'next/headers'
 
-import ContentLine from '@/components/organisms/ContentLine'
 import NotFound from '@/components/organisms/NotFound'
+import ContentDetail from '@/components/templates/ContentDetail'
+
 import { getNoobProHacker } from '@/libs/actions/noobprohacker'
 import { isMobile } from '@/utils/shared'
 
@@ -34,11 +35,11 @@ export default async function Page({
   const userAgent = headerList.get('user-agent') as string
 
   const noobprohacker = await getNoobProHacker(Number(episode))
-
   if (!noobprohacker) return <NotFound />
 
   return (
-    <ContentLine
+    <ContentDetail
+      category="눕프로해커"
       isMobile={isMobile(userAgent)}
       content={JSON.parse(JSON.stringify(noobprohacker))}
     />

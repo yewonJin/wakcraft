@@ -1,9 +1,11 @@
 import { Metadata } from 'next'
+import { headers } from 'next/headers'
 
-import ContentGrid from '@/components/organisms/ContentGrid'
+import ContentDetail from '@/components/templates/ContentDetail'
+import NotFound from '@/components/organisms/NotFound'
 
 import { getPlacementTest } from '@/libs/actions/placementTest'
-import NotFound from '@/components/organisms/NotFound'
+import { isMobile } from '@/utils/shared'
 
 export async function generateMetadata({
   params,
@@ -29,9 +31,17 @@ export default async function Page({
   params: Promise<{ episode: string }>
 }) {
   const { episode } = await params
-  const placementTest = await getPlacementTest(Number(episode))
+  const headerList = await headers()
+  const userAgent = headerList.get('user-agent') as string
 
+  const placementTest = await getPlacementTest(Number(episode))
   if (!placementTest) return <NotFound />
 
-  return <ContentGrid content={JSON.parse(JSON.stringify(placementTest))} />
+  return (
+    <ContentDetail
+      category="배치고사"
+      isMobile={isMobile(userAgent)}
+      content={JSON.parse(JSON.stringify(placementTest))}
+    />
+  )
 }

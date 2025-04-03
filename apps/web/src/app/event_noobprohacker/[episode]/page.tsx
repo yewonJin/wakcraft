@@ -1,8 +1,7 @@
 import { Metadata } from 'next'
 import { headers } from 'next/headers'
 
-import ContentGrid from '@/components/organisms/ContentGrid'
-import ContentLine from '@/components/organisms/ContentLine'
+import ContentDetail from '@/components/templates/ContentDetail'
 import NotFound from '@/components/organisms/NotFound'
 
 import { getEventNoobProHacker } from '@/libs/actions/eventNoobProHacker'
@@ -36,17 +35,11 @@ export default async function Page({
   const userAgent = headerList.get('user-agent') as string
 
   const eventNoobProHacker = await getEventNoobProHacker(Number(episode))
-
   if (!eventNoobProHacker) return <NotFound />
 
-  if (eventNoobProHacker.type === 'grid') {
-    return (
-      <ContentGrid content={JSON.parse(JSON.stringify(eventNoobProHacker))} />
-    )
-  }
-
   return (
-    <ContentLine
+    <ContentDetail
+      category="예능 눕프핵"
       isMobile={isMobile(userAgent)}
       content={JSON.parse(JSON.stringify(eventNoobProHacker))}
     />
