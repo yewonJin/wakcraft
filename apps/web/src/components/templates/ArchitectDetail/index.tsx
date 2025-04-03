@@ -4,6 +4,7 @@ import { Fragment, useEffect } from 'react'
 import { Architect, Category } from '@repo/types'
 import { cn } from '@repo/utils'
 
+import Button from '@/components/atoms/Button'
 import Switch from '@/components/atoms/Switch'
 import ArchitectProfile from '@/components/molecules/ArchitectProfile'
 import ArchitectStatistics from '@/components/molecules/ArchitectStatistics'
@@ -54,9 +55,9 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
           <div className="flex gap-4">
             {['전체보기', '눕프로해커', '예능 눕프핵', '배치고사'].map(
               (item) => (
-                <button
+                <Button
                   className={cn(
-                    'bg-fill-default min-w-max cursor-pointer rounded-md px-4 py-2 duration-300 md:min-w-auto',
+                    'duration-300',
                     category === item
                       ? 'bg-text-subtle text-fill-default'
                       : 'hover:bg-fill-subtle',
@@ -67,7 +68,7 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
                   }
                 >
                   {item}
-                </button>
+                </Button>
               ),
             )}
           </div>

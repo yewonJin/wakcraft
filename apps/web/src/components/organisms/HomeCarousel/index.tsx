@@ -2,9 +2,11 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-
 import { NoobProHacker } from '@repo/types'
 import { cn, renamePngTo1080Webp, renamePngToWebp } from '@repo/utils'
+
+import Button from '@/components/atoms/Button'
+
 import { useCarousel } from '@/hooks/useCarousel'
 import { getHackerWinLine } from '@/services/content'
 
@@ -49,20 +51,20 @@ export default function HomeCarousel({ latestNoobProHacker }: Props) {
         <div className="w-full overflow-x-scroll px-4 pb-4 md:w-auto md:overflow-auto md:pb-0 xl:px-0">
           <div className="flex w-max gap-3 md:justify-center md:gap-4">
             {latestNoobProHacker.workInfo.map((line, lineIndex) => (
-              <button
+              <Button
                 onMouseOver={() => resetAutoScroll()}
                 onMouseOut={() => startAutoScroll()}
                 onClick={() => handleCategoryClick(lineIndex)}
                 key={line.title}
                 className={cn(
-                  'bg-fill-default border-border-default w-max rounded-lg border-2 px-4 py-2 hover:cursor-pointer md:border-none md:bg-neutral-900/80 md:text-lg md:text-neutral-200',
+                  'border-border-default border-2 md:border-none md:bg-neutral-900/80 md:text-lg md:text-neutral-200',
                   carouselIndex === lineIndex
                     ? 'text-text-default md:text-white'
                     : 'opacity-50 hover:opacity-80',
                 )}
               >
                 {line.title}
-              </button>
+              </Button>
             ))}
           </div>
         </div>

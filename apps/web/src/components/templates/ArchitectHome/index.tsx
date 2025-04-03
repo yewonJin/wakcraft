@@ -6,6 +6,7 @@ import { TIER } from '@repo/constants'
 import { Architect, Tier } from '@repo/types'
 import { cn } from '@repo/utils'
 
+import Button from '@/components/atoms/Button'
 import ArchitectProfile from '@/components/molecules/ArchitectProfile'
 import ArchitectStatistics from '@/components/molecules/ArchitectStatistics'
 
@@ -107,12 +108,12 @@ function SortKey({
   return (
     <div className="flex flex-wrap gap-4 text-sm md:flex-nowrap md:text-base">
       {Object.entries(SORT_KEYS).map(([key, label]) => (
-        <button
+        <Button
           key={key}
           onClick={handleSortClick}
           data-value={key}
           className={cn(
-            'bg-fill-default flex items-center gap-1 rounded-md px-4 py-2 hover:cursor-pointer',
+            'flex items-center gap-1',
             sortKey === key && 'bg-red-900/80 text-white',
             input !== '' &&
               'pointer-events-none opacity-20 hover:cursor-not-allowed',
@@ -127,7 +128,7 @@ function SortKey({
             width={18}
             height={18}
           />
-        </button>
+        </Button>
       ))}
     </div>
   )
@@ -143,11 +144,11 @@ function FilterTier({ selectedTier, handleTierClick }: FilterTierProps) {
     <div className="bg-fill-default mb-4 overflow-x-scroll rounded-md md:overflow-x-auto">
       <div className="flex w-full gap-4 p-2 md:flex-wrap">
         {TIER.map((tier) => (
-          <button
+          <Button
             data-value={tier}
             key={tier}
             className={cn(
-              'bg-fill-strong relative min-w-max rounded-md px-4 py-2 hover:cursor-pointer',
+              'bg-fill-strong relative',
               selectedTier === tier
                 ? `${getTierBackgroundColor(tier)} text-white`
                 : 'hover:bg-fill-subtle',
@@ -155,7 +156,7 @@ function FilterTier({ selectedTier, handleTierClick }: FilterTierProps) {
             onClick={handleTierClick}
           >
             {tier}
-          </button>
+          </Button>
         ))}
       </div>
     </div>

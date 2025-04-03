@@ -7,6 +7,8 @@ import { ChevronLeft, Link2, Users } from 'lucide-react'
 import { LineEventNoobProHacker, LineInfo, NoobProHacker } from '@repo/types'
 import { cn, renamePngTo1080Webp } from '@repo/utils'
 
+import Button from '@/components/atoms/Button'
+
 import { useSlider } from '@/hooks/useSlider'
 
 type Props = {
@@ -309,14 +311,14 @@ function CarouselSlider({
         )}
       />
       {new Array(entryLength).fill(0).map((item, entryIndex) => (
-        <button
+        <Button
           key={entryIndex}
           onClick={() => handleButtonClick(lineIndex, entryIndex)}
           className={cn(
-            'bg-text-subtler h-3 w-3 rounded-full duration-300 hover:cursor-pointer',
+            'bg-text-subtler h-3 w-3 rounded-full px-0 py-0 duration-300',
             page[lineIndex] === entryIndex && 'w-12',
           )}
-        ></button>
+        />
       ))}
       <ChevronLeft
         onClick={() => moveToNextPage(lineIndex, entryLength)}

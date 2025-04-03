@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Menu, Moon, Sun } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@repo/utils'
+import Button from '@/components/atoms/Button'
 
 export default function GlobalNav() {
   const [isOpen, setIsOpen] = useState(false)
@@ -91,13 +92,13 @@ export default function GlobalNav() {
           </div>
         </div>
         <div className="flex gap-4">
-          <button
+          <Button
             onClick={toggleTheme}
-            className="hover:text-text-strong text-text-subtle cursor-pointer"
+            className="hover:text-text-strong text-text-subtle p-0"
           >
             <Moon className="hidden dark:block" width={20} height={20} />
             <Sun className="block dark:hidden" width={20} height={20} />
-          </button>
+          </Button>
           <Menu className="block md:hidden" onClick={handleMenuClick} />
         </div>
       </div>

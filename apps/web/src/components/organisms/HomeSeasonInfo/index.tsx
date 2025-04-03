@@ -5,10 +5,12 @@ import { AllTier, Architect, PlacementTest } from '@repo/types'
 import { cn } from '@repo/utils'
 import { DESCRIPTION } from '@repo/constants'
 
+import Button from '@/components/atoms/Button'
 import TierBox from '@/components/atoms/TierBox'
+
 import { groupArchitectTierBySeason } from '@/services/content'
-import { formatDateToKorean, getDaysBetween } from '@/utils/date'
 import { getTierTextColor } from '@/services/architect'
+import { formatDateToKorean, getDaysBetween } from '@/utils/date'
 
 type Props = {
   placementTestsWithoutWorkInfo: Omit<PlacementTest, 'workInfo'>[]
@@ -50,17 +52,17 @@ export default function HomeSeasonInfo({
             .map((x) => x.contentInfo.episode)
             .sort((a, b) => b - a)
             .map((season) => (
-              <button
+              <Button
                 onClick={() => changeCurrentSeason(season)}
                 key={season}
                 className={cn(
-                  'bg-fill-default border-border-default min-w-max rounded-md border-2 px-5 py-2 text-sm hover:cursor-pointer md:w-auto md:text-lg',
+                  'border-border-default min-w-max border-2 text-sm md:w-auto md:px-5 md:text-lg',
                   currentSeason === season &&
                     'bg-text-default text-fill-default',
                 )}
               >
                 {`시즌 ${season}`}
-              </button>
+              </Button>
             ))}
         </div>
       </div>
