@@ -8,11 +8,11 @@ import { LineEventNoobProHacker, LineInfo, NoobProHacker } from '@repo/types'
 import { cn, renamePngTo1080Webp } from '@repo/utils'
 
 import Button from '@/components/atoms/Button'
-
-import { useSlider } from '@/hooks/useSlider'
 import InfoBox from '@/components/atoms/InfoBox'
 import Tooltip from '@/components/atoms/Tooltip'
 
+import { useSlider } from '@/hooks/useSlider'
+import { useContentLine } from '@/hooks/useContentLine'
 import {
   getContentDetailSubTitle,
   getContentDetailTitle,
@@ -24,57 +24,8 @@ type Props = {
 }
 
 export default function ContentLine({ isMobile, content }: Props) {
-  const [page, setPage] = useState(new Array(content.workInfo.length).fill(0))
-
-  const handleButtonClick = (lineIndex: number, entryIndex: number) => {
-    setPage((prev) => {
-      const newPage = [...prev]
-      newPage[lineIndex] = entryIndex
-      return newPage
-    })
-  }
-
-  const moveToNextPage = (lineIndex: number, length: number) => {
-    setPage((prev) => {
-      const newPage = [...prev]
-
-      if (prev[lineIndex] === length - 1) {
-        return prev
-      }
-
-      newPage[lineIndex]++
-      return newPage
-    })
-  }
-
-  const moveToPrevPage = (lineIndex: number) => {
-    setPage((prev) => {
-      const newPage = [...prev]
-
-      if (prev[lineIndex] === 0) {
-        return prev
-      }
-
-      newPage[lineIndex]--
-      return newPage
-    })
-  }
-
-  const getSubTitle = () => {
-    if ('type' in content) {
-      return `예능 눕프핵 ${content.contentInfo.episode}회 `
-    } else {
-      return `제 ${content.contentInfo.episode}회`
-    }
-  }
-
-  const getTitle = () => {
-    if ('type' in content) {
-      return content.contentInfo.title
-    } else {
-      return `눕프로해커 : ${content.contentInfo.title}편`
-    }
-  }
+  const { page, handleButtonClick, moveToNextPage, moveToPrevPage } =
+    useContentLine(content)
 
   return (
     <div className="overflow-hidden">

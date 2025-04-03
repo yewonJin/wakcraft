@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import { Architect, Category } from '@repo/types'
 import { cn } from '@repo/utils'
 
@@ -12,12 +12,12 @@ import ArchitectAllTier from '@/components/molecules/ArchitectAllTier'
 import ArchitectPortfolioGridItem from '@/components/molecules/ArchitectPortfolioGridItem'
 import ArchitectPortfolioSingleItem from '@/components/molecules/ArchitectPortfolioSingleItem'
 
-import { useArchitectStore } from '@/store/architectStore'
 import {
   devideByYear,
   filterByCategory,
   sortByRecentDate,
 } from '@/services/architect'
+import { useArchitectDetail } from '@/hooks/useArchitectDetail'
 
 type Props = {
   architect: Architect
@@ -25,20 +25,8 @@ type Props = {
 }
 
 export default function ArchitectDetail({ architect, defaultView }: Props) {
-  const { view, category, toggleView, setView, setCategory } =
-    useArchitectStore()
-
-  const currentView = view || defaultView
-
-  const handleCategoryClick = (category: '전체보기' | Category) => {
-    setCategory(category)
-  }
-
-  useEffect(() => {
-    if (!view) {
-      setView(defaultView)
-    }
-  }, [])
+  const { currentView, category, toggleView, handleCategoryClick } =
+    useArchitectDetail(defaultView)
 
   return (
     <div className="mx-auto pt-6 md:pt-12 xl:w-[1300px]">
@@ -82,48 +70,26 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
             />
           </div>
         </div>
-        {currentView === 'grid' ? (
-          <div className="flex flex-col gap-12 px-4 xl:px-0">
-            {Object.entries(
-              devideByYear(
-                filterByCategory(
-                  category,
-                  sortByRecentDate(architect.portfolio),
-                ),
-              ),
-            )
-              .reverse()
-              .map(([year, yearItems]) => (
-                <Fragment key={year}>
-                  <div className="mt-2 flex items-center gap-4">
-                    <h3 className="min-w-fit text-2xl font-medium">{year}년</h3>
-                    <div className="bg-fill-subtle h-[1px] w-full"></div>
-                  </div>
+        <div className="flex flex-col gap-12 px-4 xl:px-0">
+          {Object.entries(
+            devideByYear(
+              filterByCategory(category, sortByRecentDate(architect.portfolio)),
+            ),
+          )
+            .reverse()
+            .map(([year, yearItems]) => (
+              <Fragment key={year}>
+                <div className="mt-2 flex items-center gap-4">
+                  <h3 className="min-w-fit text-2xl font-medium">{year}년</h3>
+                  <div className="bg-fill-subtle h-[1px] w-full"></div>
+                </div>
+                {currentView === 'grid' ? (
                   <div className="grid gap-8 gap-y-12 md:grid-cols-2 xl:grid-cols-3">
                     {yearItems.map((item) => (
                       <ArchitectPortfolioGridItem key={item.date} item={item} />
                     ))}
                   </div>
-                </Fragment>
-              ))}
-          </div>
-        ) : (
-          <div className="flex flex-col gap-12 px-4 xl:px-0">
-            {Object.entries(
-              devideByYear(
-                filterByCategory(
-                  category,
-                  sortByRecentDate(architect.portfolio),
-                ),
-              ),
-            )
-              .reverse()
-              .map(([year, yearItems]) => (
-                <Fragment key={year}>
-                  <div className="mt-2 flex items-center gap-4">
-                    <h3 className="min-w-fit text-2xl font-medium">{year}년</h3>
-                    <div className="bg-fill-subtle h-[1px] w-full"></div>
-                  </div>
+                ) : (
                   <div className="flex flex-col gap-8 gap-y-12">
                     {yearItems.map((item) => (
                       <ArchitectPortfolioSingleItem
@@ -132,10 +98,10 @@ export default function ArchitectDetail({ architect, defaultView }: Props) {
                       />
                     ))}
                   </div>
-                </Fragment>
-              ))}
-          </div>
-        )}
+                )}
+              </Fragment>
+            ))}
+        </div>
       </div>
     </div>
   )

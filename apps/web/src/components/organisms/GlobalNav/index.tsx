@@ -2,41 +2,15 @@
 
 import Link from 'next/link'
 import { Menu, Moon, Sun } from 'lucide-react'
-import { useState } from 'react'
 import { cn } from '@repo/utils'
+
 import Button from '@/components/atoms/Button'
 
+import { useGlobalNav } from '@/hooks/useGlobalNav'
+
 export default function GlobalNav() {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const toggleTheme = () => {
-    const currentTheme = localStorage.getItem('theme')
-
-    document.documentElement.classList.toggle('dark')
-    localStorage.setItem('theme', currentTheme === 'dark' ? 'light' : 'dark')
-  }
-
-  const handleMenuClick = () => {
-    if (isOpen) {
-      allowScroll()
-    } else {
-      preventScroll()
-    }
-    setIsOpen((prev) => !prev)
-  }
-
-  const preventScroll = () => {
-    document.body.style.position = 'fixed'
-    document.body.style.width = '100%'
-    document.body.style.overflowY = 'scroll'
-  }
-
-  const allowScroll = () => {
-    document.body.style.position = ''
-    document.body.style.width = ''
-    document.body.style.top = ''
-    document.body.style.overflowY = ''
-  }
+  const { isOpen, handleBackdropClick, toggleTheme, handleMenuClick } =
+    useGlobalNav()
 
   return (
     <nav className="bg-fill-strong/95 fixed z-20 mx-auto h-14 w-full px-4 md:h-16 xl:px-0">
@@ -46,12 +20,7 @@ export default function GlobalNav() {
             WAKCRAFT
           </Link>
           <div
-            onClick={() => {
-              if (window.screenX >= 768) return
-
-              setIsOpen(false)
-              allowScroll()
-            }}
+            onClick={handleBackdropClick}
             className={cn(
               isOpen &&
                 'fixed top-14 right-0 h-[100vh] w-full bg-[rgba(0,0,0,0.8)]',
