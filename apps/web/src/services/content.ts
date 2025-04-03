@@ -102,7 +102,7 @@ export const getContentDetailTitle = (category: Category, title: string) => {
   }
 }
 
-export const getContentHomeTitle = (
+export const getContentMainTitle = (
   category: Category,
   episode: number,
   title: string,

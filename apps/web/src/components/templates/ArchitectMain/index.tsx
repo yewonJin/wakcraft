@@ -10,7 +10,7 @@ import Button from '@/components/atoms/Button'
 import ArchitectProfile from '@/components/molecules/ArchitectProfile'
 import ArchitectStatistics from '@/components/molecules/ArchitectStatistics'
 
-import { SortBy, useArchitectHome } from '@/hooks/useArchitectHome'
+import { SortBy, useArchitectMain } from '@/hooks/useArchitectMain'
 import {
   ArchitectWithMatchingIndices,
   useSearchArchitect,
@@ -22,7 +22,7 @@ type Props = {
   architects: Omit<Architect, 'portfolio'>[]
 }
 
-export default function ArchitectHome({ architects }: Props) {
+export default function ArchitectMain({ architects }: Props) {
   const {
     sortKey,
     isDescending,
@@ -31,7 +31,7 @@ export default function ArchitectHome({ architects }: Props) {
     handleTierClick,
     compareArchitects,
     filterArchitectsByTier,
-  } = useArchitectHome()
+  } = useArchitectMain()
   const {
     input,
     handleInputChange,

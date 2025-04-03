@@ -5,7 +5,7 @@ import { useQueryString } from './useQueryString'
 
 export type SortBy = 'tier' | 'participation' | 'win' | 'hackerWin' | 'proWin'
 
-export const useArchitectHome = () => {
+export const useArchitectMain = () => {
   const [sortKey, setSortKey] = useState<SortBy>('tier')
   const [isDescending, setIsDescending] = useState(true)
   const {

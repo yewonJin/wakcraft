@@ -27,11 +27,11 @@ export type PortfolioItem = {
   category: string
   episode: number
   title: string | null
-  ranking?: number | null
+  ranking: number | null
   imageUrl: string
-  youtubeUrl?: string | null
+  youtubeUrl: string | null
   date: string
-  description?: string
+  description: string | null
 }
 
 export interface SearchedArchitect extends Architect {

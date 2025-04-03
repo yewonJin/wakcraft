@@ -3,16 +3,16 @@
 import { EventNoobProHacker } from '@repo/types'
 
 import ContentCardItem from '@/components/molecules/ContentCardItem'
-import ContentHomeTitle from '@/components/molecules/ContentHomeTitle'
+import ContentMainTitle from '@/components/molecules/ContentMainTitle'
 
 type Props = {
   eventNoobProHackers: EventNoobProHacker[]
 }
 
-export default function EventNoobProHackerHome({ eventNoobProHackers }: Props) {
+export default function EventNoobProHackerMain({ eventNoobProHackers }: Props) {
   return (
     <div className="mx-auto max-w-[1200px] px-4 pt-6 md:pt-12 xl:px-0">
-      <ContentHomeTitle
+      <ContentMainTitle
         title="예능 눕프핵"
         description="마인크래프트 예능 눕프핵 컨텐츠를 볼 수 있다."
       />

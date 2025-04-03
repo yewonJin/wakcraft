@@ -6,7 +6,7 @@ type Props = {
   noobprohackers: NoobProHacker[]
 }
 
-export default async function NoobProHackerHome({ noobprohackers }: Props) {
+export default async function NoobProHackerMain({ noobprohackers }: Props) {
   return (
     <div className="mx-auto max-w-[1200px] px-4 pt-6 md:pt-12 xl:px-0">
       <h1 className="mb-4 text-3xl font-semibold">눕프로해커</h1>

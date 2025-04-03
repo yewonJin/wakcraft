@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import NoobProHackerHome from '@/components/templates/NoobProHackerHome'
+import NoobProHackerMain from '@/components/templates/NoobProHackerMain'
 
 import { getNoobProHackers } from '@/libs/actions/noobprohacker'
 
@@ -13,7 +13,7 @@ export default async function Page() {
   const noobprohackers = await getNoobProHackers()
 
   return (
-    <NoobProHackerHome
+    <NoobProHackerMain
       noobprohackers={JSON.parse(JSON.stringify(noobprohackers))}
     />
   )

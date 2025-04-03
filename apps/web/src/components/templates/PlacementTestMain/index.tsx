@@ -8,7 +8,7 @@ type Props = {
   placementTests: PlacementTest[]
 }
 
-export default function PlacementTestHome({ placementTests }: Props) {
+export default function PlacementTestMain({ placementTests }: Props) {
   return (
     <div className="mx-auto max-w-[1200px] px-4 pt-6 md:pt-12 xl:px-0">
       <h1 className="mb-4 text-3xl font-semibold">배치고사</h1>

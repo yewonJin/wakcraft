@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import EventNoobProHackerHome from '@/components/templates/EventNoobProHackerHome'
+import EventNoobProHackerMain from '@/components/templates/EventNoobProHackerMain'
 
 import { getEventNoobProHackers } from '@/libs/actions/eventNoobProHacker'
 
@@ -13,7 +13,7 @@ export default async function Page() {
   const eventNoobProHackers = await getEventNoobProHackers()
 
   return (
-    <EventNoobProHackerHome
+    <EventNoobProHackerMain
       eventNoobProHackers={JSON.parse(JSON.stringify(eventNoobProHackers))}
     />
   )

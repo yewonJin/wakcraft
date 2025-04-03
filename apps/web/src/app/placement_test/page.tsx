@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import PlacementTestHome from '@/components/templates/PlacementTestHome'
+import PlacementTestMain from '@/components/templates/PlacementTestMain'
 
 import { getPlacementTests } from '@/libs/actions/placementTest'
 
@@ -13,7 +13,7 @@ export default async function Page() {
   const placementTests = await getPlacementTests()
 
   return (
-    <PlacementTestHome
+    <PlacementTestMain
       placementTests={JSON.parse(JSON.stringify(placementTests))}
     />
   )

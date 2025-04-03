@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { Suspense } from 'react'
 
-import ArchitectHome from '@/components/templates/ArchitectHome'
+import ArchitectMain from '@/components/templates/ArchitectMain'
 
 import { getArchitectsWithoutPortfolio } from '@/libs/actions/architect'
 import { sortByTier } from '@/services/architect'
@@ -18,7 +18,7 @@ export default async function Page() {
 
   return (
     <Suspense>
-      <ArchitectHome
+      <ArchitectMain
         architects={JSON.parse(JSON.stringify(sortedArchitectsByTier))}
       />
     </Suspense>
