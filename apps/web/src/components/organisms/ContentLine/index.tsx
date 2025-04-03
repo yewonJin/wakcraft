@@ -142,7 +142,8 @@ function ContentLineItem({ entry }: { entry: LineInfo['entries'][number] }) {
 function ContentArchitects({ architectIds }: { architectIds: string[] }) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleUserClick = () => {
+  const handleUserClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
     setIsOpen((prev) => !prev)
   }
 
