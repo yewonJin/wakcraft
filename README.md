@@ -1,84 +1,58 @@
-# Turborepo starter
+# Wakcraft
 
-This Turborepo starter is maintained by the Turborepo core team.
+<p align="center">
+    <a href="https://wakcraft.vercel.app" target="_blank">
+      <img src="https://github.com/user-attachments/assets/bd3f9ef5-c2ef-41fa-9398-e8892507d2d7" />
+    </a>
+</p>
 
-## Using this example
+<br/>
 
-Run the following command:
+## 🚀 서비스 소개
 
-```sh
-npx create-turbo@latest
-```
+이 웹사이트는 유튜버 [우왁굳](https://www.youtube.com/@woowakgood)의  [마인크래프트 컨텐츠](https://www.youtube.com/playlist?list=PLfASGV4peeDRjN43IAUD8E_ocPpQ-pLLj) 중 ‘눕프로해커’ 시리즈를 정리한 플랫폼입니다.
 
-## What's inside?
+2021년부터 현재까지 100회가 넘게 진행된 이 콘텐츠에서 활약한 건축가들의 포트폴리오를 한눈에 볼 수 있도록 정리했습니다.
 
-This Turborepo includes the following packages/apps:
+우왁굳과 그의 팬들이 생방송 중에 “이 건축가가 어떤 작품을 만들었지?” 하고 검색하며 함께 보면 더욱 재미있고 풍성한 방송을 즐길 수 있습니다.
 
-### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+[![Video Label](http://img.youtube.com/vi/LbX4YcG3BLU/0.jpg)](https://youtu.be/LbX4YcG3BLU)
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+(유튜버의 서브 채녈에 사이트를 이용하는 것이 업로드 되어있다.)
 
-### Utilities
+<br/>
 
-This Turborepo has some additional tools already setup for you:
+## 프로젝트 설명
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- apps/admin -> 어드민 애플리케이션
+- apps/web -> 웹 애플리케이션
+- packages/* -> 공용 패키지
 
-### Build
+<br/>
 
-To build all apps and packages, run the following command:
+## 웹 애플리케이션 흐름
 
-```
-cd my-turborepo
-pnpm build
-```
+<img src="https://github.com/user-attachments/assets/ad507a8e-2c44-4595-b215-8831c40e7a25" width="600px" />
 
-### Develop
+<br/>
 
-To develop all apps and packages, run the following command:
+## 어드민 애플리케이션 흐름
 
-```
-cd my-turborepo
-pnpm dev
-```
+<img src="https://github.com/user-attachments/assets/3afcae4e-eb6b-49ee-8cdc-ad0a2f45f7e4" width="600px" />
 
-### Remote Caching
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+<br/>
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## Stacks
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/Amazon%20S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white)
 
-```
-cd my-turborepo
-npx turbo login
-```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
 
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
