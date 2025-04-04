@@ -31,7 +31,7 @@ export type ContentInfo = {
   title: string
   date: string
   youtubeUrl: string | null
-  isTribute?: boolean
+  isTribute: boolean
 }
 
 // 여러 개의 라인에 작품이 3개 or 여러개 있는 형태

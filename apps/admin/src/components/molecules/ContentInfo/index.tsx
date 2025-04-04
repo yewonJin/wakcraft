@@ -52,6 +52,17 @@ export default function ContentInfo({
             tabIndex={1}
           />
         </div>
+        <div className="w-36 flex flex-col gap-2 ">
+          <label className="text-xl font-medium">조공 컨텐츠?</label>
+          <Input
+            className="w-[40px]"
+            name="isTribute"
+            onChange={onContentInfoChange}
+            type="checkbox"
+            checked={contentInfo.isTribute}
+            tabIndex={1}
+          />
+        </div>
         <div className="w-84 flex flex-col gap-2">
           <label className="text-xl font-medium">유튜브 링크</label>
           <Input

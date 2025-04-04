@@ -1,4 +1,5 @@
 import {
+  ContentInfo,
   GridEventNoobProHacker,
   GridInfo,
   LineEventNoobProHacker,
@@ -17,12 +18,7 @@ export const makeInitialNoobProHackerContent = (
   tiers: string[],
 ) => {
   const noobprohacker: NoobProHacker = {
-    contentInfo: {
-      episode: nextEpisode,
-      date: new Date().toISOString().split('T')[0],
-      title: '자유',
-      youtubeUrl: null,
-    },
+    contentInfo: makeInitialContentInfo(nextEpisode, '자유'),
     workInfo: Array.from({ length: workInfoLength }, () =>
       makeInitialLineInfo(entryLength, tiers),
     ),
@@ -39,12 +35,7 @@ export const makeInitialLineEventNoobProHackerContent = (
 ) => {
   const lineEventNoobProHacker: LineEventNoobProHacker = {
     type: 'line',
-    contentInfo: {
-      episode: nextEpisode,
-      date: new Date().toISOString().split('T')[0],
-      title: '',
-      youtubeUrl: null,
-    },
+    contentInfo: makeInitialContentInfo(nextEpisode, ''),
     workInfo: Array.from({ length: workInfoLength }, () =>
       makeInitialLineInfo(entryLength, tiers),
     ),
@@ -59,12 +50,7 @@ export const makeInitialGridEventNoobProHackerContent = (
 ) => {
   const gridEventNoobProHacker: GridEventNoobProHacker = {
     type: 'grid',
-    contentInfo: {
-      episode: nextEpisode,
-      date: new Date().toISOString().split('T')[0],
-      title: '',
-      youtubeUrl: null,
-    },
+    contentInfo: makeInitialContentInfo(nextEpisode, ''),
     workInfo: Array.from({ length: workInfoLength }, () =>
       makeInitialGridInfo(),
     ),
@@ -78,12 +64,7 @@ export const makeInitialPlacmentTestContent = (
   imageUrls: string[],
 ) => {
   const placementTest: PlacementTest = {
-    contentInfo: {
-      episode: nextEpisode,
-      date: new Date().toISOString().split('T')[0],
-      title: '',
-      youtubeUrl: null,
-    },
+    contentInfo: makeInitialContentInfo(nextEpisode, ''),
     workInfo: imageUrls.map((imageUrl) => ({
       ...makeInitialGridInfo(),
       imageUrl: imageUrl,
@@ -92,6 +73,18 @@ export const makeInitialPlacmentTestContent = (
   }
 
   return placementTest
+}
+
+export const makeInitialContentInfo = (nextEpisode: number, title: string) => {
+  const contentInfo: ContentInfo = {
+    episode: nextEpisode,
+    date: new Date().toISOString().split('T')[0],
+    title: title,
+    isTribute: false,
+    youtubeUrl: null,
+  }
+
+  return contentInfo
 }
 
 export const makeInitialLineInfo = (entryLength: number, tiers: string[]) => {

@@ -9,13 +9,18 @@ export const useContentForm = <
   const [content, setContent] = useState<T>(initialContent)
 
   const onContentInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type } = e.target
+    const { name, value, type, checked } = e.target
 
     setContent((prev) => ({
       ...prev,
       contentInfo: {
         ...prev.contentInfo,
-        [name]: type === 'number' ? Number(value) : value,
+        [name]:
+          type === 'number'
+            ? Number(value)
+            : type === 'checkbox'
+              ? checked
+              : value,
       },
     }))
   }
