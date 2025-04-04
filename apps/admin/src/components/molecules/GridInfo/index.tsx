@@ -80,7 +80,7 @@ export default function GridInfo({
             />
             <Input
               name="description"
-              value={entry.description}
+              value={entry.description || ''}
               onChange={(e) => onGridChange(entryIdx, e)}
               placeholder="추가 설명"
             />

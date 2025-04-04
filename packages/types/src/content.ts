@@ -41,7 +41,7 @@ export type LineInfo = {
   entries: {
     tier: string
     title: string
-    description?: string
+    description: string | null
     architectId: string[]
     imageUrl: string
     youtubeUrl: string | null
@@ -52,7 +52,7 @@ export type LineInfo = {
 // 작품이 여러개 있는 형태
 export type GridInfo = {
   order: number
-  description: string
+  description: string | null
   title: string | null
   architectId: string[]
   imageUrl: string
