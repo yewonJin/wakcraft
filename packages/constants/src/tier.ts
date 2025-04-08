@@ -39,3 +39,22 @@ export const DESCRIPTION: { [key in (typeof ALL_TIER)[number]]: string } = {
   '착한 눕': '눕프핵의 취지에 가장 맞는 눕',
   언랭: `현재 티어가 없는 사람`,
 }
+export const TIER_IMAGES: { [key in (typeof ALL_TIER)[number]]: string } = {
+  마카게: "url('/images/makage.webp')",
+  오마카세: "url('/images/omakase.webp')",
+  해커: "url('/images/hacker.webp')",
+  해장국: "url('/images/haejangguk.webp')",
+  국밥: "url('/images/gukbap.webp')",
+  '미지근한 국밥': "url('/images/miguk.webp')",
+  '식은 국밥': "url('/images/miguk.webp')",
+  프로: "url('/images/pro.webp')",
+  계추: "url('/images/gyechu.webp')",
+  계륵: "url('/images/gyeruik.webp')",
+  '가짜 눕': "url('/images/noob.webp')",
+  '착한 눕': "url('/images/noob.webp')",
+  '안 나쁜 눕': "url('/images/noob.webp')",
+  '그냥 눕': "url('/images/purenoob.webp')",
+  '진짜 눕': "url('/images/purenoob.webp')",
+  '퓨어 눕': "url('/images/purenoob.webp')",
+  언랭: "url('/images/purenoob.webp')",
+} as const
