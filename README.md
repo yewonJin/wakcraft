@@ -1,84 +1,118 @@
-# Turborepo starter
+# Wakcraft
 
-This Turborepo starter is maintained by the Turborepo core team.
+<p align="center">
+    <a href="https://wakcraft.vercel.app" target="_blank">
+      <img src="https://github.com/user-attachments/assets/bd3f9ef5-c2ef-41fa-9398-e8892507d2d7" />
+    </a>
+</p>
 
-## Using this example
+<br/>
 
-Run the following command:
+## 🚀 프로젝트 소개
 
-```sh
-npx create-turbo@latest
-```
+> ‘왁크래프트’는 170만 유튜버 [우왁굳](https://www.youtube.com/@woowakgood)의 [마인크래프트 컨텐츠](https://www.youtube.com/playlist?list=PLfASGV4peeDRjN43IAUD8E_ocPpQ-pLLj) 중 '눕프로해커' 시리즈를 정리한 웹사이트입니다.  
+> 방송 중 “이 건축가가 어떤 작품을 만들었지?” 하고 궁금해하는 팬들을 위해, 참여자별로 콘텐츠를 분류하고 검색할 수 있도록 했습니다.
 
-## What's inside?
+<br/>
 
-This Turborepo includes the following packages/apps:
+### 📌 버전 업데이트
 
-### Apps and Packages
+| 버전 | 주요 변화 |
+| --- | --- |
+| [V1](https://github.com/yewonJin/wakcraft-v1) | API Route 기반 + MVP 제작 및 초기 런칭 |
+| [V2](https://github.com/yewonJin/wakcraft-v2) | API Route 기반 + 전체적인 스타일링 개선 |
+| [V3](https://github.com/yewonJin/wakcraft-v3) | API Route 기반 + Atomic Design Pattern를 이용한 프로젝트 구조 개선 |
+| [V4](https://github.com/yewonJin/wakcraft) | Server Actions 기반 + 모노레포 구성 및 리팩토링 |
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+<br/>
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### 🗂️ 프로젝트 구조
 
-### Utilities
+- apps/admin -> 어드민 애플리케이션
+- apps/web -> 웹 애플리케이션
+- packages/* -> 공용 패키지
 
-This Turborepo has some additional tools already setup for you:
+<br/>
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+## 🔗 애플리케이션 흐름
 
-### Build
+### 웹 애플리케이션
+<img src="https://github.com/user-attachments/assets/ad507a8e-2c44-4595-b215-8831c40e7a25" width="600px" />
 
-To build all apps and packages, run the following command:
+### 어드민 애플리케이션 흐름
 
-```
-cd my-turborepo
-pnpm build
-```
+<img src="https://github.com/user-attachments/assets/3afcae4e-eb6b-49ee-8cdc-ad0a2f45f7e4" width="600px" />
 
-### Develop
+<br/>
+<br/>
 
-To develop all apps and packages, run the following command:
+## 💡 핵심 경험
 
-```
-cd my-turborepo
-pnpm dev
-```
+### 🛠️ 모노레포를 이용한 애플리케이션 분리
+**🧩 문제**
 
-### Remote Caching
+- 어드민과 웹 애플리케이션이 한 프로젝트에 혼재했다. → 구조 파악 및 유지보수 어려움
+- 또한 API 방식이 서로 달랐다.(API Routes + tanstack-query vs Server Actions) → 일관성 없음
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+**🔧 해결**
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- 모노레포를 이용해서 이 두 애플리케이션을 분리했고, 중복되는 부분을 패키지로 분리했다.
+- 일관성을 위해 API Route를 사용하지 않고 Server Actions으로 모두 구현했다.
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+<br/>
 
-```
-cd my-turborepo
-npx turbo login
-```
+### **🛠️ Lazy Loading을 이용한 성능 최적화**
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+**🧩 문제**
+- 사용자 경험(예: 빠른 검색)을 위해 DOM 크기가 큰 요소를 사용했다.
+- 하지만 DOM 크기 때문에 렌더링 및 리렌더링 시 성능 문제가 발생했다.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+**🔧 해결**
+- IntersectionObserver으로 Lazy loading을 구현해서 DOM 크기가 큰 요소 렌더링 성능 최적화했다.
+- CPU 4x slowdown 환경 기준, INP `811ms` → `275.2ms` 개선
 
-```
-npx turbo link
-```
+→ [자세한 내용 보기](https://doromo.vercel.app/post/큰-dom-렌더링-최적화)
 
-## Useful Links
+<br/> 
 
-Learn more about the power of Turborepo:
+### 🎨 데스크톱/모바일 이미지 캐로셀 구현
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+https://github.com/user-attachments/assets/d27f8f91-7bcf-4d57-9e8f-65154e404a79
+
+https://github.com/user-attachments/assets/86a646d2-b50b-4679-bfce-7f11ca3ccf35
+
+1. 모바일과 데스크톱 환경에서 다른 UI/UX를 적용해야 했다.
+2. header의 user-agent를 이용하여 모바일 환경임을 체크하고, 환경에 따라 다른 `CarouselContainer` 를 적용했다.
+
+→ [자세한 내용 보기](https://doromo.vercel.app/post/데스크톱-모바일-호환되는-이미지-캐로셀)
+
+→ [관련 코드 보기](https://github.com/yewonJin/wakcraft/blob/main/apps/web/src/components/organisms/ContentLine/Carousel/index.tsx)
+
+<br/>
+
+### 🎨 사용자를 위한 검색 및 하이라이팅 기능
+
+https://github.com/user-attachments/assets/78267b68-0877-412d-9f66-983f14dd9e98
+
+1. `string[]` 값과 input 값을 정규표현식으로 매칭하여, 한글 초성 검색도 가능하게 구현했다.
+2. matchingIndex가 작을 수록, 더 높은 우선순위를 부여했다.
+    ex) ㄱㄴ → 가나다라(0, 1), 가다나라(0,2) → 1. 가나다라, 2. 가다나라
+   
+→ [참고](https://taegon.kim/archives/9919)
+
+→ [관련 코드 보기 1](https://github.com/yewonJin/wakcraft/blob/main/apps/web/src/utils/search.ts)
+
+→ [관련 코드 보기 2](https://github.com/yewonJin/wakcraft/blob/main/apps/web/src/hooks/architect/useSearchArchitect.ts)
+<br/>
+<br/>
+
+## 📈 결과 및 사용자 반응
+
+- 내가 좋아하는 유튜브와 그의 팬들이 좋게 반응해주었다. (유튜버의 서브 유튜브 채널에도 사이트를 이용하는 것이 올라갔다.)    
+    https://www.youtube.com/watch?v=LbX4YcG3BLU
+- 하루 최대 2.2K 및 최대 30분간 400명의 사용자가 접속했다.
+
+<img src="https://github.com/user-attachments/assets/c9fd2a56-7e32-4b1a-940b-613a2896d96f" width="600"/>
+<img src="https://github.com/user-attachments/assets/0bfb3b0e-d0d3-4ef9-aa42-7de9cc6bb345" width="600"/>
+
+  
