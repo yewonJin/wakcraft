@@ -63,6 +63,10 @@ export const populateWakzooId = <T extends LineInfo[] | GridInfo[]>(
   }) as T
 }
 
+export const getWinnerLineIndex = (noobprohacker: NoobProHacker) => {
+  return noobprohacker.workInfo.findIndex((line) => line.ranking === 1)
+}
+
 export const getHackerWinLine = (noobprohacker: NoobProHacker) => {
   return noobprohacker.workInfo.find((line) =>
     line.entries.find((entry) => entry.tier === '해커' && entry.ranking === 1),
@@ -132,6 +136,10 @@ export const getContentUrl = (category: string, episode: number) => {
     default:
       return `/event_noobprohacker/${episode}`
   }
+}
+
+export const getYoutubeThumbnailImageUrl = (youtubeUrl: string) => {
+  return `https://i.ytimg.com/vi/${youtubeUrl.split('/')[3]}/hq720.jpg`
 }
 
 export const groupArchitectTierBySeason = (

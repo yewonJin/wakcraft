@@ -8,17 +8,16 @@ import { cn } from '@repo/utils'
 
 import { ContentYoutubeLink, InfoBox } from '@/components/atoms'
 
-import { getContentMainTitle } from '@/services/content'
+import {
+  getContentMainTitle,
+  getYoutubeThumbnailImageUrl,
+} from '@/services/content'
 
 type Props = {
   category: Category
   contentInfo: ContentInfo
   contentUrl: string
   lines: string[] | null
-}
-
-const getYoutubeThumbnailImageUrl = (youtube_url: string) => {
-  return `https://i.ytimg.com/vi/${youtube_url.split('/')[3]}/hq720.jpg`
 }
 
 export default function ContentCardItem({

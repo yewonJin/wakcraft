@@ -8,6 +8,7 @@ import { HomeCarouselNavigator } from './Navigator'
 import { HomeCarouselContent } from './Content'
 
 import { useCarousel } from '@/hooks'
+import { getWinnerLineIndex } from '@/services/content'
 
 type Props = {
   latestNoobProHacker: NoobProHacker
@@ -15,10 +16,6 @@ type Props = {
 
 // TODO: 나중에 예능 눕프핵, 배치고사도 지원하면 좋을듯
 export default function HomeCarousel({ latestNoobProHacker }: Props) {
-  const getWinnerLineIndex = (noobprohacker: NoobProHacker) => {
-    return noobprohacker.workInfo.findIndex((line) => line.ranking === 1)
-  }
-
   const {
     carouselIndex,
     resetAutoScroll,
