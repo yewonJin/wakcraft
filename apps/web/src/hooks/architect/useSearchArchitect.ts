@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Architect } from '@repo/types'
-
-import { fuzzyMatcher, generateMatchingIndex } from '@/utils/search'
+import { fuzzyMatcher, generateMatchingIndex } from '@repo/utils'
 
 export type ArchitectWithMatchingIndices = Omit<Architect, 'portfolio'> & {
   minecraftIdMatchingIndex: number[] | null
