@@ -77,6 +77,7 @@ export default function EditArchitectForm({ action, architect }: Props) {
         <SelectBox
           className="w-34"
           options={TIER}
+          value={content.curTier}
           name="curTier"
           handleSelectChange={handleCurTierChange}
         />
