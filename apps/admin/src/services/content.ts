@@ -138,9 +138,10 @@ export const convertLineContentArchitectId = (
       entries: line.entries.map((entry) => ({
         ...entry,
         architectId: entry.architectId.map(
-          (minecraftId) =>
+          (id) =>
             architects.find(
-              (architect) => architect.minecraftId === minecraftId,
+              (architect) =>
+                architect.minecraftId === id || architect.wakzooId === id,
             )?._id || '',
         ),
       })),
@@ -157,9 +158,11 @@ export const convertGridContentArchitectId = (
     workInfo: payload.workInfo.map((entry) => ({
       ...entry,
       architectId: entry.architectId.map(
-        (minecraftId) =>
-          architects.find((architect) => architect.minecraftId === minecraftId)
-            ?._id || '',
+        (id) =>
+          architects.find(
+            (architect) =>
+              architect.minecraftId === id || architect.wakzooId === id,
+          )?._id || '',
       ),
     })),
   }
