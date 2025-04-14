@@ -2,7 +2,8 @@ import Link from 'next/link'
 
 import { ArchitectProfile, ArchitectStatistics } from '@/components/molecules'
 
-import { useIntersectionObserver, ArchitectWithMatchingIndices } from '@/hooks'
+import { useIntersectionObserver } from '@/hooks'
+import { ArchitectWithMatchingIndices } from '@/types/architect'
 
 type Props = {
   architect: ArchitectWithMatchingIndices
