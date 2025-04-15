@@ -23,6 +23,7 @@ export type PlacementTestTierInfo = {
 }
 
 export type PortfolioItem = {
+  _id: string
   type: string | null
   category: string
   episode: number
