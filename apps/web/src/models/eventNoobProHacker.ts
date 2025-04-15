@@ -47,13 +47,13 @@ EventNoobProHacker.findPopluatedOne = async function (episode) {
   return doc.type === 'line'
     ? doc.populate({
         path: 'workInfo.entries.architectId',
-        model: Architect,
+        model: Architect as unknown as Model<Architect>,
         select: 'minecraftId wakzooId',
         strictPopulate: false,
       })
     : doc.populate({
         path: 'workInfo.architectId',
-        model: Architect,
+        model: Architect as unknown as Model<Architect>,
         select: 'minecraftId wakzooId',
         strictPopulate: false,
       })
