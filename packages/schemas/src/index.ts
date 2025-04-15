@@ -1,3 +1,3 @@
-export * from "./architect";
-export * from "./content";
-export * from "./shared";
+export * from './architect'
+export * from './content'
+export * from './shared'

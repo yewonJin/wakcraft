@@ -1,40 +1,53 @@
-import { Schema } from "mongoose";
+import { Schema } from 'mongoose'
 
-import { contentInfoSchema, lineInfoSchema, gridInfoSchema } from "./shared";
-import { EventNoobProHacker, NoobProHacker, PlacementTest } from "@repo/types";
+import { EventNoobProHacker, NoobProHacker, PlacementTest } from '@repo/types'
+import {
+  contentInfoSchema,
+  lineInfoSchema,
+  gridInfoSchema,
+  stringifyIds,
+} from './shared'
 
-export const noobprohackerSchema = new Schema<NoobProHacker>({
-  contentInfo: contentInfoSchema,
-  workInfo: [lineInfoSchema],
-});
-
-export const eventNoobProHackerSchema = new Schema<EventNoobProHacker>({
-  type: {
-    type: String,
-    enum: ["line", "grid"],
-    required: true,
+export const noobprohackerSchema = new Schema<NoobProHacker>(
+  {
+    contentInfo: contentInfoSchema,
+    workInfo: [lineInfoSchema],
   },
-  contentInfo: contentInfoSchema,
-  workInfo: [
-    {
-      type: Schema.Types.Mixed,
-      required: true,
-      validate: {
-        validator: function (this: EventNoobProHacker, value: any) {
-          if (this.type === "line") {
-            return Array.isArray(value) && value.every((item) => "entries" in item);
-          }
-          if (this.type === "grid") {
-            return Array.isArray(value) && value.every((item) => "order" in item);
-          }
-          return false;
-        },
-      },
+  {
+    virtuals: false,
+    toJSON: {
+      transform: (doc, ret: NoobProHacker) => stringifyIds(ret),
     },
-  ],
-});
+  },
+)
 
-export const placementTestSchema = new Schema<PlacementTest>({
-  contentInfo: contentInfoSchema,
-  workInfo: [gridInfoSchema],
-});
+export const eventNoobProHackerSchema = new Schema<EventNoobProHacker>(
+  {
+    type: {
+      type: String,
+      enum: ['line', 'grid'],
+      required: true,
+    },
+    contentInfo: contentInfoSchema,
+  },
+  {
+    discriminatorKey: 'type',
+    virtuals: false,
+    toJSON: {
+      transform: (doc, ret: EventNoobProHacker) => stringifyIds(ret),
+    },
+  },
+)
+
+export const placementTestSchema = new Schema<PlacementTest>(
+  {
+    contentInfo: contentInfoSchema,
+    workInfo: [gridInfoSchema],
+  },
+  {
+    virtuals: false,
+    toJSON: {
+      transform: (doc, ret: PlacementTest) => stringifyIds(ret),
+    },
+  },
+)
