@@ -55,20 +55,16 @@ export const gridInfoSchema = new Schema<GridInfo>({
   ranking: { type: Number },
 })
 
-export const stringifyIds = <
-  T extends NoobProHacker | EventNoobProHacker | PlacementTest,
->(
-  ret: T,
-): T => {
+export const stringifyIds = (ret: Record<string, any>): Record<string, any> => {
   if (ret._id) ret._id = ret._id.toString()
   if (ret.contentInfo) {
     ret.contentInfo._id = ret.contentInfo._id.toString()
   }
   if (ret.workInfo) {
-    ret.workInfo = ret.workInfo.map((work) => {
+    ret.workInfo = ret.workInfo.map((work: Record<string, any>) => {
       if (work._id) work._id = work._id.toString()
       if (work.entries) {
-        work.entries = work.entries.map((entry) => {
+        work.entries = work.entries.map((entry: Record<string, any>) => {
           if (entry._id) entry._id = entry._id.toString()
           return entry
         })

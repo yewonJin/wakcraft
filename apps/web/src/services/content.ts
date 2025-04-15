@@ -5,63 +5,9 @@ import {
   Architect,
   Category,
   EventNoobProHacker,
-  GridInfo,
-  LineInfo,
   NoobProHacker,
   PlacementTest,
 } from '@repo/types'
-
-export const getArchitectIds = <T extends LineInfo[] | GridInfo[]>(
-  workInfo: T,
-) => {
-  return [
-    ...new Set(
-      workInfo.flatMap((line) => {
-        if ('entries' in line) {
-          return line.entries.flatMap((entry) => entry.architectId)
-        } else {
-          const entry = line
-          return entry.architectId
-        }
-      }),
-    ),
-  ]
-}
-
-export const populateWakzooId = <T extends LineInfo[] | GridInfo[]>(
-  workInfo: T,
-  architectInfos: Pick<Architect, '_id' | 'wakzooId'>[],
-): T => {
-  const idToMinecraftIdMap = architectInfos.reduce(
-    (acc, { _id, wakzooId }) => {
-      acc[_id.toString()] = wakzooId.replaceAll(' ', '-')
-      return acc
-    },
-    {} as Record<string, string>,
-  )
-
-  return workInfo.map((line) => {
-    if ('entries' in line) {
-      return {
-        ...line,
-        entries: line.entries.map((entry) => ({
-          ...entry,
-          architectId: entry.architectId.map(
-            (id) => idToMinecraftIdMap[id] || id,
-          ),
-        })),
-      }
-    } else {
-      const entry = line
-      return {
-        ...entry,
-        architectId: entry.architectId.map(
-          (id) => idToMinecraftIdMap[id] || id,
-        ),
-      }
-    }
-  }) as T
-}
 
 export const getWinnerLineIndex = (noobprohacker: NoobProHacker) => {
   return noobprohacker.workInfo.findIndex((line) => line.ranking === 1)

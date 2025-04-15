@@ -16,7 +16,7 @@ export const noobprohackerSchema = new Schema<NoobProHacker>(
   {
     virtuals: false,
     toJSON: {
-      transform: (doc, ret: NoobProHacker) => stringifyIds(ret),
+      transform: (doc, ret) => stringifyIds(ret),
     },
   },
 )
@@ -34,7 +34,7 @@ export const eventNoobProHackerSchema = new Schema<EventNoobProHacker>(
     discriminatorKey: 'type',
     virtuals: false,
     toJSON: {
-      transform: (doc, ret: EventNoobProHacker) => stringifyIds(ret),
+      transform: (doc, ret) => stringifyIds(ret),
     },
   },
 )
@@ -47,7 +47,7 @@ export const placementTestSchema = new Schema<PlacementTest>(
   {
     virtuals: false,
     toJSON: {
-      transform: (doc, ret: PlacementTest) => stringifyIds(ret),
+      transform: (doc, ret) => stringifyIds(ret),
     },
   },
 )
