@@ -32,7 +32,7 @@ export default function ContentMain<T extends Contents>({
             contentInfo={content.contentInfo}
             contentUrl={getContentUrl(category, content.contentInfo.episode)}
             lines={content.workInfo
-              .map((line) => ('entries' in line ? line.title : null))
+              ?.map((line) => ('entries' in line ? line.title : null))
               .filter((x) => x !== null)}
           />
         ))}

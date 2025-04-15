@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Users } from 'lucide-react'
 import { renamePngToWebp } from '@repo/utils'
-import { LineInfo } from '@repo/types'
+import { ArchitectId, LineInfo } from '@repo/types'
 
 import { InfoBox, Tooltip } from '@/components/atoms'
 
@@ -47,12 +47,12 @@ export function ContentLineItem({
           <div className="flex flex-col gap-2">
             {entry.architectId.map((id) => (
               <Link
-                key={id}
+                key={id.minecraftId}
                 onClick={(e) => e.stopPropagation()}
-                href={`/architect/${id}`}
+                href={`/architect/${id.wakzooId}`}
                 className="text-lg text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
               >
-                {id.replaceAll('-', ' ')}
+                {id.wakzooId.replaceAll('-', ' ')}
               </Link>
             ))}
           </div>
@@ -72,7 +72,7 @@ export function ContentLineItem({
   )
 }
 
-function ContentArchitects({ architectIds }: { architectIds: string[] }) {
+function ContentArchitects({ architectIds }: { architectIds: ArchitectId[] }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleUserClick = (e: React.MouseEvent) => {
@@ -91,11 +91,11 @@ function ContentArchitects({ architectIds }: { architectIds: string[] }) {
           {architectIds.map((id) => (
             <Link
               onClick={(e) => e.stopPropagation()}
-              key={id}
-              href={`/architect/${id}`}
+              key={id.minecraftId}
+              href={`/architect/${id.wakzooId}`}
               className="px-3 py-2 text-sm text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
             >
-              {id}
+              {id.wakzooId}
             </Link>
           ))}
         </div>

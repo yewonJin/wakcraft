@@ -45,21 +45,21 @@ export function ContentGridItem({ entry }: { entry: GridInfo }) {
         {entry.architectId.length === 1 ? (
           <Link
             onClick={(e) => e.stopPropagation()}
-            href={`/architect/${entry.architectId}`}
+            href={`/architect/${entry.architectId[0].wakzooId}`}
             className="text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
           >
-            {entry.architectId[0].replaceAll('-', ' ')}
+            {entry.architectId[0].wakzooId.replaceAll('-', ' ')}
           </Link>
         ) : (
           <div className="mt-3 flex flex-col gap-1.5">
             {entry.architectId.map((id) => (
               <Link
                 onClick={(e) => e.stopPropagation()}
-                key={id}
-                href={`/architect/${id}`}
+                key={id.wakzooId}
+                href={`/architect/${id.wakzooId}`}
                 className="text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
               >
-                {id}
+                {id.wakzooId}
               </Link>
             ))}
           </div>

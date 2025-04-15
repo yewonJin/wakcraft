@@ -61,10 +61,10 @@ export function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
                 className="md:group-hover:animate-fadeIn visible flex w-max gap-4 rounded-2xl bg-[#121212] px-6 py-2 md:invisible md:group-hover:visible"
               >
                 <Link
-                  href={`/architect/${entry.architectId}`}
+                  href={`/architect/${entry.architectId[0].wakzooId}`}
                   className="text-text-subtle hover:text-text-default"
                 >
-                  {entry.architectId}
+                  {entry.architectId[0].wakzooId}
                 </Link>
                 <p>{entry.tier}</p>
               </Tooltip>

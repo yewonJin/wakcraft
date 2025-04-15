@@ -52,10 +52,10 @@ export function HomeRecentWinEntries({
                     {noobprohacker.contentInfo.episode}회 : {hackerWinTitle}
                   </span>
                   <Link
-                    href={`/architect/${hackerEntry?.architectId}`}
+                    href={`/architect/${hackerEntry?.architectId[0].wakzooId}`}
                     className="text-neutral-400 hover:text-neutral-300"
                   >
-                    {hackerEntry?.architectId}
+                    {hackerEntry?.architectId[0].wakzooId}
                   </Link>
                 </InfoBox>
               </div>
@@ -84,10 +84,10 @@ export function HomeRecentWinEntries({
                     {noobprohacker.contentInfo.episode}회 : {proWinTitle}
                   </span>
                   <Link
-                    href={`/architect/${proEntry?.architectId}`}
+                    href={`/architect/${proEntry?.architectId[0].wakzooId}`}
                     className="text-neutral-400 hover:text-neutral-300"
                   >
-                    {proEntry?.architectId}
+                    {proEntry?.architectId[0].wakzooId}
                   </Link>
                 </InfoBox>
               </div>

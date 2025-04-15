@@ -50,9 +50,9 @@ export function HomeCarouselContent({
                   position="bottom"
                   className="md:group-hover:animate-fadeIn visible flex gap-4 rounded-2xl px-6 py-2 md:invisible md:group-hover:visible"
                 >
-                  <Link href={`/architect/${entry.architectId[0]}`}>
+                  <Link href={`/architect/${entry.architectId[0].wakzooId}`}>
                     <p className="text-[#aaa] hover:cursor-pointer hover:text-[white]">
-                      {entry.architectId[0]}
+                      {entry.architectId[0].wakzooId}
                     </p>
                   </Link>
                   <p>{entry.tier}</p>
