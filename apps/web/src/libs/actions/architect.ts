@@ -13,38 +13,25 @@ export const getArchitectsWithoutPortfolio = async () => {
 export const getArchitectById = async (id: string) => {
   await connectMongo()
 
-  const architect = await Architect.findOne({
-    $or: [{ minecraftId: id }, { wakzooId: id }],
-  })
-  return architect as unknown as Architect
+  const architect = await Architect.findByArchitectId(id)
+  const serialized = architect?.toJSON()
+  return serialized
 }
 
-export const getArchitectByArchitectId = async (architectId: string) => {
+export const getArchitectByArchitectId = async (_id: string) => {
   await connectMongo()
 
-  const architect = Architect.findOne({ _id: architectId })
-  return architect as unknown as Architect
-}
+  const architect = await Architect.findById(_id)
+  const serialized = architect?.toJSON()
 
-export const getArchitectInfos = async (architectIds: string[]) => {
-  await connectMongo()
-
-  const architectInfos = await Architect.find(
-    { _id: { $in: architectIds } },
-    { _id: 1, wakzooId: 1 },
-  ).lean()
-  return architectInfos as unknown as Pick<Architect, '_id' | 'wakzooId'>[]
+  return serialized
 }
 
 export const getArchitectsWithTier = async () => {
   await connectMongo()
 
-  const architectTiers = await Architect.find(
-    {},
-    { _id: 1, wakzooId: 1, tier: 1 },
-  )
-  return architectTiers as unknown as Pick<
-    Architect,
-    '_id' | 'wakzooId' | 'tier'
-  >[]
+  const architectTiers = await Architect.findAllWithTier()
+  const serializeds = architectTiers.map((architect) => architect.toJSON())
+
+  return serializeds
 }

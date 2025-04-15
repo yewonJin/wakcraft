@@ -1,45 +1,28 @@
 'use server'
 
-import NoobProHacker from '@/models/noobprohacker'
 import { connectMongo } from '@repo/database'
-import { getArchitectInfos } from './architect'
-import { getArchitectIds, populateWakzooId } from '@/services/content'
-import { LineInfo } from '@repo/types'
+
+import NoobProHacker from '@/models/noobprohacker'
 
 export const getLatestNoobProHacker = async () => {
   await connectMongo()
 
-  const noobprohacker = (await NoobProHacker.findOne()
-    .sort({
-      'contentInfo.episode': -1,
-    })
-    .lean()) as unknown as NoobProHacker
+  const noobprohacker = await NoobProHacker.findLatest()
+  const serialized = noobprohacker?.toJSON()
 
-  const architectIds = getArchitectIds(noobprohacker.workInfo)
-  const architectInfos = await getArchitectInfos(architectIds)
+  if (!noobprohacker)
+    return console.log('최근 눕프로해커 작품을 찾을 수 없습니다.')
 
-  return {
-    ...noobprohacker,
-    workInfo: populateWakzooId(noobprohacker.workInfo, architectInfos),
-  }
+  return serialized
 }
 
 export const getNoobProHacker = async (episode: number) => {
   await connectMongo()
 
-  const noobprohacker = (await NoobProHacker.findOne({
-    'contentInfo.episode': episode,
-  }).lean()) as unknown as NoobProHacker
+  const noobprohacker = await NoobProHacker.findByEpisode(episode)
+  const serialized = noobprohacker?.toJSON()
 
-  if (!noobprohacker) return null
-
-  const architectIds = getArchitectIds(noobprohacker.workInfo)
-  const architectInfos = await getArchitectInfos(architectIds)
-
-  return {
-    ...noobprohacker,
-    workInfo: populateWakzooId(noobprohacker.workInfo, architectInfos),
-  }
+  return serialized
 }
 
 export const getNoobProHackers = async () => {
@@ -54,19 +37,24 @@ export const getNoobProHackers = async () => {
 export const getRecentNoobProHackers = async (length: number) => {
   await connectMongo()
 
-  const noobprohackers = (await NoobProHacker.find({})
-    .sort({ 'contentInfo.episode': -1 })
-    .limit(length)
-    .lean()) as unknown as NoobProHacker[]
+  const noobprohackers = await NoobProHacker.findRecent(length)
+  const serializeds = noobprohackers?.map((noobprohacker) =>
+    noobprohacker.toJSON(),
+  )
 
-  return noobprohackers
+  return serializeds
 }
 
 export const getSweepLines = async () => {
   await connectMongo()
 
   const noobprohackers = await NoobProHacker.findAllWithSweepLine()
-  return noobprohackers.map(
-    (noobprohacker) => noobprohacker.workInfo,
-  ) as LineInfo[]
+  const populated = await NoobProHacker.populate(noobprohackers, {
+    path: 'workInfo.entries.architectId',
+    model: 'Architect',
+    select: 'minecraftId wakzooId',
+  })
+
+  const serializeds = JSON.parse(JSON.stringify(populated))
+  return serializeds
 }
