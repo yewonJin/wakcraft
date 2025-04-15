@@ -16,7 +16,7 @@ export default async function Page() {
     <ContentMain
       category="눕프로해커"
       description="마인크래프트 눕프로해커 컨텐츠를 볼 수 있다."
-      contents={JSON.parse(JSON.stringify(noobprohackers))}
+      contents={noobprohackers}
     />
   )
 }

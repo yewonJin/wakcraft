@@ -16,7 +16,7 @@ export default async function Page() {
     <ContentMain
       category="배치고사"
       description="마인크래프트 배치고사 컨텐츠를 볼 수 있다."
-      contents={JSON.parse(JSON.stringify(placementTests))}
+      contents={placementTests}
     />
   )
 }

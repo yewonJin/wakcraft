@@ -41,7 +41,7 @@ export default async function Page({
     <ContentDetail
       category="배치고사"
       isMobile={isMobile(userAgent)}
-      content={JSON.parse(JSON.stringify(placementTest))}
+      content={placementTest}
     />
   )
 }

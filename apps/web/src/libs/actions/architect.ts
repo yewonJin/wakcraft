@@ -6,8 +6,10 @@ import { connectMongo } from '@repo/database'
 export const getArchitectsWithoutPortfolio = async () => {
   await connectMongo()
 
-  const architects = await Architect.find({}, { portfolio: 0 })
-  return architects as unknown as Omit<Architect, 'portfolio'>[]
+  const architects = await Architect.findAllWithoutPortfolio()
+  const serializeds = architects.map((architect) => architect.toJSON())
+
+  return serializeds
 }
 
 export const getArchitectById = async (id: string) => {

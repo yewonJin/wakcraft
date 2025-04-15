@@ -41,7 +41,7 @@ export default async function Page({
     <ContentDetail
       category="예능 눕프핵"
       isMobile={isMobile(userAgent)}
-      content={JSON.parse(JSON.stringify(eventNoobProHacker))}
+      content={eventNoobProHacker}
     />
   )
 }

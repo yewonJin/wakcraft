@@ -18,9 +18,7 @@ export default async function Page() {
 
   return (
     <Suspense>
-      <ArchitectMain
-        architects={JSON.parse(JSON.stringify(sortedArchitectsByTier))}
-      />
+      <ArchitectMain architects={sortedArchitectsByTier} />
     </Suspense>
   )
 }

@@ -41,7 +41,7 @@ export default async function Page({
     <ContentDetail
       category="눕프로해커"
       isMobile={isMobile(userAgent)}
-      content={JSON.parse(JSON.stringify(noobprohacker))}
+      content={noobprohacker}
     />
   )
 }

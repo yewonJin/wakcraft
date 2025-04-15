@@ -29,10 +29,11 @@ export const getNoobProHacker = async (episode: number) => {
 export const getNoobProHackers = async () => {
   await connectMongo()
 
-  const noobprohackers = (await NoobProHacker.find(
-    {},
-  ).lean()) as unknown as NoobProHacker[]
-  return noobprohackers
+  const noobprohackers = await NoobProHacker.find({})
+  const serializeds = noobprohackers?.map((noobprohacker) =>
+    noobprohacker.toJSON(),
+  )
+  return serializeds
 }
 
 export const getRecentNoobProHackers = async (length: number) => {

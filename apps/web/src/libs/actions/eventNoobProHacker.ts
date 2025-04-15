@@ -7,10 +7,12 @@ import EventNoobProHacker from '@/models/eventNoobProHacker'
 export const getEventNoobProHackers = async () => {
   await connectMongo()
 
-  const eventNoobProHackers = (await EventNoobProHacker.find(
-    {},
-  ).lean()) as unknown as EventNoobProHacker[]
-  return eventNoobProHackers
+  const eventNoobProHackers = await EventNoobProHacker.find({})
+  const serializeds = eventNoobProHackers.map((eventNoobProHacker) =>
+    eventNoobProHacker.toJSON(),
+  )
+
+  return serializeds
 }
 
 export const getEventNoobProHacker = async (episode: number) => {

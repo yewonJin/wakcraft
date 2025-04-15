@@ -54,10 +54,5 @@ export default async function Page({
 
   if (!architect) return <NotFound />
 
-  return (
-    <ArchitectDetail
-      architect={JSON.parse(JSON.stringify(architect))}
-      defaultView={view || 'grid'}
-    />
-  )
+  return <ArchitectDetail architect={architect} defaultView={view || 'grid'} />
 }
