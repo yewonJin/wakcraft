@@ -1,4 +1,5 @@
-import { AllTier, Architect } from '@repo/types'
+import { useQuery } from '@tanstack/react-query'
+import { AllTier } from '@repo/types'
 import { cn } from '@repo/utils'
 import { DESCRIPTION } from '@repo/constants'
 
@@ -6,17 +7,21 @@ import { TierBox } from '@/components/atoms'
 
 import { getTierTextColor } from '@/services/architect'
 import { groupArchitectTierBySeason } from '@/services/content'
+import { getArchitectsWithTier } from '@/libs/actions/architect'
 
 type Props = {
   currentSeason: number
-  architectsWithTier: Pick<Architect, '_id' | 'wakzooId' | 'tier'>[]
 }
 
-export function HomeSeasonInfoTierList({
-  currentSeason,
-  architectsWithTier,
-}: Props) {
+export function HomeSeasonInfoTierList({ currentSeason }: Props) {
+  const { data: architectsWithTier } = useQuery({
+    queryKey: ['architectsWithTier'],
+    queryFn: getArchitectsWithTier,
+  })
+
   const TIER_ORDER = ['눕', '계륵', '프로', '국밥', '해커']
+
+  if (!architectsWithTier) return null
 
   return (
     <div

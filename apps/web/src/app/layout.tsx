@@ -4,6 +4,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 
 import './globals.css'
 import { GlobalNav, ScrollToTop } from '@/components/organisms'
+import Providers from './provider'
 
 import { setInitialThemeMode } from '@/utils/theme'
 
@@ -25,11 +26,13 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: setInitialThemeMode }} />
       </head>
       <body className={`${NotoSansKR.className} antialiased`}>
-        <SpeedInsights />
-        <GoogleAnalytics gaId={process.env.GA_TRACKING_ID as string} />
-        <GlobalNav />
-        <ScrollToTop />
-        <main className="pt-16 pb-20 md:gap-40">{children}</main>
+        <Providers>
+          <SpeedInsights />
+          <GoogleAnalytics gaId={process.env.GA_TRACKING_ID as string} />
+          <GlobalNav />
+          <ScrollToTop />
+          <main className="pt-16 pb-20 md:gap-40">{children}</main>
+        </Providers>
       </body>
     </html>
   )

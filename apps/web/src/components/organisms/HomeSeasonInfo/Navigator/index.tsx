@@ -1,24 +1,22 @@
-import { PlacementTest } from '@repo/types'
 import { cn } from '@repo/utils'
 
 import { Button } from '@/components/atoms'
 
 type Props = {
-  placementTestsWithoutWorkInfo: Omit<PlacementTest, 'workInfo'>[]
+  seasons: number[]
   currentSeason: number
   onSeasonChange: (season: number) => void
 }
 
 export function HomeSeasonInfoNavigator({
-  placementTestsWithoutWorkInfo,
+  seasons,
   currentSeason,
   onSeasonChange,
 }: Props) {
   return (
     <div className="w-full overflow-x-scroll pb-4 md:w-auto md:overflow-auto md:pb-0">
       <div className="flex gap-4 md:flex-wrap md:gap-6">
-        {placementTestsWithoutWorkInfo
-          .map((x) => x.contentInfo.episode)
+        {seasons
           .sort((a, b) => b - a)
           .map((season) => (
             <Button

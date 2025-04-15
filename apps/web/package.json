@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^15.2.4",
+    "@tanstack/react-query": "^5.74.3",
     "@vercel/speed-insights": "^1.2.0",
     "lucide-react": "^0.483.0",
     "typescript-cookie": "^1.0.6"

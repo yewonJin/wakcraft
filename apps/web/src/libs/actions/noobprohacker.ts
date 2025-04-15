@@ -1,6 +1,7 @@
 'use server'
 
 import { connectMongo } from '@repo/database'
+import { ContentInfo, LineInfo } from '@repo/types'
 
 import NoobProHacker from '@/models/noobprohacker'
 
@@ -54,7 +55,10 @@ export const getSweepLines = async () => {
     model: 'Architect',
     select: 'minecraftId wakzooId',
   })
-
   const serializeds = JSON.parse(JSON.stringify(populated))
-  return serializeds
+
+  return serializeds as unknown as {
+    contentInfo: ContentInfo
+    workInfo: LineInfo
+  }[]
 }

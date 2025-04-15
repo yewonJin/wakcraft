@@ -1,26 +1,30 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useQuery } from '@tanstack/react-query'
 import { ChevronLeft } from 'lucide-react'
-import { LineInfo } from '@repo/types'
 import { cn, renamePngToWebp } from '@repo/utils'
 
 import { Tooltip } from '@/components/atoms'
+import { getSweepLines } from '@/libs/actions/noobprohacker'
 
-type HomeSweepLineProps = {
-  sweepLines: LineInfo[]
-}
+export function HomeSweepLine() {
+  const { data: sweepLines } = useQuery({
+    queryKey: ['sweepLines'],
+    queryFn: getSweepLines,
+  })
 
-export function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
   const [page, setPage] = useState(0)
 
   const moveToNextPage = () => {
-    setPage((prev) => (prev === sweepLines.length ? prev : prev + 1))
+    setPage((prev) => (prev === sweepLines!.length ? prev : prev + 1))
   }
 
   const moveToPrevPage = () => {
     setPage((prev) => (prev === 0 ? prev : prev - 1))
   }
+
+  if (!sweepLines) return null
 
   return (
     <div className="relative mt-32">
@@ -33,18 +37,14 @@ export function HomeSweepLine({ sweepLines }: HomeSweepLineProps) {
       <div className="flex flex-col">
         <div className="mb-4 flex gap-2">
           <span className="text-text-subtle text-lg">
-            {`${
-              sweepLines[page].entries[0].imageUrl
-                .split('/')
-                .at(-2)
-                ?.split('/')[0]
-            }회`}
-            :
+            {`${sweepLines[page].contentInfo.episode}회:`}
           </span>
-          <span className="text-xl font-medium">{sweepLines[page].title}</span>
+          <span className="text-xl font-medium">
+            {sweepLines[page].workInfo.title}
+          </span>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {sweepLines[page].entries.map((entry) => (
+          {sweepLines[page].workInfo.entries.map((entry) => (
             <div
               key={entry.imageUrl}
               className="group relative aspect-video md:aspect-3/4"

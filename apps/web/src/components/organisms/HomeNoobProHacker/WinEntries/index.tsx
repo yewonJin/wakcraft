@@ -1,20 +1,22 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useQuery } from '@tanstack/react-query'
 import { Link2 } from 'lucide-react'
-import { NoobProHacker } from '@repo/types'
 import { renamePngToWebp } from '@repo/utils'
 
 import { InfoBox } from '@/components/atoms'
 
 import { getHackerWinLine, getProWinLine } from '@/services/content'
+import { getRecentNoobProHackers } from '@/libs/actions/noobprohacker'
 
-type HomeRecentWinEntriesProps = {
-  recentNoobProHackers: NoobProHacker[]
-}
+export function HomeRecentWinEntries() {
+  const { data: recentNoobProHackers } = useQuery({
+    queryKey: ['recentNoobProHackers'],
+    queryFn: () => getRecentNoobProHackers(3),
+  })
 
-export function HomeRecentWinEntries({
-  recentNoobProHackers,
-}: HomeRecentWinEntriesProps) {
+  if (!recentNoobProHackers) return null
+
   return (
     <div className="mt-16">
       <h3 className="text-xl font-semibold md:text-3xl">최근 우승 작품</h3>
