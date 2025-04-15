@@ -2,6 +2,12 @@ import { CATEGORY } from '@repo/constants'
 
 export type Category = (typeof CATEGORY)[number]
 
+export type ArchitectId = {
+  _id: string
+  minecraftId: string
+  wakzooId: string
+}
+
 export type NoobProHacker = {
   _id: string
   contentInfo: ContentInfo
@@ -48,7 +54,7 @@ export type LineInfo = {
     tier: string
     title: string
     description: string | null
-    architectId: string[]
+    architectId: ArchitectId[]
     imageUrl: string
     youtubeUrl: string | null
     ranking: number
@@ -61,7 +67,7 @@ export type GridInfo = {
   order: number
   description: string | null
   title: string | null
-  architectId: string[]
+  architectId: ArchitectId[]
   imageUrl: string
   youtubeUrl: string | null
   ranking: number
