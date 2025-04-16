@@ -1,5 +1,12 @@
 import '@testing-library/jest-dom'
 import { TextEncoder, TextDecoder } from 'util'
 
-global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder
+Object.defineProperty(global, 'TextEncoder', {
+  value: TextEncoder,
+  writable: true,
+})
+
+Object.defineProperty(global, 'TextDecoder', {
+  value: TextDecoder,
+  writable: true,
+})
