@@ -1,7 +1,10 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import { LineEventNoobProHacker, NoobProHacker } from '@repo/types'
+import {
+  LineEventNoobProHackerMutation,
+  NoobProHackerMutation,
+} from '@repo/types'
 
 import Divider from '@/components/atoms/Divider'
 import ContentInfo from '@/components/molecules/ContentInfo'
@@ -11,13 +14,13 @@ import { useContentForm } from '@/hooks/useContentForm'
 import { convertLineContentArchitectId } from '@/services/content'
 import { useArchitectsStore } from '@/store/architectStore'
 
-type Props<T extends NoobProHacker | LineEventNoobProHacker> = {
+type Props<T extends NoobProHackerMutation | LineEventNoobProHackerMutation> = {
   action: (payload: T) => Promise<void>
   initialContent: T
 }
 
 export default function LineContentForm<
-  T extends NoobProHacker | LineEventNoobProHacker,
+  T extends NoobProHackerMutation | LineEventNoobProHackerMutation,
 >({ action, initialContent }: Props<T>) {
   const {
     content,
@@ -34,8 +37,8 @@ export default function LineContentForm<
     <form
       action={() =>
         action(
-          !Boolean(params.episode)
-            ? (convertLineContentArchitectId(architects, content) as T)
+          !Boolean(params?.episode)
+            ? convertLineContentArchitectId(architects, content)
             : content,
         )
       }

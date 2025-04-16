@@ -4,7 +4,6 @@ import mongoose from 'mongoose'
 import { connectMongo } from '@repo/database'
 
 import NoobProHacker from '@/models/noobprohacker'
-import Architect from '@/models/architect'
 import {
   convertNoobProHackerToPortfolioItems,
   hasEmptyArchitectId,
@@ -13,6 +12,11 @@ import {
   hasEmptyTitle,
   hasEmptyYoutubeUrl,
 } from '@/services/content'
+import {
+  pushToArchitectsPortfolio,
+  updateArchitectsPortfolio,
+} from '../processors/architect'
+import { NoobProHackerMutation } from '@repo/types'
 
 export const getNoobProHacker = async (episode: number) => {
   await connectMongo()
@@ -32,7 +36,7 @@ export const getNoobProHackerLatestEpisode = async () => {
   return noobprohacker?.contentInfo.episode || 0
 }
 
-export const postNoobProHacker = async (payload: NoobProHacker) => {
+export const postNoobProHacker = async (payload: NoobProHackerMutation) => {
   if (hasEmptyTitle(payload.workInfo)) {
     return console.log('작품명을 모두 입력해주세요')
   }
@@ -57,24 +61,9 @@ export const postNoobProHacker = async (payload: NoobProHacker) => {
       await NoobProHacker.create(payload)
 
       const portfolioItems = convertNoobProHackerToPortfolioItems(payload)
+      await pushToArchitectsPortfolio(portfolioItems)
 
-      // 건축가 포트폴리오에 반영
-      for (const { _id, portfolioItem } of portfolioItems) {
-        await Architect.pushToPortfolio(_id, portfolioItem)
-
-        if (portfolioItem.ranking === 1 && portfolioItem.type === '프로') {
-          await Architect.increaseProWin(_id)
-        }
-
-        if (portfolioItem.ranking === 1 && portfolioItem.type === '해커') {
-          await Architect.increaseHackerWin(_id)
-          await Architect.increaseWin(_id)
-        }
-
-        await Architect.increaseParticipation(_id)
-      }
-
-      console.log('눕프핵 추가 및 건축 포트폴리오 push 성공')
+      console.log('눕프로해커 및 건축가 포트폴리오 추가 성공')
     })
   } catch (error) {
     console.log('트랜잭션 실패:', error)
@@ -83,7 +72,7 @@ export const postNoobProHacker = async (payload: NoobProHacker) => {
   }
 }
 
-export const updateNoobProHacker = async (payload: NoobProHacker) => {
+export const updateNoobProHacker = async (payload: NoobProHackerMutation) => {
   if (hasEmptyYoutubeUrl(payload.workInfo)) {
     return console.log('유튜브 링크를 모두 입력해주세요')
   }
@@ -99,26 +88,9 @@ export const updateNoobProHacker = async (payload: NoobProHacker) => {
       )
 
       const portfolioItems = convertNoobProHackerToPortfolioItems(payload)
+      await updateArchitectsPortfolio(portfolioItems)
 
-      // 건축가 포트폴리오에 반영
-      for (const { _id, portfolioItem } of portfolioItems) {
-        await Architect.updatePortfolioYoutubeUrl(
-          _id,
-          portfolioItem.title as string,
-          portfolioItem.category,
-          portfolioItem.episode,
-          portfolioItem.youtubeUrl as string,
-        )
-        await Architect.updatePortfolioDescription(
-          _id,
-          portfolioItem.title as string,
-          portfolioItem.category,
-          portfolioItem.episode,
-          portfolioItem.description as string,
-        )
-      }
-
-      console.log('눕프핵 수정 및 건축 포트폴리오 수정 성공')
+      console.log('눕프로해커 및 건축가 포트폴리오 수정 성공')
     })
   } catch (error) {
     console.log('트랜잭션 실패:', error)

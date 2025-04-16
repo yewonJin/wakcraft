@@ -1,11 +1,11 @@
 import { useParams } from 'next/navigation'
-import { type ContentInfo } from '@repo/types'
+import { ContentInfoMutation } from '@repo/types'
 
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 
 type Props = {
-  contentInfo: ContentInfo
+  contentInfo: ContentInfoMutation
   onContentInfoChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -70,7 +70,7 @@ export default function ContentInfo({
             onChange={onContentInfoChange}
             tabIndex={1}
             value={contentInfo.youtubeUrl || ''}
-            disabled={!Boolean(params.episode)}
+            disabled={!Boolean(params?.episode)}
           />
         </div>
       </div>

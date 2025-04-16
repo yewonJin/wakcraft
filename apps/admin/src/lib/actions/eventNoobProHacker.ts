@@ -2,7 +2,11 @@
 
 import mongoose from 'mongoose'
 import { connectMongo } from '@repo/database'
-import { GridEventNoobProHacker, LineEventNoobProHacker } from '@repo/types'
+import {
+  EventNoobProHackerMutation,
+  GridEventNoobProHackerMutation,
+  LineEventNoobProHackerMutation,
+} from '@repo/types'
 
 import EventNoobProHacker from '@/models/eventNoobProHacker'
 import {
@@ -13,13 +17,16 @@ import {
   hasEmptyTitle,
   hasEmptyYoutubeUrl,
 } from '@/services/content'
-import Architect from '@/models/architect'
+import {
+  pushToArchitectsPortfolio,
+  updateArchitectsPortfolio,
+} from '../processors/architect'
 
 export const getEventNoobProHacker = async (episode: number) => {
   await connectMongo()
   const eventNoobProHacker = (await EventNoobProHacker.findOne({
     'contentInfo.episode': episode,
-  })) as LineEventNoobProHacker | GridEventNoobProHacker
+  })) as EventNoobProHackerMutation
 
   return eventNoobProHacker
 }
@@ -34,7 +41,7 @@ export const getEventNoobProHackerLatestEpisode = async () => {
 }
 
 export const postLineEventNoobProHacker = async (
-  payload: LineEventNoobProHacker,
+  payload: LineEventNoobProHackerMutation,
 ) => {
   if (hasEmptyTitle(payload.workInfo)) {
     return console.log('작품명을 모두 입력해주세요')
@@ -57,19 +64,9 @@ export const postLineEventNoobProHacker = async (
 
       const portfolioItems =
         convertLineEventNoobProHackerToPortfolioItems(payload)
+      await pushToArchitectsPortfolio(portfolioItems)
 
-      // 건축가 포트폴리오에 반영
-      for (const { _id, portfolioItem } of portfolioItems) {
-        await Architect.pushToPortfolio(_id, portfolioItem)
-
-        if (portfolioItem.ranking === 1) {
-          await Architect.increaseWin(_id)
-        }
-
-        await Architect.increaseParticipation(_id)
-      }
-
-      console.log('라인 이벤트 눕프핵 추가 및 건축 포트폴리오 push 성공')
+      console.log('라인 이벤트 눕프핵 및 건축 포트폴리오 push 성공')
     })
   } catch (error) {
     console.log('트랜잭션 실패:', error)
@@ -79,7 +76,7 @@ export const postLineEventNoobProHacker = async (
 }
 
 export const postGridEventNoobProHacker = async (
-  payload: GridEventNoobProHacker,
+  payload: GridEventNoobProHackerMutation,
 ) => {
   if (hasEmptyTitle(payload.workInfo)) {
     return console.log('설명을 모두 입력해주세요')
@@ -102,19 +99,9 @@ export const postGridEventNoobProHacker = async (
 
       const portfolioItems =
         convertGridEventNoobProHackerToPortfolioItems(payload)
+      await pushToArchitectsPortfolio(portfolioItems)
 
-      // 건축가 포트폴리오에 반영
-      for (const { _id, portfolioItem } of portfolioItems) {
-        await Architect.pushToPortfolio(_id, portfolioItem)
-
-        if (portfolioItem.ranking === 1) {
-          await Architect.increaseWin(_id)
-        }
-
-        await Architect.increaseParticipation(_id)
-      }
-
-      console.log('그리드 이벤트 눕프핵 추가 및 건축가 포트폴리오 push 성공')
+      console.log('그리드 이벤트 눕프핵 및 건축가 포트폴리오 push 성공')
     })
   } catch (error) {
     console.log('트랜잭션 실패:', error)
@@ -124,7 +111,7 @@ export const postGridEventNoobProHacker = async (
 }
 
 export const updateLineEventNoobProHacker = async (
-  payload: LineEventNoobProHacker,
+  payload: LineEventNoobProHackerMutation,
 ) => {
   if (hasEmptyYoutubeUrl(payload.workInfo)) {
     return console.log('유튜브 링크를 모두 입력해주세요')
@@ -142,26 +129,9 @@ export const updateLineEventNoobProHacker = async (
 
       const portfolioItems =
         convertLineEventNoobProHackerToPortfolioItems(payload)
+      await updateArchitectsPortfolio(portfolioItems)
 
-      // 건축가 포트폴리오에 반영
-      for (const { _id, portfolioItem } of portfolioItems) {
-        await Architect.updatePortfolioYoutubeUrl(
-          _id,
-          portfolioItem.title as string,
-          portfolioItem.category,
-          portfolioItem.episode,
-          portfolioItem.youtubeUrl as string,
-        )
-        await Architect.updatePortfolioDescription(
-          _id,
-          portfolioItem.title as string,
-          portfolioItem.category,
-          portfolioItem.episode,
-          portfolioItem.description as string,
-        )
-      }
-
-      console.log('라인 이벤트 눕프핵 수정 및 건축가 포트폴리오 수정 성공')
+      console.log('라인 이벤트 눕프핵 및 건축가 포트폴리오 수정 성공')
     })
   } catch (error) {
     console.log('트랜잭션 실패:', error)
@@ -171,7 +141,7 @@ export const updateLineEventNoobProHacker = async (
 }
 
 export const updateGridEventNoobProHacker = async (
-  payload: GridEventNoobProHacker,
+  payload: GridEventNoobProHackerMutation,
 ) => {
   if (hasEmptyYoutubeUrl(payload.workInfo)) {
     return console.log('유튜브 링크를 모두 입력해주세요')
@@ -189,26 +159,9 @@ export const updateGridEventNoobProHacker = async (
 
       const portfolioItems =
         convertGridEventNoobProHackerToPortfolioItems(payload)
+      await updateArchitectsPortfolio(portfolioItems)
 
-      // 건축가 포트폴리오에 반영
-      for (const { _id, portfolioItem } of portfolioItems) {
-        await Architect.updatePortfolioYoutubeUrl(
-          _id,
-          portfolioItem.title as string,
-          portfolioItem.category,
-          portfolioItem.episode,
-          portfolioItem.youtubeUrl as string,
-        )
-        await Architect.updatePortfolioDescription(
-          _id,
-          portfolioItem.title as string,
-          portfolioItem.category,
-          portfolioItem.episode,
-          portfolioItem.description as string,
-        )
-      }
-
-      console.log('그리드 이벤트 눕프핵 수정 및 건축가 포트폴리오 수정 성공')
+      console.log('그리드 이벤트 눕프핵 및 건축가 포트폴리오 수정 성공')
     })
   } catch (error) {
     console.log('트랜잭션 실패:', error)

@@ -1,5 +1,5 @@
 import { useParams } from 'next/navigation'
-import { type GridInfo } from '@repo/types'
+import { GridInfoMutation, type GridInfo } from '@repo/types'
 
 import Input from '@/components/atoms/Input'
 import SearchArchitectPanel from '../SearchArchitectPanel'
@@ -10,7 +10,7 @@ import { useArchitectsStore } from '@/store/architectStore'
 import { useModalStore } from '@/store/modalStore'
 
 type Props = {
-  entries: GridInfo[]
+  entries: GridInfoMutation[]
   onGridChange: (index: number, e: React.ChangeEvent<HTMLInputElement>) => void
   onGridImageUrlChange: (index: number, imageUrl: string | null) => void
   onGridArchitectIdChange: (index: number, architectIds: string[]) => void

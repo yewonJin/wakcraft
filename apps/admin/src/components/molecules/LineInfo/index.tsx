@@ -1,5 +1,5 @@
 import { useParams } from 'next/navigation'
-import { type LineInfo } from '@repo/types'
+import { LineInfoMutation } from '@repo/types'
 
 import Input from '@/components/atoms/Input'
 import ImageManager from '../ImageManager'
@@ -10,7 +10,7 @@ import { useArchitectsStore } from '@/store/architectStore'
 import { useModalStore } from '@/store/modalStore'
 
 type Props = {
-  lines: LineInfo[]
+  lines: LineInfoMutation[]
   onLineInfoChange: (
     index: number,
     e: React.ChangeEvent<HTMLInputElement>,
@@ -83,9 +83,9 @@ export default function LineInfo({
                   }
                 />
                 <div className="flex gap-2">
-                  {!Boolean(params.episode) ? (
+                  {!Boolean(params?.episode) ? (
                     <SearchArchitectPanel
-                      disabled={Boolean(params.episode)}
+                      disabled={Boolean(params?.episode)}
                       architects={architects}
                       onArchitectIdChange={(value: string[]) =>
                         onLineArchitectIdChange(lineIdx, entryIdx, value)
@@ -94,7 +94,7 @@ export default function LineInfo({
                   ) : (
                     <Input
                       value={entry.architectId[0]}
-                      disabled={Boolean(params.episode)}
+                      disabled={Boolean(params?.episode)}
                     />
                   )}
                   <Input
@@ -124,7 +124,7 @@ export default function LineInfo({
                   onChange={(e) => onEntryChange(lineIdx, entryIdx, e)}
                   placeholder="유튜브 링크"
                   value={entry.youtubeUrl || ''}
-                  disabled={!Boolean(params.episode)}
+                  disabled={!Boolean(params?.episode)}
                 />
               </div>
             ))}

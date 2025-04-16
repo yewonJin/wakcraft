@@ -1,10 +1,10 @@
 import { Model, model, models } from 'mongoose'
 
 import { architectSchema } from '@repo/schemas'
-import { type Tier, type Architect } from '@repo/types'
+import { type Tier, type Architect, ArchitectMutation } from '@repo/types'
 import { TIER_GROUP } from '@repo/constants'
 
-interface ArchitectModel extends Model<Architect> {
+interface ArchitectModel extends Model<ArchitectMutation> {
   updateWakzooId: (architectId: string, wakzooId: string) => Promise<void>
   updateCurTier: (architectId: string, tier: Tier) => Promise<void>
   updateSeasonTier: (
@@ -19,7 +19,7 @@ interface ArchitectModel extends Model<Architect> {
   increaseProWin: (architectId: string) => Promise<void>
   pushToPortfolio: (
     architectId: string,
-    payload: Architect['portfolio'][number],
+    payload: ArchitectMutation['portfolio'][number],
   ) => Promise<void>
   updatePortfolioYoutubeUrl: (
     architectId: string,

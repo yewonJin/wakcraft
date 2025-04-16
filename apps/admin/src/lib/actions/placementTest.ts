@@ -2,11 +2,15 @@
 
 import mongoose from 'mongoose'
 import { connectMongo } from '@repo/database'
-import { Tier } from '@repo/types'
 
 import PlacementTest from '@/models/placementTest'
 import Architect from '@/models/architect'
 import { convertPlacementTestToPortfolioItems } from '@/services/content'
+import {
+  pushToArchitectsPortfolio,
+  updateArchitectsTier,
+} from '../processors/architect'
+import { PlacementTestMutation } from '@repo/types'
 
 export const getPlacementTestLatestEpisode = async () => {
   await connectMongo()
@@ -17,7 +21,7 @@ export const getPlacementTestLatestEpisode = async () => {
   return placementTest?.contentInfo.episode || 0
 }
 
-export const postPlacementTest = async (payload: PlacementTest) => {
+export const postPlacementTest = async (payload: PlacementTestMutation) => {
   await connectMongo()
   const session = await mongoose.startSession()
 
@@ -31,23 +35,8 @@ export const postPlacementTest = async (payload: PlacementTest) => {
       await Architect.updateAllArchitectsTierToUnranked(
         payload.contentInfo.episode,
       )
-
-      // 건축가 포트폴리오에 반영
-      for (const { _id, portfolioItem } of portfolioItems) {
-        await Architect.pushToPortfolio(_id, portfolioItem)
-        await Architect.updateCurTier(_id, portfolioItem.title as Tier)
-        await Architect.updateSeasonTier(
-          _id,
-          portfolioItem.episode,
-          portfolioItem.title as Tier,
-        )
-
-        if (portfolioItem.ranking === 1) {
-          await Architect.increaseWin(_id)
-        }
-
-        await Architect.increaseParticipation(_id)
-      }
+      await pushToArchitectsPortfolio(portfolioItems)
+      await updateArchitectsTier(portfolioItems)
 
       console.log('배치고사 추가 및 건축 포트폴리오 push 성공')
     })

@@ -1,16 +1,19 @@
 'use client'
 
 import { Fragment } from 'react'
-import { GridEventNoobProHacker, LineEventNoobProHacker } from '@repo/types'
+import {
+  GridEventNoobProHackerMutation,
+  LineEventNoobProHackerMutation,
+} from '@repo/types'
 
 import LineContentForm from '@/components/organisms/LineContentForm'
 import GridContentForm from '@/components/organisms/GridContentForm'
 
 type Props = {
-  content: LineEventNoobProHacker | GridEventNoobProHacker
+  content: LineEventNoobProHackerMutation | GridEventNoobProHackerMutation
   actions: {
-    line: (payload: LineEventNoobProHacker) => Promise<void>
-    grid: (payload: GridEventNoobProHacker) => Promise<void>
+    line: (payload: LineEventNoobProHackerMutation) => Promise<void>
+    grid: (payload: GridEventNoobProHackerMutation) => Promise<void>
   }
 }
 
