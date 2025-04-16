@@ -2,6 +2,7 @@ import { model, models, Model, Document } from 'mongoose'
 
 import { noobprohackerSchema } from '@repo/schemas'
 import { ContentInfo, LineInfo, type NoobProHacker } from '@repo/types'
+import Architect from './architect'
 
 type NoobProHackerDocument = Document<unknown, object, NoobProHacker> &
   NoobProHacker &
@@ -27,7 +28,7 @@ NoobProHacker.findLatest = function () {
     })
     .populate({
       path: 'workInfo.entries.architectId',
-      model: 'Architect',
+      model: Architect as unknown as Model<Architect>,
       select: 'minecraftId wakzooId',
     })
 }
@@ -35,7 +36,7 @@ NoobProHacker.findLatest = function () {
 NoobProHacker.findByEpisode = function (episode) {
   return this.findOne({ 'contentInfo.episode': episode }).populate({
     path: 'workInfo.entries.architectId',
-    model: 'Architect',
+    model: Architect as unknown as Model<Architect>,
     select: 'minecraftId wakzooId',
   })
 }
@@ -46,7 +47,7 @@ NoobProHacker.findRecent = function (length) {
     .limit(length)
     .populate({
       path: 'workInfo.entries.architectId',
-      model: 'Architect',
+      model: Architect as unknown as Model<Architect>,
       select: 'minecraftId wakzooId',
     })
 }

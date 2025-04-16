@@ -2,6 +2,7 @@ import { Document, Model, model, models } from 'mongoose'
 
 import { placementTestSchema } from '@repo/schemas'
 import { type PlacementTest } from '@repo/types'
+import Architect from './architect'
 
 type PlacementTestDocument = Document<unknown, object, PlacementTest> &
   PlacementTest &
@@ -25,7 +26,7 @@ PlacementTest.findByEpisode = function (episode) {
     'contentInfo.episode': episode,
   }).populate({
     path: 'workInfo.architectId',
-    model: 'Architect',
+    model: Architect as unknown as Model<Architect>,
     select: 'minecraftId wakzooId',
   })
 }
