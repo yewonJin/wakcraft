@@ -6,12 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.772.0",
     "sharp": "^0.33.5",
     "uuid": "^11.1.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "mongodb-memory-server": "^10.1.4",
+    "ts-node": "^10.9.2"
+  }
 }
