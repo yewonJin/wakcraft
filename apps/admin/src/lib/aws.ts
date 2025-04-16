@@ -1,9 +1,10 @@
 import {
   S3Client,
-  PutObjectCommand,
   ListObjectsCommand,
-  PutObjectCommandInput,
   ListObjectsCommandInput,
+  ListObjectsCommandOutput,
+  PutObjectCommand,
+  PutObjectCommandInput,
 } from '@aws-sdk/client-s3'
 
 const awsAccessKey = process.env.MY_AWS_ACCESS_KEY as string
@@ -33,7 +34,9 @@ export const listS3Objects = async (content: AWSDirectory, episode: number) => {
     Prefix: `${content}/${episode}/`,
   }
 
-  const res = await s3.send(new ListObjectsCommand(params))
+  const res = (await s3.send(
+    new ListObjectsCommand(params),
+  )) as ListObjectsCommandOutput
   return res
 }
 
