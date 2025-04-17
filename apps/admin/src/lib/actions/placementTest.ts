@@ -32,9 +32,11 @@ export const postPlacementTest = async (payload: TPlacementTest) => {
       const portfolioItems = convertPlacementTestToPortfolioItems(payload)
 
       // 눕을 제외한 모든 건축가의 티어 초기화 및 tier에 '언랭' push
-      await Architect.updateAllArchitectsTierToUnranked(
+      await Architect.setAllArchitectsTierToUnrankedForSeason(
         payload.contentInfo.episode,
       )
+      await Architect.updateAllArchitectsTierToUnranked()
+
       await pushToArchitectsPortfolio(portfolioItems)
       await updateArchitectsTier(portfolioItems)
 

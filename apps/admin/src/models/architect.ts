@@ -12,7 +12,8 @@ interface ArchitectModel extends Model<ArchitectDocument> {
     season: number,
     tier: Tier,
   ) => Promise<void>
-  updateAllArchitectsTierToUnranked: (season: number) => Promise<void>
+  setAllArchitectsTierToUnrankedForSeason: (season: number) => Promise<void>
+  updateAllArchitectsTierToUnranked: () => Promise<void>
   increaseParticipation: (architectId: string) => Promise<void>
   increaseWin: (architectId: string) => Promise<void>
   increaseHackerWin: (architectId: string) => Promise<void>
@@ -47,33 +48,45 @@ architectSchema.statics.updateCurTier = function (
   )
 }
 
-architectSchema.statics.updateSeasonTier = function (
+architectSchema.statics.updateSeasonTier = async function (
   architectId: string,
   season: number,
   tier: Tier,
 ) {
+  await this.updateOne({ _id: architectId }, { $pop: { tier: 1 } })
+
   return this.updateOne(
     { _id: architectId },
     {
       $push: {
         tier: { season: season, isPortfolioPlacementTest: false, result: tier },
       },
-      $set: { curTier: '언랭' },
+      $set: { curTier: tier },
     },
   )
 }
 
-architectSchema.statics.updateAllArchitectsTierToUnranked = function (
-  season: number,
+architectSchema.statics.setAllArchitectsTierToUnrankedForSeason = function (
+  season,
 ) {
+  return this.updateMany(
+    {},
+    {
+      $push: {
+        tier: {
+          season: season,
+          isPortfolioPlacementTest: false,
+          result: '언랭',
+        },
+      },
+    },
+  )
+}
+
+architectSchema.statics.updateAllArchitectsTierToUnranked = function () {
   return this.updateMany(
     { curTier: { $nin: TIER_GROUP['눕'] } },
     {
-      $push: {
-        season: season,
-        isPortfolioPlacementTest: false,
-        result: '언랭',
-      },
       $set: { curTier: '언랭' },
     },
   )
