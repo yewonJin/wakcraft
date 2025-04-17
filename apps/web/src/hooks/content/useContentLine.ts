@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import { LineEventNoobProHacker, NoobProHacker } from '@repo/types'
+import {
+  PopulatedNoobProHacker,
+  PopulatedLineEventNoobProHacker,
+} from '@/types/content'
 
 export const useContentLine = (
-  content: NoobProHacker | LineEventNoobProHacker,
+  content: PopulatedNoobProHacker | PopulatedLineEventNoobProHacker,
 ) => {
   const [page, setPage] = useState(new Array(content.workInfo.length).fill(0))
 

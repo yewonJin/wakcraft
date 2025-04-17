@@ -1,17 +1,20 @@
-import {
-  Category,
-  EventNoobProHacker,
-  NoobProHacker,
-  PlacementTest,
-} from '@repo/types'
+import { Category } from '@repo/types'
 
 import { ContentYoutubeLink } from '@/components/atoms'
 import { ContentDetailTitle } from '@/components/molecules'
 import { ContentGrid, ContentLine } from '@/components/organisms'
+import {
+  PopulatedNoobProHacker,
+  PopulatedEventNoobProHacker,
+  PopulatedPlacementTest,
+} from '@/types/content'
 
 type Props = {
   category: Category
-  content: NoobProHacker | EventNoobProHacker | PlacementTest
+  content:
+    | PopulatedNoobProHacker
+    | PopulatedEventNoobProHacker
+    | PopulatedPlacementTest
   isMobile: boolean
 }
 
@@ -19,15 +22,18 @@ export default function ContentDetail({ category, content, isMobile }: Props) {
   const renderContent = () => {
     if (category === '눕프로해커') {
       return (
-        <ContentLine isMobile={isMobile} content={content as NoobProHacker} />
+        <ContentLine
+          isMobile={isMobile}
+          content={content as PopulatedNoobProHacker}
+        />
       )
     }
 
     if (category === '배치고사') {
-      return <ContentGrid content={content as PlacementTest} />
+      return <ContentGrid content={content as PopulatedPlacementTest} />
     }
 
-    const eventContent = content as EventNoobProHacker
+    const eventContent = content as PopulatedEventNoobProHacker
     return eventContent.type === 'grid' ? (
       <ContentGrid content={eventContent} />
     ) : (

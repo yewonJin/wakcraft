@@ -1,10 +1,10 @@
-import { NoobProHacker } from '@repo/types'
 import { cn } from '@repo/utils'
 
 import { Button } from '@/components/atoms'
+import { PopulatedNoobProHacker } from '@/types/content'
 
 type Props = {
-  latestNoobProHacker: NoobProHacker
+  latestNoobProHacker: PopulatedNoobProHacker
   carouselIndex: number
   onCategoryClick: (index: number) => void
   onMouseOver: () => void

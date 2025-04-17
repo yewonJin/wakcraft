@@ -1,16 +1,16 @@
 import { Schema } from 'mongoose'
 
-import { Architect, PlacementTestTierInfo } from '@repo/types'
+import { ArchitectDocument, PlacementTestTierInfoDoucment } from '@repo/types'
 import { ALL_TIER, TIER } from '@repo/constants'
 import { PortfolioItemSchema } from './shared'
 
-const tierSchema = new Schema<PlacementTestTierInfo>({
+const tierSchema = new Schema<PlacementTestTierInfoDoucment>({
   season: { type: Number },
   isPortfolioPlacementTest: { type: Boolean },
   result: { type: String, enum: ALL_TIER },
 })
 
-export const architectSchema = new Schema<Architect>(
+export const architectSchema = new Schema<ArchitectDocument>(
   {
     minecraftId: {
       type: String,

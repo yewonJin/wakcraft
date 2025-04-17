@@ -1,11 +1,13 @@
 'use client'
 
-import { GridEventNoobProHacker, PlacementTest } from '@repo/types'
-
 import { ContentGridItem } from './Item'
+import {
+  PopulatedGridEventNoobProHacker,
+  PopulatedPlacementTest,
+} from '@/types/content'
 
 type Props = {
-  content: GridEventNoobProHacker | PlacementTest
+  content: PopulatedGridEventNoobProHacker | PopulatedPlacementTest
 }
 
 export default function ContentGrid({ content }: Props) {

@@ -1,11 +1,11 @@
 import { useParams } from 'next/navigation'
-import { ContentInfoMutation } from '@repo/types'
+import { type ContentInfo } from '@repo/types'
 
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 
 type Props = {
-  contentInfo: ContentInfoMutation
+  contentInfo: ContentInfo
   onContentInfoChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 

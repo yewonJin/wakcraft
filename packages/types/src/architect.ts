@@ -1,7 +1,7 @@
+import { HydratedDocument } from 'mongoose'
 import { AllTier, Tier } from './tier'
 
 export type Architect = {
-  _id: string
   minecraftId: string
   wakzooId: string
   tier: PlacementTestTierInfo[]
@@ -23,7 +23,6 @@ export type PlacementTestTierInfo = {
 }
 
 export type PortfolioItem = {
-  _id: string
   type: string | null
   category: string
   episode: number
@@ -34,27 +33,15 @@ export type PortfolioItem = {
   date: string
   description: string | null
 }
-
 export interface SearchedArchitect extends Architect {
   minecraftIdIndexArr: number[]
   wakzooIdIndexArr: number[]
 }
 
-// Mutation(create, update) 전용 타입
+// Mongoose Document 타입
+export type ArchitectDocument = HydratedDocument<Architect>
 
-export type PortfolioItemMutation = Omit<PortfolioItem, '_id'>
+export type PortfolioItemDocument = HydratedDocument<PortfolioItem>
 
-export type ArchitectMutation = {
-  minecraftId: string
-  wakzooId: string
-  tier: PlacementTestTierInfo[]
-  curTier: Tier
-  wakzooLink: string
-  statistics: {
-    win: number
-    hackerWin: number
-    proWin: number
-    participation: number
-  }
-  portfolio: PortfolioItemMutation[]
-}
+export type PlacementTestTierInfoDoucment =
+  HydratedDocument<PlacementTestTierInfo>

@@ -10,7 +10,7 @@ import {
   pushToArchitectsPortfolio,
   updateArchitectsTier,
 } from '../processors/architect'
-import { PlacementTestMutation } from '@repo/types'
+import { PlacementTest as TPlacementTest } from '@repo/types'
 
 export const getPlacementTestLatestEpisode = async () => {
   await connectMongo()
@@ -21,7 +21,7 @@ export const getPlacementTestLatestEpisode = async () => {
   return placementTest?.contentInfo.episode || 0
 }
 
-export const postPlacementTest = async (payload: PlacementTestMutation) => {
+export const postPlacementTest = async (payload: TPlacementTest) => {
   await connectMongo()
   const session = await mongoose.startSession()
 

@@ -1,15 +1,12 @@
 import { Schema } from 'mongoose'
 import {
-  ContentInfo,
-  EventNoobProHacker,
-  GridInfo,
-  LineInfo,
-  NoobProHacker,
-  PlacementTest,
-  PortfolioItem,
+  ContentInfoDocument,
+  GridInfoDocument,
+  LineInfoDocument,
+  PortfolioItemDocument,
 } from '@repo/types'
 
-export const PortfolioItemSchema = new Schema<PortfolioItem>({
+export const PortfolioItemSchema = new Schema<PortfolioItemDocument>({
   type: { type: String },
   category: { type: String, required: true },
   episode: { type: Number, required: true },
@@ -21,7 +18,7 @@ export const PortfolioItemSchema = new Schema<PortfolioItem>({
   description: { type: String },
 })
 
-export const contentInfoSchema = new Schema<ContentInfo>({
+export const contentInfoSchema = new Schema<ContentInfoDocument>({
   episode: { type: Number, required: true, unique: true },
   title: { type: String, required: true },
   date: { type: String, required: true, default: new Date().toISOString() },
@@ -29,7 +26,7 @@ export const contentInfoSchema = new Schema<ContentInfo>({
   isTribute: { type: Boolean },
 })
 
-export const lineInfoSchema = new Schema<LineInfo>({
+export const lineInfoSchema = new Schema<LineInfoDocument>({
   title: { type: String, required: true },
   ranking: { type: Number, default: 0 },
   entries: [
@@ -45,7 +42,7 @@ export const lineInfoSchema = new Schema<LineInfo>({
   ],
 })
 
-export const gridInfoSchema = new Schema<GridInfo>({
+export const gridInfoSchema = new Schema<GridInfoDocument>({
   order: { type: Number, required: true },
   description: { type: String },
   architectId: [{ type: Schema.Types.ObjectId, ref: 'Architect' }],

@@ -1,14 +1,14 @@
 import {
-  ContentInfoMutation,
-  GridEventNoobProHackerMutation,
-  GridInfoMutation,
-  LineEventNoobProHackerMutation,
-  LineInfoMutation,
-  NoobProHackerMutation,
-  PlacementTestMutation,
-  PortfolioItemMutation,
+  ContentInfo,
+  GridEventNoobProHacker,
+  GridInfo,
+  LineEventNoobProHacker,
+  LineInfo,
+  NoobProHacker,
+  PlacementTest,
+  PortfolioItem,
 } from '@repo/types'
-import { ArchitectInfo } from '@/store/architectStore'
+import { ArchitectIdInfo } from '@/store/architectStore'
 
 // 함수
 export const makeInitialNoobProHackerContent = (
@@ -17,7 +17,7 @@ export const makeInitialNoobProHackerContent = (
   entryLength: number,
   tiers: string[],
 ) => {
-  const noobprohacker: NoobProHackerMutation = {
+  const noobprohacker: NoobProHacker = {
     contentInfo: makeInitialContentInfo(nextEpisode, '자유'),
     workInfo: Array.from({ length: workInfoLength }, () =>
       makeInitialLineInfo(entryLength, tiers),
@@ -33,7 +33,7 @@ export const makeInitialLineEventNoobProHackerContent = (
   entryLength: number,
   tiers: string[],
 ) => {
-  const lineEventNoobProHacker: LineEventNoobProHackerMutation = {
+  const lineEventNoobProHacker: LineEventNoobProHacker = {
     type: 'line',
     contentInfo: makeInitialContentInfo(nextEpisode, ''),
     workInfo: Array.from({ length: workInfoLength }, () =>
@@ -48,7 +48,7 @@ export const makeInitialGridEventNoobProHackerContent = (
   nextEpisode: number,
   workInfoLength: number,
 ) => {
-  const gridEventNoobProHacker: GridEventNoobProHackerMutation = {
+  const gridEventNoobProHacker: GridEventNoobProHacker = {
     type: 'grid',
     contentInfo: makeInitialContentInfo(nextEpisode, ''),
     workInfo: Array.from({ length: workInfoLength }, () =>
@@ -63,7 +63,7 @@ export const makeInitialPlacmentTestContent = (
   nextEpisode: number,
   imageUrls: string[],
 ) => {
-  const placementTest: PlacementTestMutation = {
+  const placementTest: PlacementTest = {
     contentInfo: makeInitialContentInfo(nextEpisode, ''),
     workInfo: imageUrls.map((imageUrl) => ({
       ...makeInitialGridInfo(),
@@ -76,7 +76,7 @@ export const makeInitialPlacmentTestContent = (
 }
 
 export const makeInitialContentInfo = (nextEpisode: number, title: string) => {
-  const contentInfo: ContentInfoMutation = {
+  const contentInfo: ContentInfo = {
     episode: nextEpisode,
     date: new Date().toISOString().split('T')[0],
     title: title,
@@ -88,7 +88,7 @@ export const makeInitialContentInfo = (nextEpisode: number, title: string) => {
 }
 
 export const makeInitialLineInfo = (entryLength: number, tiers: string[]) => {
-  const lineInfo: LineInfoMutation = {
+  const lineInfo: LineInfo = {
     title: '',
     ranking: 0,
     entries: Array.from({ length: entryLength }, (_, i) =>
@@ -100,7 +100,7 @@ export const makeInitialLineInfo = (entryLength: number, tiers: string[]) => {
 }
 
 export const makeInitialEntry = (tier: string) => {
-  const entry: LineInfoMutation['entries'][number] = {
+  const entry: LineInfo['entries'][number] = {
     tier: tier,
     title: '',
     description: '',
@@ -114,7 +114,7 @@ export const makeInitialEntry = (tier: string) => {
 }
 
 export const makeInitialGridInfo = () => {
-  const gridInfo: GridInfoMutation = {
+  const gridInfo: GridInfo = {
     order: 0,
     description: '',
     architectId: [],
@@ -128,9 +128,9 @@ export const makeInitialGridInfo = () => {
 }
 
 export const convertLineContentArchitectId = <
-  T extends NoobProHackerMutation | LineEventNoobProHackerMutation,
+  T extends NoobProHacker | LineEventNoobProHacker,
 >(
-  architects: ArchitectInfo[],
+  architects: ArchitectIdInfo[],
   payload: T,
 ): T => {
   return {
@@ -152,9 +152,9 @@ export const convertLineContentArchitectId = <
 }
 
 export const convertGridContentArchitectId = <
-  T extends GridEventNoobProHackerMutation | PlacementTestMutation,
+  T extends GridEventNoobProHacker | PlacementTest,
 >(
-  architects: ArchitectInfo[],
+  architects: ArchitectIdInfo[],
   payload: T,
 ): T => {
   return {
@@ -173,16 +173,16 @@ export const convertGridContentArchitectId = <
 }
 
 export const convertNoobProHackerToPortfolioItems = (
-  payload: NoobProHackerMutation,
+  payload: NoobProHacker,
 ) => {
   const portfolioItems: {
     _id: string
-    portfolioItem: PortfolioItemMutation
+    portfolioItem: PortfolioItem
   }[] = []
 
   payload.workInfo.forEach((line) => {
     line.entries.forEach((entry) => {
-      const portfolioItem: PortfolioItemMutation = {
+      const portfolioItem: PortfolioItem = {
         category: '눕프로해커',
         episode: payload.contentInfo.episode,
         date: payload.contentInfo.date,
@@ -204,16 +204,16 @@ export const convertNoobProHackerToPortfolioItems = (
 }
 
 export const convertLineEventNoobProHackerToPortfolioItems = (
-  payload: LineEventNoobProHackerMutation,
+  payload: LineEventNoobProHacker,
 ) => {
   const portfolioItems: {
     _id: string
-    portfolioItem: PortfolioItemMutation
+    portfolioItem: PortfolioItem
   }[] = []
 
   payload.workInfo.forEach((line) => {
     line.entries.forEach((entry) => {
-      const portfolioItem: PortfolioItemMutation = {
+      const portfolioItem: PortfolioItem = {
         category: payload.contentInfo.title,
         episode: payload.contentInfo.episode,
         date: payload.contentInfo.date,
@@ -235,15 +235,15 @@ export const convertLineEventNoobProHackerToPortfolioItems = (
 }
 
 export const convertGridEventNoobProHackerToPortfolioItems = (
-  payload: GridEventNoobProHackerMutation,
+  payload: GridEventNoobProHacker,
 ) => {
   const portfolioItems: {
     _id: string
-    portfolioItem: PortfolioItemMutation
+    portfolioItem: PortfolioItem
   }[] = []
 
   payload.workInfo.forEach((entry) => {
-    const portfolioItem: PortfolioItemMutation = {
+    const portfolioItem: PortfolioItem = {
       category: payload.contentInfo.title,
       episode: payload.contentInfo.episode,
       date: payload.contentInfo.date,
@@ -264,15 +264,15 @@ export const convertGridEventNoobProHackerToPortfolioItems = (
 }
 
 export const convertPlacementTestToPortfolioItems = (
-  payload: PlacementTestMutation,
+  payload: PlacementTest,
 ) => {
   const portfolioItems: {
     _id: string
-    portfolioItem: PortfolioItemMutation
+    portfolioItem: PortfolioItem
   }[] = []
 
   payload.workInfo.forEach((entry) => {
-    const portfolioItem: PortfolioItemMutation = {
+    const portfolioItem: PortfolioItem = {
       category: '배치고사',
       episode: payload.contentInfo.episode,
       date: payload.contentInfo.date,
@@ -292,9 +292,7 @@ export const convertPlacementTestToPortfolioItems = (
   return portfolioItems
 }
 
-export const hasEmptyImageUrl = (
-  workInfo: LineInfoMutation[] | GridInfoMutation[],
-) => {
+export const hasEmptyImageUrl = (workInfo: LineInfo[] | GridInfo[]) => {
   return workInfo.some((item) => {
     if ('entries' in item) {
       return item.entries.some((entry) => entry.imageUrl === '')
@@ -304,9 +302,7 @@ export const hasEmptyImageUrl = (
   })
 }
 
-export const hasEmptyArchitectId = (
-  workInfo: LineInfoMutation[] | GridInfoMutation[],
-) => {
+export const hasEmptyArchitectId = (workInfo: LineInfo[] | GridInfo[]) => {
   return workInfo.some((item) => {
     if ('entries' in item) {
       return item.entries.some(
@@ -319,24 +315,21 @@ export const hasEmptyArchitectId = (
   })
 }
 
-export const hasEmptyEntryRanking = (workInfo: LineInfoMutation[]) =>
+export const hasEmptyEntryRanking = (workInfo: LineInfo[]) =>
   workInfo.some((item) =>
     item.entries.some((entry) => entry.tier !== '눕' && entry.ranking === 0),
   )
 
-export const hasEmptyOrder = (workInfo: GridInfoMutation[]) =>
+export const hasEmptyOrder = (workInfo: GridInfo[]) =>
   workInfo.some((item) => item.order === 0 || item.order === null)
 
-export const hasEmptyDescription = (workInfo: GridInfoMutation[]) =>
+export const hasEmptyDescription = (workInfo: GridInfo[]) =>
   workInfo.some((item) => item.description === '')
 
-export const hasEmptyTitle = (
-  workInfo: LineInfoMutation[] | GridInfoMutation[],
-) => workInfo.some((item) => item.title === '' || item.title === null)
+export const hasEmptyTitle = (workInfo: LineInfo[] | GridInfo[]) =>
+  workInfo.some((item) => item.title === '' || item.title === null)
 
-export const hasEmptyYoutubeUrl = (
-  workInfo: LineInfoMutation[] | GridInfoMutation[],
-) => {
+export const hasEmptyYoutubeUrl = (workInfo: LineInfo[] | GridInfo[]) => {
   return workInfo.some((item) => {
     if ('entries' in item) {
       return item.entries.some(

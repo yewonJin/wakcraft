@@ -1,5 +1,5 @@
 import { useParams } from 'next/navigation'
-import { LineInfoMutation } from '@repo/types'
+import { type LineInfo } from '@repo/types'
 
 import Input from '@/components/atoms/Input'
 import ImageManager from '../ImageManager'
@@ -10,7 +10,7 @@ import { useArchitectsStore } from '@/store/architectStore'
 import { useModalStore } from '@/store/modalStore'
 
 type Props = {
-  lines: LineInfoMutation[]
+  lines: LineInfo[]
   onLineInfoChange: (
     index: number,
     e: React.ChangeEvent<HTMLInputElement>,

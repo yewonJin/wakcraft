@@ -1,14 +1,14 @@
 import { create } from 'zustand'
 
-export type ArchitectInfo = {
+export type ArchitectIdInfo = {
   _id: string
   minecraftId: string
   wakzooId: string
 }
 
 interface ArchitectsState {
-  architects: ArchitectInfo[]
-  setArchitects: (data: ArchitectInfo[]) => void
+  architects: ArchitectIdInfo[]
+  setArchitects: (data: ArchitectIdInfo[]) => void
 }
 
 export const useArchitectsStore = create<ArchitectsState>((set) => ({

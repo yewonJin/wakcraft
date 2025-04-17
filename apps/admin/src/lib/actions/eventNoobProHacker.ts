@@ -2,11 +2,7 @@
 
 import mongoose from 'mongoose'
 import { connectMongo } from '@repo/database'
-import {
-  EventNoobProHackerMutation,
-  GridEventNoobProHackerMutation,
-  LineEventNoobProHackerMutation,
-} from '@repo/types'
+import { GridEventNoobProHacker, LineEventNoobProHacker } from '@repo/types'
 
 import EventNoobProHacker from '@/models/eventNoobProHacker'
 import {
@@ -26,7 +22,7 @@ export const getEventNoobProHacker = async (episode: number) => {
   await connectMongo()
   const eventNoobProHacker = (await EventNoobProHacker.findOne({
     'contentInfo.episode': episode,
-  })) as EventNoobProHackerMutation
+  })) as typeof EventNoobProHacker
 
   return eventNoobProHacker
 }
@@ -41,7 +37,7 @@ export const getEventNoobProHackerLatestEpisode = async () => {
 }
 
 export const postLineEventNoobProHacker = async (
-  payload: LineEventNoobProHackerMutation,
+  payload: LineEventNoobProHacker,
 ) => {
   if (hasEmptyTitle(payload.workInfo)) {
     return console.log('작품명을 모두 입력해주세요')
@@ -76,7 +72,7 @@ export const postLineEventNoobProHacker = async (
 }
 
 export const postGridEventNoobProHacker = async (
-  payload: GridEventNoobProHackerMutation,
+  payload: GridEventNoobProHacker,
 ) => {
   if (hasEmptyTitle(payload.workInfo)) {
     return console.log('설명을 모두 입력해주세요')
@@ -111,7 +107,7 @@ export const postGridEventNoobProHacker = async (
 }
 
 export const updateLineEventNoobProHacker = async (
-  payload: LineEventNoobProHackerMutation,
+  payload: LineEventNoobProHacker,
 ) => {
   if (hasEmptyYoutubeUrl(payload.workInfo)) {
     return console.log('유튜브 링크를 모두 입력해주세요')
@@ -141,7 +137,7 @@ export const updateLineEventNoobProHacker = async (
 }
 
 export const updateGridEventNoobProHacker = async (
-  payload: GridEventNoobProHackerMutation,
+  payload: GridEventNoobProHacker,
 ) => {
   if (hasEmptyYoutubeUrl(payload.workInfo)) {
     return console.log('유튜브 링크를 모두 입력해주세요')

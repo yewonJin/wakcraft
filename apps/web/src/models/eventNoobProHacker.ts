@@ -1,30 +1,27 @@
-import { model, models, Model, Document } from 'mongoose'
+import { model, models, Model } from 'mongoose'
 
 import {
   eventNoobProHackerSchema,
   gridInfoSchema,
   lineInfoSchema,
 } from '@repo/schemas'
-import { type EventNoobProHacker } from '@repo/types'
+import { EventNoobProHackerDocument } from '@repo/types'
 import Architect from './architect'
+import {
+  PopulatedEventNoobProHackerDocument,
+  PopulatedGridEventNoobProHackerDocument,
+  PopulatedLineEventNoobProHackerDocument,
+} from '@/types/content'
 
-type EventNoobProHackerDocument = Document<
-  unknown,
-  object,
-  EventNoobProHacker
-> &
-  EventNoobProHacker &
-  Required<{ _id: string }>
-
-interface EventNoobProHackerModel extends Model<EventNoobProHacker> {
+interface EventNoobProHackerModel extends Model<EventNoobProHackerDocument> {
   findPopluatedOne: (
     episode: number,
-  ) => Promise<EventNoobProHackerDocument | null>
+  ) => Promise<PopulatedEventNoobProHackerDocument | null>
 }
 
 const EventNoobProHacker =
   (models['EventNoobProHacker'] as unknown as EventNoobProHackerModel) ||
-  model<EventNoobProHacker, EventNoobProHackerModel>(
+  model<EventNoobProHackerDocument, EventNoobProHackerModel>(
     'EventNoobProHacker',
     eventNoobProHackerSchema,
   )
@@ -45,18 +42,18 @@ EventNoobProHacker.findPopluatedOne = async function (episode) {
   if (!doc) return null
 
   return doc.type === 'line'
-    ? doc.populate({
+    ? (doc.populate({
         path: 'workInfo.entries.architectId',
         model: Architect as unknown as Model<Architect>,
         select: 'minecraftId wakzooId',
         strictPopulate: false,
-      })
-    : doc.populate({
+      }) as unknown as Promise<PopulatedLineEventNoobProHackerDocument>)
+    : (doc.populate({
         path: 'workInfo.architectId',
         model: Architect as unknown as Model<Architect>,
         select: 'minecraftId wakzooId',
         strictPopulate: false,
-      })
+      }) as unknown as Promise<PopulatedGridEventNoobProHackerDocument>)
 }
 
 export default EventNoobProHacker

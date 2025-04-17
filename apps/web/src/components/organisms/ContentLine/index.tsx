@@ -1,7 +1,5 @@
 'use client'
 
-import { LineEventNoobProHacker, NoobProHacker } from '@repo/types'
-
 import {
   CarouselContainer,
   CarouselMobileContainer,
@@ -11,10 +9,14 @@ import { ContentLineInfo } from './Info'
 import { ContentLineItem } from './Item'
 
 import { useContentLine } from '@/hooks'
+import {
+  PopulatedLineEventNoobProHacker,
+  PopulatedNoobProHacker,
+} from '@/types/content'
 
 type Props = {
   isMobile: boolean
-  content: NoobProHacker | LineEventNoobProHacker
+  content: PopulatedNoobProHacker | PopulatedLineEventNoobProHacker
 }
 
 export default function ContentLine({ isMobile, content }: Props) {

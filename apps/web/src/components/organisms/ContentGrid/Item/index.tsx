@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { GridInfo } from '@repo/types'
 import { renamePngToWebp } from '@repo/utils'
 
 import { InfoBox, Tooltip } from '@/components/atoms'
 
-export function ContentGridItem({ entry }: { entry: GridInfo }) {
+import { PopulatedGridInfo } from '@/types/content'
+
+export function ContentGridItem({ entry }: { entry: PopulatedGridInfo }) {
   return (
     <div
       onClick={() => {

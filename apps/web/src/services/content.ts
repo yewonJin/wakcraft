@@ -1,3 +1,4 @@
+import { PopulatedNoobProHacker } from '@/types/content'
 import { ALL_TIER_GROUP } from '@repo/constants'
 import {
   AllTier,
@@ -9,17 +10,17 @@ import {
   PlacementTest,
 } from '@repo/types'
 
-export const getWinnerLineIndex = (noobprohacker: NoobProHacker) => {
+export const getWinnerLineIndex = (noobprohacker: PopulatedNoobProHacker) => {
   return noobprohacker.workInfo.findIndex((line) => line.ranking === 1)
 }
 
-export const getHackerWinLine = (noobprohacker: NoobProHacker) => {
+export const getHackerWinLine = (noobprohacker: PopulatedNoobProHacker) => {
   return noobprohacker.workInfo.find((line) =>
     line.entries.find((entry) => entry.tier === '해커' && entry.ranking === 1),
   )
 }
 
-export const getProWinLine = (noobprohacker: NoobProHacker) => {
+export const getProWinLine = (noobprohacker: PopulatedNoobProHacker) => {
   return noobprohacker.workInfo.find((line) =>
     line.entries.find((entry) => entry.tier === '프로' && entry.ranking === 1),
   )

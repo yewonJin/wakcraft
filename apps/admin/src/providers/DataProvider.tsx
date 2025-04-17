@@ -2,13 +2,13 @@
 
 import { Fragment, useEffect } from 'react'
 
-import { useArchitectsStore, ArchitectInfo } from '@/store/architectStore'
+import { useArchitectsStore, ArchitectIdInfo } from '@/store/architectStore'
 import { AWS_BASE_URL, AWSDirectory } from '@/lib/aws'
 import { fetchS3Images } from '@/lib/actions/aws'
 import { useContentStore } from '@/store/contentStore'
 
 type Props = {
-  architects: ArchitectInfo[]
+  architects: ArchitectIdInfo[]
   category: AWSDirectory
   episode: number
   children: React.ReactNode

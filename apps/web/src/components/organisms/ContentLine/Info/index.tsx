@@ -1,10 +1,10 @@
-import { LineInfo } from '@repo/types'
+import { PopulatedLineInfo } from '@/types/content'
 
 export function ContentLineInfo({
   line,
   lineIndex,
 }: {
-  line: LineInfo
+  line: PopulatedLineInfo
   lineIndex: number
 }) {
   return (

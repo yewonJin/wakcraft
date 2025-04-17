@@ -1,13 +1,9 @@
-import { Document, Model, model, models } from 'mongoose'
+import { Model, model, models } from 'mongoose'
 
 import { architectSchema } from '@repo/schemas'
-import { type Architect } from '@repo/types'
+import { ArchitectDocument, type Architect } from '@repo/types'
 
-type ArchitectDocument = Document<unknown, object, Architect> &
-  Architect &
-  Required<{ _id: string }>
-
-interface ArchitectModel extends Model<Architect> {
+interface ArchitectModel extends Model<ArchitectDocument> {
   findAllWithoutPortfolio: () => Promise<ArchitectDocument[]>
   findByArchitectId: (_id: string) => Promise<ArchitectDocument | null>
   findAllWithTier: () => Promise<
@@ -17,7 +13,7 @@ interface ArchitectModel extends Model<Architect> {
 
 const Architect =
   (models['Architect'] as unknown as ArchitectModel) ||
-  model<Architect, ArchitectModel>('Architect', architectSchema)
+  model<ArchitectDocument, ArchitectModel>('Architect', architectSchema)
 
 Architect.findAllWithoutPortfolio = function () {
   return this.find({}, { portfolio: 0 })

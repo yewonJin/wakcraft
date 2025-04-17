@@ -1,8 +1,8 @@
-import { Architect } from '@repo/types'
+import { ArchitectIdInfo } from '@/store/architectStore'
 import { fuzzyMatcher } from '@repo/utils'
 
 type Props = {
-  architects: Pick<Architect, 'minecraftId' | 'wakzooId' | '_id'>[]
+  architects: ArchitectIdInfo[]
   input: string
 }
 

@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { type Architect } from '@repo/types'
 
 import Input from '@/components/atoms/Input'
 import { useSearchArchitect } from '@/hooks/useSearchArchitect'
+import { ArchitectIdInfo } from '@/store/architectStore'
 
 type Props = {
   disabled?: boolean
-  architects: Pick<Architect, 'minecraftId' | 'wakzooId' | '_id'>[]
+  architects: ArchitectIdInfo[]
   onArchitectIdChange: (value: string[]) => void
 }
 
@@ -45,9 +45,7 @@ export default function SearchArchitectPanel({
     }
   }
 
-  const handleArchitectClick = (
-    architect: Pick<Architect, 'minecraftId' | 'wakzooId' | '_id'>,
-  ) => {
+  const handleArchitectClick = (architect: ArchitectIdInfo) => {
     setInput(architect.wakzooId)
     onArchitectIdChange([architect.minecraftId])
   }

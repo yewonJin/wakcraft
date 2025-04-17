@@ -1,10 +1,13 @@
-import { model, models } from 'mongoose'
+import { Model, model, models } from 'mongoose'
 
 import { noobprohackerSchema } from '@repo/schemas'
-import { type NoobProHacker } from '@repo/types'
+import { NoobProHackerDocument } from '@repo/types'
 
 const NoobProHacker =
-  models['NoobProHacker'] ||
-  model<NoobProHacker>('NoobProHacker', noobprohackerSchema)
+  (models['NoobProHacker'] as unknown as Model<NoobProHackerDocument>) ||
+  model<NoobProHackerDocument, Model<NoobProHackerDocument>>(
+    'NoobProHacker',
+    noobprohackerSchema,
+  )
 
 export default NoobProHacker

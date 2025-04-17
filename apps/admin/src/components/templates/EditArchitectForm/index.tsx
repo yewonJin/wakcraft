@@ -11,8 +11,8 @@ import Input from '@/components/atoms/Input'
 import SelectBox from '@/components/atoms/SelectBox'
 
 type Props = {
-  action: (payload: Architect) => Promise<void>
-  architect: Architect
+  action: (payload: Architect & { _id: string }) => Promise<void>
+  architect: Architect & { _id: string }
 }
 
 export default function EditArchitectForm({ action, architect }: Props) {

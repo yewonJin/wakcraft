@@ -5,14 +5,14 @@ import {
   BASE_LINE_TIERS,
   BASE_WORKINFO_LENGTH,
 } from '@repo/constants'
-import { NoobProHackerMutation } from '@repo/types'
+import { NoobProHacker } from '@repo/types'
 
 import LineContentForm from '@/components/organisms/LineContentForm'
 import { makeInitialNoobProHackerContent } from '@/services/content'
 
 type Props = {
-  action: (payload: NoobProHackerMutation) => Promise<void>
-  content?: NoobProHackerMutation
+  action: (payload: NoobProHacker) => Promise<void>
+  content?: NoobProHacker
   nextEpisode: number
 }
 

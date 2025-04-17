@@ -1,17 +1,18 @@
-import { model, models, Model, Document } from 'mongoose'
+import { model, models, Model } from 'mongoose'
 
 import { noobprohackerSchema } from '@repo/schemas'
-import { ContentInfo, LineInfo, type NoobProHacker } from '@repo/types'
+import { ContentInfo, LineInfo, NoobProHackerDocument } from '@repo/types'
 import Architect from './architect'
+import { PopulatedNoobProHackerDocument } from '@/types/content'
 
-type NoobProHackerDocument = Document<unknown, object, NoobProHacker> &
-  NoobProHacker &
-  Required<{ _id: string }>
-
-interface NoobProHackerModel extends Model<NoobProHacker> {
-  findLatest: () => Promise<NoobProHackerDocument | null>
-  findByEpisode: (episode: number) => Promise<NoobProHackerDocument | null>
-  findRecent: (length: number) => Promise<NoobProHackerDocument[] | null>
+interface NoobProHackerModel extends Model<NoobProHackerDocument> {
+  findLatest: () => Promise<PopulatedNoobProHackerDocument | null>
+  findByEpisode: (
+    episode: number,
+  ) => Promise<PopulatedNoobProHackerDocument | null>
+  findRecent: (
+    length: number,
+  ) => Promise<PopulatedNoobProHackerDocument[] | null>
   findAllWithSweepLine: () => Promise<
     { contentInfo: ContentInfo; workInfo: LineInfo }[]
   >
@@ -19,7 +20,10 @@ interface NoobProHackerModel extends Model<NoobProHacker> {
 
 const NoobProHacker =
   (models['NoobProHacker'] as unknown as NoobProHackerModel) ||
-  model<NoobProHacker, NoobProHackerModel>('NoobProHacker', noobprohackerSchema)
+  model<NoobProHackerDocument, NoobProHackerModel>(
+    'NoobProHacker',
+    noobprohackerSchema,
+  )
 
 NoobProHacker.findLatest = function () {
   return this.findOne()
@@ -30,7 +34,7 @@ NoobProHacker.findLatest = function () {
       path: 'workInfo.entries.architectId',
       model: Architect as unknown as Model<Architect>,
       select: 'minecraftId wakzooId',
-    })
+    }) as Promise<PopulatedNoobProHackerDocument | null>
 }
 
 NoobProHacker.findByEpisode = function (episode) {
@@ -38,7 +42,7 @@ NoobProHacker.findByEpisode = function (episode) {
     path: 'workInfo.entries.architectId',
     model: Architect as unknown as Model<Architect>,
     select: 'minecraftId wakzooId',
-  })
+  }) as Promise<PopulatedNoobProHackerDocument | null>
 }
 
 NoobProHacker.findRecent = function (length) {
@@ -49,7 +53,7 @@ NoobProHacker.findRecent = function (length) {
       path: 'workInfo.entries.architectId',
       model: Architect as unknown as Model<Architect>,
       select: 'minecraftId wakzooId',
-    })
+    }) as unknown as Promise<PopulatedNoobProHackerDocument[] | null>
 }
 
 NoobProHacker.findAllWithSweepLine = function () {

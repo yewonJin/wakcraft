@@ -9,10 +9,10 @@ import Input from '@/components/atoms/Input'
 import SearchArchitectPanel from '@/components/molecules/SearchArchitectPanel'
 
 import { addArchitect } from '@/lib/actions/architect'
-import { ArchitectInfo } from '@/store/architectStore'
+import { ArchitectIdInfo } from '@/store/architectStore'
 
 type Props = {
-  architects: ArchitectInfo[]
+  architects: ArchitectIdInfo[]
 }
 
 export default function ArchitectForm({ architects }: Props) {

@@ -1,9 +1,9 @@
-import { NoobProHacker } from '@repo/types'
+import { PopulatedNoobProHacker } from '@/types/content'
 
 export function HomeCarouselTitle({
   latestNoobProHacker,
 }: {
-  latestNoobProHacker: NoobProHacker
+  latestNoobProHacker: PopulatedNoobProHacker
 }) {
   return (
     <div className="flex flex-col items-center gap-4">

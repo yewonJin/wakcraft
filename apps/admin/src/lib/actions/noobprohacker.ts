@@ -16,7 +16,7 @@ import {
   pushToArchitectsPortfolio,
   updateArchitectsPortfolio,
 } from '../processors/architect'
-import { NoobProHackerMutation } from '@repo/types'
+import { NoobProHacker as TNoobProHacker } from '@repo/types'
 
 export const getNoobProHacker = async (episode: number) => {
   await connectMongo()
@@ -36,7 +36,7 @@ export const getNoobProHackerLatestEpisode = async () => {
   return noobprohacker?.contentInfo.episode || 0
 }
 
-export const postNoobProHacker = async (payload: NoobProHackerMutation) => {
+export const postNoobProHacker = async (payload: TNoobProHacker) => {
   if (hasEmptyTitle(payload.workInfo)) {
     return console.log('작품명을 모두 입력해주세요')
   }
@@ -72,7 +72,7 @@ export const postNoobProHacker = async (payload: NoobProHackerMutation) => {
   }
 }
 
-export const updateNoobProHacker = async (payload: NoobProHackerMutation) => {
+export const updateNoobProHacker = async (payload: TNoobProHacker) => {
   if (hasEmptyYoutubeUrl(payload.workInfo)) {
     return console.log('유튜브 링크를 모두 입력해주세요')
   }

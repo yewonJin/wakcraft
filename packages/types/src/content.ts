@@ -1,15 +1,14 @@
+import { HydratedDocument } from 'mongoose'
 import { CATEGORY } from '@repo/constants'
 
 export type Category = (typeof CATEGORY)[number]
 
 export type ArchitectId = {
-  _id: string
   minecraftId: string
   wakzooId: string
 }
 
 export type ContentInfo = {
-  _id: string
   episode: number
   title: string
   date: string
@@ -19,64 +18,6 @@ export type ContentInfo = {
 
 // 여러 개의 라인에 작품이 3개 or 여러개 있는 형태
 export type LineInfo = {
-  _id: string
-  title: string
-  ranking: number
-  entries: {
-    tier: string
-    title: string
-    description: string | null
-    architectId: ArchitectId[]
-    imageUrl: string
-    youtubeUrl: string | null
-    ranking: number
-  }[]
-}
-
-// 작품이 여러개 있는 형태
-export type GridInfo = {
-  _id: string
-  order: number
-  description: string | null
-  title: string | null
-  architectId: ArchitectId[]
-  imageUrl: string
-  youtubeUrl: string | null
-  ranking: number
-}
-
-export type NoobProHacker = {
-  _id: string
-  contentInfo: ContentInfo
-  workInfo: LineInfo[]
-}
-
-export type EventNoobProHacker = LineEventNoobProHacker | GridEventNoobProHacker
-
-export type LineEventNoobProHacker = {
-  _id: string
-  type: 'line'
-  contentInfo: ContentInfo
-  workInfo: LineInfo[]
-}
-
-export type GridEventNoobProHacker = {
-  _id: string
-  type: 'grid'
-  contentInfo: ContentInfo
-  workInfo: GridInfo[]
-}
-
-export type PlacementTest = {
-  _id: string
-  contentInfo: ContentInfo
-  workInfo: GridInfo[]
-}
-
-// Mutation(create, update) 전용 타입
-export type ContentInfoMutation = Omit<ContentInfo, '_id'>
-
-export type LineInfoMutation = {
   title: string
   ranking: number
   entries: {
@@ -90,7 +31,8 @@ export type LineInfoMutation = {
   }[]
 }
 
-export type GridInfoMutation = {
+// 작품이 여러개 있는 형태
+export type GridInfo = {
   order: number
   description: string | null
   title: string | null
@@ -100,28 +42,43 @@ export type GridInfoMutation = {
   ranking: number
 }
 
-export type NoobProHackerMutation = {
-  contentInfo: Omit<ContentInfo, '_id'>
-  workInfo: LineInfoMutation[]
+export type NoobProHacker = {
+  contentInfo: ContentInfo
+  workInfo: LineInfo[]
 }
 
-export type EventNoobProHackerMutation =
-  | LineEventNoobProHackerMutation
-  | GridEventNoobProHackerMutation
+export type EventNoobProHacker = LineEventNoobProHacker | GridEventNoobProHacker
 
-export type LineEventNoobProHackerMutation = {
+export type LineEventNoobProHacker = {
   type: 'line'
-  contentInfo: Omit<ContentInfo, '_id'>
-  workInfo: LineInfoMutation[]
+  contentInfo: ContentInfo
+  workInfo: LineInfo[]
 }
 
-export type GridEventNoobProHackerMutation = {
+export type GridEventNoobProHacker = {
   type: 'grid'
-  contentInfo: Omit<ContentInfo, '_id'>
-  workInfo: GridInfoMutation[]
+  contentInfo: ContentInfo
+  workInfo: GridInfo[]
 }
 
-export type PlacementTestMutation = {
-  contentInfo: Omit<ContentInfo, '_id'>
-  workInfo: GridInfoMutation[]
+export type PlacementTest = {
+  contentInfo: ContentInfo
+  workInfo: GridInfo[]
 }
+
+// Mongoose Document 타입
+export type ContentInfoDocument = HydratedDocument<ContentInfo>
+export type LineInfoDocument = HydratedDocument<LineInfo>
+export type GridInfoDocument = HydratedDocument<GridInfo>
+
+export type NoobProHackerDocument = HydratedDocument<NoobProHacker>
+
+export type LineEventNoobProHackerDocument =
+  HydratedDocument<LineEventNoobProHacker>
+export type GridEventNoobProHackerDocument =
+  HydratedDocument<GridEventNoobProHacker>
+export type EventNoobProHackerDocument =
+  | LineEventNoobProHackerDocument
+  | GridEventNoobProHackerDocument
+
+export type PlacementTestDocument = HydratedDocument<PlacementTest>

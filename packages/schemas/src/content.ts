@@ -1,6 +1,10 @@
 import { Schema } from 'mongoose'
 
-import { EventNoobProHacker, NoobProHacker, PlacementTest } from '@repo/types'
+import {
+  EventNoobProHackerDocument,
+  NoobProHackerDocument,
+  PlacementTestDocument,
+} from '@repo/types'
 import {
   contentInfoSchema,
   lineInfoSchema,
@@ -8,7 +12,7 @@ import {
   stringifyIds,
 } from './shared'
 
-export const noobprohackerSchema = new Schema<NoobProHacker>(
+export const noobprohackerSchema = new Schema<NoobProHackerDocument>(
   {
     contentInfo: contentInfoSchema,
     workInfo: [lineInfoSchema],
@@ -21,7 +25,7 @@ export const noobprohackerSchema = new Schema<NoobProHacker>(
   },
 )
 
-export const eventNoobProHackerSchema = new Schema<EventNoobProHacker>(
+export const eventNoobProHackerSchema = new Schema<EventNoobProHackerDocument>(
   {
     type: {
       type: String,
@@ -39,7 +43,7 @@ export const eventNoobProHackerSchema = new Schema<EventNoobProHacker>(
   },
 )
 
-export const placementTestSchema = new Schema<PlacementTest>(
+export const placementTestSchema = new Schema<PlacementTestDocument>(
   {
     contentInfo: contentInfoSchema,
     workInfo: [gridInfoSchema],

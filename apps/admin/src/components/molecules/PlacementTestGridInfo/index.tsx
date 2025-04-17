@@ -1,7 +1,7 @@
 import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import { TIER } from '@repo/constants'
-import { GridInfoMutation } from '@repo/types'
+import { GridInfo } from '@repo/types'
 import { renamePngToWebp } from '@repo/utils'
 
 import Input from '@/components/atoms/Input'
@@ -11,7 +11,7 @@ import ImagePickerModal from '../ImagePickerModal'
 import { useModalStore } from '@/store/modalStore'
 
 type Props = {
-  entries: GridInfoMutation[]
+  entries: GridInfo[]
   onGridChange: (
     index: number,
     e:

@@ -1,15 +1,8 @@
 import { useState } from 'react'
-import {
-  EventNoobProHackerMutation,
-  NoobProHackerMutation,
-  PlacementTestMutation,
-} from '@repo/types'
+import { EventNoobProHacker, NoobProHacker, PlacementTest } from '@repo/types'
 
 export const useContentForm = <
-  T extends
-    | NoobProHackerMutation
-    | EventNoobProHackerMutation
-    | PlacementTestMutation,
+  T extends NoobProHacker | EventNoobProHacker | PlacementTest,
 >(
   initialContent: T,
 ) => {

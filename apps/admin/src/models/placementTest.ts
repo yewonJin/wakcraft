@@ -1,10 +1,13 @@
-import { model, models } from 'mongoose'
+import { Model, model, models } from 'mongoose'
 
 import { placementTestSchema } from '@repo/schemas'
-import { type PlacementTest } from '@repo/types'
+import { PlacementTestDocument } from '@repo/types'
 
 const PlacementTest =
-  models['PlacementTest'] ||
-  model<PlacementTest>('PlacementTest', placementTestSchema)
+  (models['PlacementTest'] as unknown as Model<PlacementTestDocument>) ||
+  model<PlacementTestDocument, Model<PlacementTestDocument>>(
+    'PlacementTest',
+    placementTestSchema,
+  )
 
 export default PlacementTest

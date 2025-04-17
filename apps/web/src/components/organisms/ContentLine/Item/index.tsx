@@ -3,15 +3,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Users } from 'lucide-react'
 import { renamePngToWebp } from '@repo/utils'
-import { ArchitectId, LineInfo } from '@repo/types'
+import { ArchitectId } from '@repo/types'
 
 import { InfoBox, Tooltip } from '@/components/atoms'
 
-export function ContentLineItem({
-  entry,
-}: {
-  entry: LineInfo['entries'][number]
-}) {
+import { PopulatedLineEntry } from '@/types/content'
+
+export function ContentLineItem({ entry }: { entry: PopulatedLineEntry }) {
   return (
     <div
       onClick={() => {

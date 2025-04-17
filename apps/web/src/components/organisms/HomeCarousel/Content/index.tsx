@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { NoobProHacker } from '@repo/types'
 import { renamePngToWebp } from '@repo/utils'
 
 import { Tooltip } from '@/components/atoms'
+import { PopulatedNoobProHacker } from '@/types/content'
 
 type Props = {
-  latestNoobProHacker: NoobProHacker
+  latestNoobProHacker: PopulatedNoobProHacker
   carouselIndex: number
   onMouseOver: () => void
   onMouseOut: () => void

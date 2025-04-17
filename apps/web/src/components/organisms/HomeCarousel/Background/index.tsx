@@ -1,12 +1,12 @@
-import { NoobProHacker } from '@repo/types'
 import { renamePngTo1080Webp } from '@repo/utils'
 
 import { getHackerWinLine } from '@/services/content'
+import { PopulatedNoobProHacker } from '@/types/content'
 
 export function HomeCarouselBackground({
   latestNoobProHacker,
 }: {
-  latestNoobProHacker: NoobProHacker
+  latestNoobProHacker: PopulatedNoobProHacker
 }) {
   return (
     <div

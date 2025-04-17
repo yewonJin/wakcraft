@@ -56,7 +56,7 @@ export const addArchitect = async (formData: FormData) => {
   }
 }
 
-export const updateArchitect = async (payload: Architect) => {
+export const updateArchitect = async (payload: Architect & { _id: string }) => {
   await connectMongo()
   const session = await mongoose.startSession()
 

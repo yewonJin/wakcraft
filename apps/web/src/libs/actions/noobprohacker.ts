@@ -1,9 +1,13 @@
 'use server'
 
 import { connectMongo } from '@repo/database'
-import { ContentInfo, LineInfo } from '@repo/types'
+import { ContentInfo } from '@repo/types'
 
 import NoobProHacker from '@/models/noobprohacker'
+import {
+  PopulatedLineInfo,
+  PopulatedNoobProHackerDocument,
+} from '@/types/content'
 
 export const getLatestNoobProHacker = async () => {
   await connectMongo()
@@ -51,15 +55,15 @@ export const getSweepLines = async () => {
   await connectMongo()
 
   const noobprohackers = await NoobProHacker.findAllWithSweepLine()
-  const populated = await NoobProHacker.populate(noobprohackers, {
+  const populated = (await NoobProHacker.populate(noobprohackers, {
     path: 'workInfo.entries.architectId',
     model: 'Architect',
     select: 'minecraftId wakzooId',
-  })
+  })) as unknown as Promise<PopulatedNoobProHackerDocument>
   const serializeds = JSON.parse(JSON.stringify(populated))
 
   return serializeds as unknown as {
     contentInfo: ContentInfo
-    workInfo: LineInfo
+    workInfo: PopulatedLineInfo
   }[]
 }

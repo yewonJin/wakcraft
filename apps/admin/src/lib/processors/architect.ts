@@ -1,8 +1,8 @@
 import Architect from '@/models/architect'
-import { PortfolioItemMutation, Tier } from '@repo/types'
+import { PortfolioItem, Tier } from '@repo/types'
 
 export const pushToArchitectsPortfolio = async (
-  portfolioItems: { _id: string; portfolioItem: PortfolioItemMutation }[],
+  portfolioItems: { _id: string; portfolioItem: PortfolioItem }[],
 ) => {
   for (const { _id, portfolioItem } of portfolioItems) {
     await Architect.pushToPortfolio(_id, portfolioItem)
@@ -26,7 +26,7 @@ export const pushToArchitectsPortfolio = async (
 }
 
 export const updateArchitectsPortfolio = async (
-  portfolioItems: { _id: string; portfolioItem: PortfolioItemMutation }[],
+  portfolioItems: { _id: string; portfolioItem: PortfolioItem }[],
 ) => {
   // 건축가 포트폴리오에 반영
   for (const { _id, portfolioItem } of portfolioItems) {
@@ -48,7 +48,7 @@ export const updateArchitectsPortfolio = async (
 }
 
 export const updateArchitectsTier = async (
-  portfolioItems: { _id: string; portfolioItem: PortfolioItemMutation }[],
+  portfolioItems: { _id: string; portfolioItem: PortfolioItem }[],
 ) => {
   for (const { _id, portfolioItem } of portfolioItems) {
     await Architect.updateCurTier(_id, portfolioItem.title as Tier)
