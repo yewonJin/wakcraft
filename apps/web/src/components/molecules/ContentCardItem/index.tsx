@@ -41,7 +41,7 @@ export default function ContentCardItem({
       >
         {contentInfo.youtubeUrl && (
           <Image
-            className="rounded-t-xl bg-blend-darken brightness-50 duration-300 group-hover:scale-105 group-hover:brightness-100"
+            className="rounded-t-xl object-cover bg-blend-darken brightness-50 duration-300 group-hover:scale-105 group-hover:brightness-100"
             fill
             alt="유튜브 썸네일 이미지"
             src={getYoutubeThumbnailImageUrl(contentInfo.youtubeUrl)}

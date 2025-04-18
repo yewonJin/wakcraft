@@ -86,7 +86,7 @@ export const getContentUrl = (category: string, episode: number) => {
 }
 
 export const getYoutubeThumbnailImageUrl = (youtubeUrl: string) => {
-  return `https://i.ytimg.com/vi/${youtubeUrl.split('/')[3]}/hq720.jpg`
+  return `https://i.ytimg.com/vi/${youtubeUrl.split('/')[3]}/hqdefault.jpg`
 }
 
 export const groupArchitectTierBySeason = (
