@@ -3,18 +3,8 @@ import { cookies } from 'next/headers'
 
 import { NotFound } from '@/components/organisms'
 import { ArchitectDetail } from '@/components/templates'
-import {
-  getArchitectById,
-  getArchitectsWithoutPortfolio,
-} from '@/libs/actions/architect'
 
-export async function generateStaticParams() {
-  const architects = await getArchitectsWithoutPortfolio()
-  return [
-    ...architects.map((architect) => ({ id: String(architect.wakzooId) })),
-    ...architects.map((architect) => ({ id: String(architect.minecraftId) })),
-  ]
-}
+import { getArchitectById } from '@/libs/actions/architect'
 
 export async function generateMetadata({
   params,
