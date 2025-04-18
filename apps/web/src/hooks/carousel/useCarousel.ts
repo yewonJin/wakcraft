@@ -33,7 +33,7 @@ export const useCarousel = (startIndex: number | null, indexLength: number) => {
     return () => startAutoScroll()
   }, [])
 
-  const handleCategoryClick = (index: number) => {
+  const onCategoryClick = (index: number) => {
     setCarouselIndex(index)
     resetAutoScroll()
     startAutoScroll()
@@ -43,6 +43,6 @@ export const useCarousel = (startIndex: number | null, indexLength: number) => {
     carouselIndex,
     resetAutoScroll,
     startAutoScroll,
-    handleCategoryClick,
+    onCategoryClick,
   }
 }

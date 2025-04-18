@@ -7,7 +7,9 @@ import {
 export const useContentLine = (
   content: PopulatedNoobProHacker | PopulatedLineEventNoobProHacker,
 ) => {
-  const [page, setPage] = useState(new Array(content.workInfo.length).fill(0))
+  const [page, setPage] = useState<number[]>(
+    new Array(content.workInfo.length).fill(0),
+  )
 
   const handleButtonClick = (lineIndex: number, entryIndex: number) => {
     setPage((prev) => {
