@@ -117,7 +117,7 @@ HomeCarousel.Navigator = function Navigator() {
 
   return (
     <div className="w-full overflow-x-scroll px-4 pb-4 md:w-auto md:overflow-auto md:pb-0 xl:px-0">
-      <div className="flex w-max gap-3 md:justify-center md:gap-4">
+      <div className="flex w-max gap-3 md:w-auto md:flex-wrap md:justify-center md:gap-4">
         {noobprohacker.workInfo.map((line, lineIndex) => (
           <Button
             onMouseOver={resetAutoScroll}
