@@ -176,7 +176,7 @@ HomeCarousel.Content = function Content() {
                 <Tooltip
                   onClick={(e) => e.preventDefault()}
                   position="bottom"
-                  className="md:group-hover:animate-fadeIn visible flex gap-4 rounded-2xl px-6 py-2 md:invisible md:group-hover:visible"
+                  className="md:group-hover:animate-fadeIn visible flex w-max gap-4 rounded-2xl px-6 py-2 hover:cursor-auto md:invisible md:group-hover:visible"
                 >
                   <Link href={`/architect/${entry.architectId[0].wakzooId}`}>
                     <p className="text-[#aaa] hover:cursor-pointer hover:text-[white]">
