@@ -1,19 +1,12 @@
-import { useParams } from 'next/navigation'
 import { type ContentInfo } from '@repo/types'
 
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
+import { useContentFormContext } from '@/hooks/useContentFormContext'
 
-type Props = {
-  contentInfo: ContentInfo
-  onContentInfoChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
-
-export default function ContentInfo({
-  contentInfo,
-  onContentInfoChange,
-}: Props) {
-  const params = useParams()
+export default function ContentInfo() {
+  const { content, onContentInfoChange, isEditMode } = useContentFormContext()
+  const { contentInfo } = content
 
   return (
     <div className="flex justify-between items-center">
@@ -70,7 +63,7 @@ export default function ContentInfo({
             onChange={onContentInfoChange}
             tabIndex={1}
             value={contentInfo.youtubeUrl || ''}
-            disabled={!Boolean(params?.episode)}
+            disabled={!isEditMode}
           />
         </div>
       </div>
