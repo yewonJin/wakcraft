@@ -6,9 +6,7 @@ import { TIER } from '@repo/constants'
 import { Tier, type Architect } from '@repo/types'
 import { renamePngToWebp } from '@repo/utils'
 
-import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Input'
-import SelectBox from '@/components/atoms/SelectBox'
+import { Button, Input, SelectBox } from '@/components/atoms'
 
 type Props = {
   action: (payload: Architect & { _id: string }) => Promise<void>

@@ -1,9 +1,9 @@
-import EventNoobProHackerForm from '@/components/templates/EventNoobProHackerForm'
+import { EventNoobProHackerForm } from '@/components/templates'
 import DataProvider from '@/providers/DataProvider'
 
 import { getArchitectIds } from '@/lib/actions/architect'
-import { getEventNoobProHackerLatestEpisode } from '@/lib/actions/eventNoobProHacker'
 import {
+  getEventNoobProHackerLatestEpisode,
   postGridEventNoobProHacker,
   postLineEventNoobProHacker,
 } from '@/lib/actions/eventNoobProHacker'

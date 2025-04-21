@@ -3,8 +3,7 @@
 import { Fragment } from 'react'
 import { GridEventNoobProHacker, LineEventNoobProHacker } from '@repo/types'
 
-import LineContentForm from '@/components/organisms/LineContentForm'
-import GridContentForm from '@/components/organisms/GridContentForm'
+import { LineContentForm, GridContentForm } from '@/components/organisms'
 
 type Props = {
   content: LineEventNoobProHacker | GridEventNoobProHacker

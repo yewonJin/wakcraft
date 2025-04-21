@@ -4,9 +4,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@repo/utils'
 
-import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Input'
-import SearchArchitectPanel from '@/components/molecules/SearchArchitectPanel'
+import { Button, Input } from '@/components/atoms'
+import { SearchArchitectPanel } from '@/components/molecules'
 
 import { addArchitect } from '@/lib/actions/architect'
 import { ArchitectIdInfo } from '@/store/architectStore'

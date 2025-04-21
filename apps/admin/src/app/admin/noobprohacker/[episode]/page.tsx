@@ -1,12 +1,11 @@
+import { NoobProHackerForm } from '@/components/templates'
 import DataProvider from '@/providers/DataProvider'
 
 import { getArchitectIds } from '@/lib/actions/architect'
-
 import {
   getNoobProHacker,
   updateNoobProHacker,
 } from '@/lib/actions/noobprohacker'
-import NoobProHackerForm from '@/components/templates/NoobProHackerForm'
 
 export default async function Page({
   params,

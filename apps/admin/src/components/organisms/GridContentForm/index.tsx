@@ -6,13 +6,13 @@ import { TIER } from '@repo/constants'
 import { GridEventNoobProHacker, PlacementTest } from '@repo/types'
 import { renamePngToWebp } from '@repo/utils'
 
-import Divider from '@/components/atoms/Divider'
-import Input from '@/components/atoms/Input'
-import SelectBox from '@/components/atoms/SelectBox'
-import ContentInfo from '@/components/molecules/ContentInfo'
-import ImagePickerModal from '@/components/molecules/ImagePickerModal'
-import ImageManager from '@/components/molecules/ImageManager'
-import SearchArchitectPanel from '@/components/molecules/SearchArchitectPanel'
+import { Divider, Input, SelectBox } from '@/components/atoms'
+import {
+  ContentInfo,
+  ImagePickerModal,
+  ImageManager,
+  SearchArchitectPanel,
+} from '@/components/molecules'
 
 import { useContentForm } from '@/hooks/useContentForm'
 import {

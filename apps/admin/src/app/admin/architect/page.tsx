@@ -1,4 +1,5 @@
-import ArchitectForm from '@/components/templates/ArchitectForm'
+import { ArchitectForm } from '@/components/templates'
+
 import { getArchitectIds } from '@/lib/actions/architect'
 
 export default async function Page() {

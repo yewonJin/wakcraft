@@ -7,7 +7,8 @@ import {
 } from '@repo/constants'
 import { NoobProHacker } from '@repo/types'
 
-import LineContentForm from '@/components/organisms/LineContentForm'
+import { LineContentForm } from '@/components/organisms'
+
 import { makeInitialNoobProHackerContent } from '@/services/content'
 
 type Props = {

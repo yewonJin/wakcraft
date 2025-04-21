@@ -1,4 +1,4 @@
-import PlacementTestForm from '@/components/templates/PlacementTestForm'
+import { PlacementTestForm } from '@/components/templates'
 import DataProvider from '@/providers/DataProvider'
 
 import { getArchitectIds } from '@/lib/actions/architect'

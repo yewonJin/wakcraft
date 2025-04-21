@@ -1,7 +1,7 @@
 import { type ContentInfo } from '@repo/types'
 
-import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Input'
+import { Button, Input } from '@/components/atoms'
+
 import { useContentFormContext } from '@/hooks/useContentFormContext'
 
 export default function ContentInfo() {

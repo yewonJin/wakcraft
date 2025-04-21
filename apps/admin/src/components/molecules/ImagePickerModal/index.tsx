@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { createPortal } from 'react-dom'
 import { renamePngToWebp } from '@repo/utils'
 
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms'
 
 import { sortImagesByTierName } from '@/services/tier'
 import { useModalStore } from '@/store/modalStore'

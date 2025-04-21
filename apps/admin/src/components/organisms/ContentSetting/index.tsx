@@ -1,6 +1,4 @@
-import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Input'
-import SelectBox from '@/components/atoms/SelectBox'
+import { Button, Input, SelectBox } from '@/components/atoms'
 
 import { InitialState } from '@/hooks/useEventNoobProHacker'
 

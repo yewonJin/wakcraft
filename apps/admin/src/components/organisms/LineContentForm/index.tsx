@@ -3,12 +3,13 @@
 import { useParams } from 'next/navigation'
 import { LineEventNoobProHacker, NoobProHacker } from '@repo/types'
 
-import Input from '@/components/atoms/Input'
-import Divider from '@/components/atoms/Divider'
-import ContentInfo from '@/components/molecules/ContentInfo'
-import ImageManager from '@/components/molecules/ImageManager'
-import ImagePickerModal from '@/components/molecules/ImagePickerModal'
-import SearchArchitectPanel from '@/components/molecules/SearchArchitectPanel'
+import { Divider, Input } from '@/components/atoms'
+import {
+  ContentInfo,
+  ImagePickerModal,
+  ImageManager,
+  SearchArchitectPanel,
+} from '@/components/molecules'
 
 import { useContentForm } from '@/hooks/useContentForm'
 import {

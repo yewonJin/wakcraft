@@ -3,8 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Image from 'next/image'
 import { cn, renamePngToWebp } from '@repo/utils'
 
-import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Input'
+import { Button, Input } from '@/components/atoms'
 
 import { useImageForm } from '@/hooks/useImageForm'
 

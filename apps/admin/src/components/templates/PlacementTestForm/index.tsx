@@ -1,6 +1,6 @@
 'use client'
 
-import GridContentForm from '@/components/organisms/GridContentForm'
+import { GridContentForm } from '@/components/organisms'
 
 import { postPlacementTest } from '@/lib/actions/placementTest'
 import {

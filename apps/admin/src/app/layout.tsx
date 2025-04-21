@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Noto_Sans_KR } from 'next/font/google'
 import './globals.css'
-import TopNav from '@/components/templates/TopNav'
+import { TopNav } from '@/components/templates'
 
 const NotoSansKR = Noto_Sans_KR({
   variable: '--font-noto-sans',

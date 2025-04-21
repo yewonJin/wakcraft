@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Input from '@/components/atoms/Input'
+import { Input } from '@/components/atoms'
 import { useSearchArchitect } from '@/hooks/useSearchArchitect'
 import { ArchitectIdInfo } from '@/store/architectStore'
 

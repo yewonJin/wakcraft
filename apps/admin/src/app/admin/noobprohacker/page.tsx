@@ -1,4 +1,4 @@
-import NoobProHackerForm from '@/components/templates/NoobProHackerForm'
+import { NoobProHackerForm } from '@/components/templates'
 import DataProvider from '@/providers/DataProvider'
 
 import { getArchitectIds } from '@/lib/actions/architect'

@@ -1,4 +1,5 @@
-import EditArchitectForm from '@/components/templates/EditArchitectForm'
+import { EditArchitectForm } from '@/components/templates'
+
 import { getArchitect, updateArchitect } from '@/lib/actions/architect'
 
 export default async function Page({
