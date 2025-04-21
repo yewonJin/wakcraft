@@ -21,6 +21,7 @@ export const useArchitectStore = create<ArchitectState>((set) => ({
     set((state) => {
       const newView = state.view === 'single' ? 'grid' : 'single'
       setCookie('architect-view', newView, {
+        path: '/architect',
         expires: 365,
       })
       return { view: newView }
