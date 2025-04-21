@@ -1,5 +1,6 @@
 export { default as ContentGrid } from './ContentGrid'
 export { default as ContentLine } from './ContentLine'
+export { default as ErrorFallback } from './ErrorFallback'
 export { default as GlobalNav } from './GlobalNav'
 export { default as HomeCarousel } from './HomeCarousel'
 export { default as HomeNoobProHacker } from './HomeNoobProHacker'
