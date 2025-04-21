@@ -1,12 +1,14 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, use, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { useQuery } from '@tanstack/react-query'
 import { DESCRIPTION } from '@repo/constants'
 import { AllTier, ArchitectDocument, PlacementTest } from '@repo/types'
 import { cn } from '@repo/utils'
 
 import { Button, TierBox } from '@/components/atoms'
+import ErrorFallback from '../ErrorFallback'
 
 import { getPlacementTestsWithoutWorkInfo } from '@/libs/actions/placementTest'
 import { getArchitectsWithTier } from '@/libs/actions/architect'
@@ -24,18 +26,27 @@ type HomeSeasonContext = {
 }
 
 const Context = createContext<HomeSeasonContext | null>(null)
-const { Provider: ContextProvider } = Context
+
+const useHomeSeasonInfoContext = () => {
+  const context = use(Context)
+  if (!context) {
+    throw new Error('HomeSeasonInfoContext.Provider is missing')
+  }
+  return context
+}
 
 function HomeSeasonInfo() {
   return (
-    <HomeSeasonInfo.Provider>
-      <HomeSeasonInfo.Title />
-      <HomeSeasonInfo.Navigator />
-      <HomeSeasonInfo.ContentWrapper>
-        <HomeSeasonInfo.DateInfo />
-        <HomeSeasonInfo.TierList />
-      </HomeSeasonInfo.ContentWrapper>
-    </HomeSeasonInfo.Provider>
+    <ErrorBoundary fallback={<ErrorFallback />}>
+      <HomeSeasonInfo.Provider>
+        <HomeSeasonInfo.Title />
+        <HomeSeasonInfo.Navigator />
+        <HomeSeasonInfo.ContentWrapper>
+          <HomeSeasonInfo.DateInfo />
+          <HomeSeasonInfo.TierList />
+        </HomeSeasonInfo.ContentWrapper>
+      </HomeSeasonInfo.Provider>
+    </ErrorBoundary>
   )
 }
 
@@ -54,17 +65,21 @@ HomeSeasonInfo.Provider = function Provider({
     queryFn: getArchitectsWithTier,
   })
 
-  const seasons = data!.map((x) => x.contentInfo.episode)
+  if (!data || !architectsWithTier) {
+    throw new Error('데이터를 불러오지 못했습니다.')
+  }
+
+  const seasons = data.map((x) => x.contentInfo.episode)
 
   const [currentSeason, setCurrentSeason] = useState(
-    Math.max(...data!.map((item) => item.contentInfo.episode)),
+    Math.max(...data.map((item) => item.contentInfo.episode)),
   )
 
-  const currentPlacementTest = data!.find(
+  const currentPlacementTest = data.find(
     (x) => x.contentInfo.episode === currentSeason,
   )
 
-  const nextPlecementTest = data!.find(
+  const nextPlecementTest = data.find(
     (x) => x.contentInfo.episode === currentSeason + 1,
   )
 
@@ -72,10 +87,8 @@ HomeSeasonInfo.Provider = function Provider({
     setCurrentSeason(season)
   }
 
-  if (!data || !architectsWithTier) return
-
   return (
-    <ContextProvider
+    <Context.Provider
       value={{
         seasons,
         currentSeason,
@@ -86,7 +99,7 @@ HomeSeasonInfo.Provider = function Provider({
       }}
     >
       <div className="mb-12 px-4 pt-24 md:mb-32 xl:px-0">{children}</div>
-    </ContextProvider>
+    </Context.Provider>
   )
 }
 
@@ -99,10 +112,7 @@ HomeSeasonInfo.Title = function Title() {
 }
 
 HomeSeasonInfo.Navigator = function Navigator() {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { seasons, currentSeason, changeSeason } = context
+  const { seasons, currentSeason, changeSeason } = useHomeSeasonInfoContext()
 
   return (
     <div className="w-full overflow-x-scroll pb-4 md:w-auto md:overflow-auto md:pb-0">
@@ -135,10 +145,7 @@ HomeSeasonInfo.ContentWrapper = function Content({
 }
 
 HomeSeasonInfo.DateInfo = function DateInfo() {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { currentPlacementTest, nextPlecementTest } = context
+  const { currentPlacementTest, nextPlecementTest } = useHomeSeasonInfoContext()
 
   if (!currentPlacementTest) return
 
@@ -163,12 +170,8 @@ HomeSeasonInfo.DateInfo = function DateInfo() {
 }
 
 HomeSeasonInfo.TierList = function TierList() {
+  const { currentSeason, architectsWithTier } = useHomeSeasonInfoContext()
   const TIER_ORDER = ['눕', '계륵', '프로', '국밥', '해커']
-
-  const context = useContext(Context)
-  if (!context) return
-
-  const { currentSeason, architectsWithTier } = context
 
   return (
     <div

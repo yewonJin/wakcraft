@@ -1,6 +1,7 @@
 'use client'
 
-import { createContext, Fragment, useContext } from 'react'
+import { createContext, Fragment, use } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Architect, Category } from '@repo/types'
@@ -15,6 +16,7 @@ import {
   Tooltip,
 } from '@/components/atoms'
 import { ArchitectProfile, ArchitectStatistics } from '@/components/molecules'
+import { ErrorFallback } from '@/components/organisms'
 
 import { useArchitectDetail } from '@/hooks'
 import {
@@ -34,18 +36,30 @@ type Props = {
 type ArchitectDetailContext = ReturnType<typeof useArchitectDetail> & Props
 
 const Context = createContext<ArchitectDetailContext | null>(null)
-const { Provider: ContextProvider } = Context
+
+const useArchitectDetailContext = () => {
+  const context = use(Context)
+  if (!context) {
+    throw new Error('ArchitectDetailContext.Provider is missing')
+  }
+  return context
+}
 
 function ArchitectDetail({ architect, defaultView }: Props) {
   return (
     <div className="mx-auto pt-6 md:pt-12 xl:w-[1300px]">
-      <ArchitectDetail.Provider architect={architect} defaultView={defaultView}>
-        <ArchitectDetail.Profile />
-        <ArchitectDetail.TierInfo />
-        <Separator className="mb-6" />
-        <ArchitectDetail.Controls />
-        <ArchitectDetail.PortfolioList />
-      </ArchitectDetail.Provider>
+      <ErrorBoundary fallback={<ErrorFallback />}>
+        <ArchitectDetail.Provider
+          architect={architect}
+          defaultView={defaultView}
+        >
+          <ArchitectDetail.Profile />
+          <ArchitectDetail.TierInfo />
+          <Separator className="mb-6" />
+          <ArchitectDetail.Controls />
+          <ArchitectDetail.PortfolioList />
+        </ArchitectDetail.Provider>
+      </ErrorBoundary>
     </div>
   )
 }
@@ -56,19 +70,16 @@ ArchitectDetail.Provider = function Provider({
   defaultView,
 }: Props & { children: React.ReactNode }) {
   return (
-    <ContextProvider
+    <Context.Provider
       value={{ ...useArchitectDetail(defaultView), architect, defaultView }}
     >
       {children}
-    </ContextProvider>
+    </Context.Provider>
   )
 }
 
 ArchitectDetail.Profile = function Profile() {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { architect } = context
+  const { architect } = useArchitectDetailContext()
 
   return (
     <div className="mb-6 flex flex-col gap-4 px-4 sm:flex-row sm:justify-between md:items-center xl:px-0">
@@ -83,13 +94,10 @@ ArchitectDetail.Profile = function Profile() {
 }
 
 ArchitectDetail.TierInfo = function TierInfo() {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { architect } = context
+  const { architect } = useArchitectDetailContext()
   const { tier } = architect
 
-  if (!tier.filter((item) => item.result !== '언랭').length) return null
+  if (!tier.filter((item) => item.result !== '언랭').length) return
 
   return (
     <div className="mb-6 flex flex-wrap gap-2 px-4 xl:px-0">
@@ -115,10 +123,8 @@ ArchitectDetail.TierInfo = function TierInfo() {
 }
 
 ArchitectDetail.Controls = function Controls() {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { category, handleCategoryClick, currentView, toggleView } = context
+  const { category, handleCategoryClick, currentView, toggleView } =
+    useArchitectDetailContext()
 
   return (
     <div className="mb-6 flex justify-between overflow-x-scroll px-4 pb-4 sm:overflow-x-hidden md:pb-0 xl:px-0">
@@ -150,10 +156,7 @@ ArchitectDetail.Controls = function Controls() {
 }
 
 ArchitectDetail.PortfolioList = function PortfolioList() {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { category, architect, currentView } = context
+  const { category, architect, currentView } = useArchitectDetailContext()
 
   return (
     <div className="flex flex-col gap-12 px-4 xl:px-0">

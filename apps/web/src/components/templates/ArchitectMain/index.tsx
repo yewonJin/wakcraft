@@ -1,18 +1,20 @@
 'use client'
 
-import { createContext, useContext } from 'react'
+import { createContext, use } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import Link from 'next/link'
 import { LucideArrowDown, Search } from 'lucide-react'
 import { TIER } from '@repo/constants'
 import { Architect } from '@repo/types'
 import { cn } from '@repo/utils'
 
+import { Button } from '@/components/atoms'
 import {
   ArchitectProfile,
   ArchitectStatistics,
   MainPageTitle,
 } from '@/components/molecules'
-import { Button } from '@/components/atoms'
+import { ErrorFallback } from '@/components/organisms'
 
 import {
   useArchitectMain,
@@ -30,23 +32,32 @@ type ArchitectMainContext = ReturnType<typeof useArchitectMain> &
   ReturnType<typeof useSearchArchitect>
 
 const Context = createContext<ArchitectMainContext | null>(null)
-const { Provider: ContextProvider } = Context
+
+const useArchitectMainContext = () => {
+  const context = use(Context)
+  if (!context) {
+    throw new Error('ArchitectMainContext.Provider is missing')
+  }
+  return context
+}
 
 function ArchitectMain({ architects }: Props) {
   return (
     <div className="mx-auto max-w-[1200px] px-4 pt-6 md:pt-12 xl:px-0">
-      <MainPageTitle
-        title="건축가"
-        description="마인크래프트 건축가들의 포트폴리오를 볼 수 있다."
-      />
-      <ArchitectMain.Provider>
-        <div className="mb-4 flex flex-col-reverse justify-between gap-4 lg:flex-row">
-          <ArchitectMain.SearchBar />
-          <ArchitectMain.SortButtons />
-        </div>
-        <ArchitectMain.TierButtons />
-        <ArchitectMain.ArchitectList architects={architects} />
-      </ArchitectMain.Provider>
+      <ErrorBoundary fallback={<ErrorFallback />}>
+        <MainPageTitle
+          title="건축가"
+          description="마인크래프트 건축가들의 포트폴리오를 볼 수 있다."
+        />
+        <ArchitectMain.Provider>
+          <div className="mb-4 flex flex-col-reverse justify-between gap-4 lg:flex-row">
+            <ArchitectMain.SearchBar />
+            <ArchitectMain.SortButtons />
+          </div>
+          <ArchitectMain.TierButtons />
+          <ArchitectMain.ArchitectList architects={architects} />
+        </ArchitectMain.Provider>
+      </ErrorBoundary>
     </div>
   )
 }
@@ -57,17 +68,16 @@ ArchitectMain.Provider = function Provider({
   children: React.ReactNode
 }) {
   return (
-    <ContextProvider value={{ ...useArchitectMain(), ...useSearchArchitect() }}>
+    <Context.Provider
+      value={{ ...useArchitectMain(), ...useSearchArchitect() }}
+    >
       {children}
-    </ContextProvider>
+    </Context.Provider>
   )
 }
 
 ArchitectMain.SearchBar = function SearchBar() {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { input, handleInputChange } = context
+  const { input, handleInputChange } = useArchitectMainContext()
 
   return (
     <div className="relative flex items-center">
@@ -83,10 +93,8 @@ ArchitectMain.SearchBar = function SearchBar() {
 }
 
 ArchitectMain.SortButtons = function SortButtons() {
-  const context = useContext(Context)
-  if (!context) return context
-
-  const { input, isDescending, sortKey, handleSortClick } = context
+  const { input, isDescending, sortKey, handleSortClick } =
+    useArchitectMainContext()
 
   const SORT_KEYS = {
     tier: '티어',
@@ -126,10 +134,7 @@ ArchitectMain.SortButtons = function SortButtons() {
 }
 
 ArchitectMain.TierButtons = function TierButtons() {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { selectedTier, handleTierClick } = context
+  const { selectedTier, handleTierClick } = useArchitectMainContext()
 
   return (
     <div className="bg-fill-default mb-4 overflow-x-scroll rounded-md pb-1.5 md:overflow-x-auto xl:pb-0">
@@ -159,16 +164,13 @@ ArchitectMain.ArchitectList = function ArchitectList({
 }: {
   architects: Omit<Architect, 'portfolio'>[]
 }) {
-  const context = useContext(Context)
-  if (!context) return
-
   const {
     input,
     compareArchitects,
     addMatchingIndicesToArchitect,
     filterArchitectsByTier,
     compareMatchingIndex,
-  } = context
+  } = useArchitectMainContext()
 
   return (
     <div className="flex flex-col gap-4">

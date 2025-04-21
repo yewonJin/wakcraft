@@ -1,6 +1,7 @@
 'use client'
 
-import { createContext, Fragment, useContext, useState } from 'react'
+import { createContext, Fragment, use, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useQuery } from '@tanstack/react-query'
@@ -9,6 +10,7 @@ import { ContentInfo } from '@repo/types'
 import { cn, renamePngToWebp } from '@repo/utils'
 
 import { InfoBox, Tooltip } from '@/components/atoms'
+import ErrorFallback from '../ErrorFallback'
 
 import {
   getRecentNoobProHackers,
@@ -26,15 +28,24 @@ type HomeNoobProHackerContext = {
 }
 
 const Context = createContext<HomeNoobProHackerContext | null>(null)
-const { Provider: ContextProvider } = Context
+
+const useHomeNoobProHackerContext = () => {
+  const context = use(Context)
+  if (!context) {
+    throw new Error('HomeNoobProHackerContext.Provider is missing')
+  }
+  return context
+}
 
 function HomeNoobProHacker() {
   return (
-    <HomeNoobProHacker.Provider>
-      <HomeNoobProHacker.Title />
-      <HomeNoobProHacker.RecentWinEntries />
-      <HomeNoobProHacker.SweepLine />
-    </HomeNoobProHacker.Provider>
+    <ErrorBoundary fallback={<ErrorFallback />}>
+      <HomeNoobProHacker.Provider>
+        <HomeNoobProHacker.Title />
+        <HomeNoobProHacker.RecentWinEntries />
+        <HomeNoobProHacker.SweepLine />
+      </HomeNoobProHacker.Provider>
+    </ErrorBoundary>
   )
 }
 
@@ -53,12 +64,14 @@ HomeNoobProHacker.Provider = function Provider({
     queryFn: getSweepLines,
   })
 
-  if (!recentNoobProHackers || !sweepLines) return
+  if (!recentNoobProHackers || !sweepLines) {
+    throw new Error('데이터를 불러오지 못했습니다.')
+  }
 
   return (
-    <ContextProvider value={{ recentNoobProHackers, sweepLines }}>
+    <Context.Provider value={{ recentNoobProHackers, sweepLines }}>
       <div className="px-4 pt-12 md:pt-24 xl:px-0">{children}</div>
-    </ContextProvider>
+    </Context.Provider>
   )
 }
 
@@ -80,10 +93,7 @@ HomeNoobProHacker.Title = function Title() {
 }
 
 HomeNoobProHacker.RecentWinEntries = function RecentWinEntries() {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { recentNoobProHackers } = context
+  const { recentNoobProHackers } = useHomeNoobProHackerContext()
 
   return (
     <div className="mt-16">
@@ -180,10 +190,7 @@ HomeNoobProHacker.SweepLine = function SweepLine() {
     setPage((prev) => (prev === 0 ? prev : prev - 1))
   }
 
-  const context = useContext(Context)
-  if (!context) return
-
-  const { sweepLines } = context
+  const { sweepLines } = useHomeNoobProHackerContext()
 
   return (
     <div className="relative mt-32">

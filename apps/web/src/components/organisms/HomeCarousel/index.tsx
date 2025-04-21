@@ -1,12 +1,14 @@
 'use client'
 
-import { createContext, useContext } from 'react'
+import { createContext, use } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useQuery } from '@tanstack/react-query'
 import { cn, renamePngTo1080Webp, renamePngToWebp } from '@repo/utils'
 
 import { Button, Tooltip } from '@/components/atoms'
+import ErrorFallback from '../ErrorFallback'
 
 import { useCarousel } from '@/hooks'
 import { getHackerWinLine, getWinnerLineIndex } from '@/services/content'
@@ -22,18 +24,27 @@ type HomeCarouselContext = {
 }
 
 const Context = createContext<HomeCarouselContext | null>(null)
-const { Provider: ContextProvider } = Context
+
+const useHomeCarouselContext = () => {
+  const context = use(Context)
+  if (!context) {
+    throw new Error('HomeCarouselContext.Provider is missing')
+  }
+  return context
+}
 
 function HomeCarousel() {
   return (
-    <HomeCarousel.Provider>
-      <HomeCarousel.Background />
-      <HomeCarousel.Wrapper>
-        <HomeCarousel.Title />
-        <HomeCarousel.Navigator />
-        <HomeCarousel.Content />
-      </HomeCarousel.Wrapper>
-    </HomeCarousel.Provider>
+    <ErrorBoundary fallback={<ErrorFallback />}>
+      <HomeCarousel.Provider>
+        <HomeCarousel.Background />
+        <HomeCarousel.Wrapper>
+          <HomeCarousel.Title />
+          <HomeCarousel.Navigator />
+          <HomeCarousel.Content />
+        </HomeCarousel.Wrapper>
+      </HomeCarousel.Provider>
+    </ErrorBoundary>
   )
 }
 
@@ -46,22 +57,18 @@ HomeCarousel.Provider = function Provider({
     queryKey: ['latestNoobProHacker'],
     queryFn: getLatestNoobProHacker,
   })
-  const carousel = useCarousel(getWinnerLineIndex(data!), data!.workInfo.length)
-
-  if (!data) return null
+  if (!data) throw new Error('최근 눕프로해커 데이터를 가져오지 못했습니다.')
+  const carousel = useCarousel(getWinnerLineIndex(data), data.workInfo.length)
 
   return (
-    <ContextProvider value={{ noobprohacker: data, ...carousel }}>
+    <Context.Provider value={{ noobprohacker: data, ...carousel }}>
       <div className="mt-8 md:mt-0 md:h-[100vh]">{children}</div>
-    </ContextProvider>
+    </Context.Provider>
   )
 }
 
 HomeCarousel.Background = function Background() {
-  const context = useContext(Context)
-  if (!context) return null
-
-  const { noobprohacker } = context
+  const { noobprohacker } = useHomeCarouselContext()
 
   return (
     <div
@@ -86,10 +93,7 @@ HomeCarousel.Wrapper = function Wrapper({
 }
 
 HomeCarousel.Title = function Title() {
-  const context = useContext(Context)
-  if (!context) return null
-
-  const { noobprohacker } = context
+  const { noobprohacker } = useHomeCarouselContext()
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -104,16 +108,13 @@ HomeCarousel.Title = function Title() {
 }
 
 HomeCarousel.Navigator = function Navigator() {
-  const context = useContext(Context)
-  if (!context) return null
-
   const {
     noobprohacker,
     carouselIndex,
     onCategoryClick,
     resetAutoScroll,
     startAutoScroll,
-  } = context
+  } = useHomeCarouselContext()
 
   return (
     <div className="w-full overflow-x-scroll px-4 pb-4 md:w-auto md:overflow-auto md:pb-0 xl:px-0">
@@ -140,11 +141,8 @@ HomeCarousel.Navigator = function Navigator() {
 }
 
 HomeCarousel.Content = function Content() {
-  const context = useContext(Context)
-  if (!context) return null
-
   const { noobprohacker, carouselIndex, resetAutoScroll, startAutoScroll } =
-    context
+    useHomeCarouselContext()
 
   return (
     <div className="w-full overflow-hidden px-4 xl:px-0">

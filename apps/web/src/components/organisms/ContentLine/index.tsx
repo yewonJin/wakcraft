@@ -1,6 +1,7 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, use, useEffect, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronLeft, Users } from 'lucide-react'
@@ -8,6 +9,7 @@ import { ArchitectId } from '@repo/types'
 import { cn, renamePngToWebp } from '@repo/utils'
 
 import { Button, InfoBox, Tooltip } from '@/components/atoms'
+import ErrorFallback from '../ErrorFallback'
 
 import { useContentLine, useSlider } from '@/hooks'
 import {
@@ -25,19 +27,28 @@ type Props = {
 type ContentLineContext = ReturnType<typeof useContentLine> & Props
 
 const Context = createContext<ContentLineContext | null>(null)
-const { Provider: ContextProvider } = Context
+
+const useContentLineContext = () => {
+  const context = use(Context)
+  if (!context) {
+    throw new Error('ContentLineContext.Provider is missing')
+  }
+  return context
+}
 
 function ContentLine({ isMobile, content }: Props) {
   return (
-    <ContentLine.Provider isMobile={isMobile} content={content}>
-      {content.workInfo.map((line, lineIndex) => (
-        <ContentLineCarousel
-          key={line.title}
-          line={line}
-          lineIndex={lineIndex}
-        />
-      ))}
-    </ContentLine.Provider>
+    <ErrorBoundary fallback={<ErrorFallback />}>
+      <ContentLine.Provider isMobile={isMobile} content={content}>
+        {content.workInfo.map((line, lineIndex) => (
+          <ContentLineCarousel
+            key={line.title}
+            line={line}
+            lineIndex={lineIndex}
+          />
+        ))}
+      </ContentLine.Provider>
+    </ErrorBoundary>
   )
 }
 
@@ -47,9 +58,9 @@ ContentLine.Provider = function Provider({
   children,
 }: Props & { children: React.ReactNode }) {
   return (
-    <ContextProvider value={{ ...useContentLine(content), content, isMobile }}>
+    <Context.Provider value={{ ...useContentLine(content), content, isMobile }}>
       <div className="mt-12 flex flex-col gap-32">{children}</div>
-    </ContextProvider>
+    </Context.Provider>
   )
 }
 
@@ -60,10 +71,7 @@ function ContentLineCarousel({
   line: PopulatedLineInfo
   lineIndex: number
 }) {
-  const context = useContext(Context)
-  if (!context) return
-
-  const { isMobile } = context
+  const { isMobile } = useContentLineContext()
 
   return (
     <ContentLineCarousel.Wrapper>
@@ -152,7 +160,6 @@ ContentLineCarousel.DesktopContainer = function DesktopContainer({
   entries: PopulatedLineEntry[]
   lineIndex: number
 }) {
-  const context = useContext(Context)
   const [isLargeScreen, setIsLargeScreen] = useState(false)
 
   useEffect(() => {
@@ -166,8 +173,7 @@ ContentLineCarousel.DesktopContainer = function DesktopContainer({
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  if (!context) return
-  const { page } = context
+  const { page } = useContentLineContext()
 
   return (
     <div
@@ -192,11 +198,8 @@ ContentLineCarousel.Slider = function Slider({
   lineIndex: number
   entryLength: number
 }) {
-  const context = useContext(Context)
-  if (!context) return
-
   const { isMobile, page, moveToNextPage, moveToPrevPage, handleButtonClick } =
-    context
+    useContentLineContext()
 
   if (isMobile || entryLength === 1) return
 
