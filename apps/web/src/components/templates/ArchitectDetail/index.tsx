@@ -33,9 +33,11 @@ type Props = {
   defaultView: 'single' | 'grid'
 }
 
-type ArchitectDetailContext = ReturnType<typeof useArchitectDetail> & Props
+type ArchitectDetailContext =
+  | (ReturnType<typeof useArchitectDetail> & Props)
+  | null
 
-const Context = createContext<ArchitectDetailContext | null>(null)
+const Context = createContext<ArchitectDetailContext>(null)
 
 const useArchitectDetailContext = () => {
   const context = use(Context)

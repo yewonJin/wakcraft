@@ -24,9 +24,9 @@ type Props = {
   content: PopulatedNoobProHacker | PopulatedLineEventNoobProHacker
 }
 
-type ContentLineContext = ReturnType<typeof useContentLine> & Props
+type ContentLineContext = (ReturnType<typeof useContentLine> & Props) | null
 
-const Context = createContext<ContentLineContext | null>(null)
+const Context = createContext<ContentLineContext>(null)
 
 const useContentLineContext = () => {
   const context = use(Context)

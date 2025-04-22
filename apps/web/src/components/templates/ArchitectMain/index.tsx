@@ -28,10 +28,12 @@ type Props = {
   architects: Omit<Architect, 'portfolio'>[]
 }
 
-type ArchitectMainContext = ReturnType<typeof useArchitectMain> &
-  ReturnType<typeof useSearchArchitect>
+type ArchitectMainContext =
+  | (ReturnType<typeof useArchitectMain> &
+      ReturnType<typeof useSearchArchitect>)
+  | null
 
-const Context = createContext<ArchitectMainContext | null>(null)
+const Context = createContext<ArchitectMainContext>(null)
 
 const useArchitectMainContext = () => {
   const context = use(Context)

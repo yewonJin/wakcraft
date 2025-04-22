@@ -21,9 +21,9 @@ type HomeCarouselContext = {
   resetAutoScroll: () => void
   startAutoScroll: () => void
   onCategoryClick: (index: number) => void
-}
+} | null
 
-const Context = createContext<HomeCarouselContext | null>(null)
+const Context = createContext<HomeCarouselContext>(null)
 
 const useHomeCarouselContext = () => {
   const context = use(Context)

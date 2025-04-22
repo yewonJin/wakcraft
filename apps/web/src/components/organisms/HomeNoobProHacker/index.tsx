@@ -25,9 +25,9 @@ type HomeNoobProHackerContext = {
     contentInfo: ContentInfo
     workInfo: PopulatedLineInfo
   }[]
-}
+} | null
 
-const Context = createContext<HomeNoobProHackerContext | null>(null)
+const Context = createContext<HomeNoobProHackerContext>(null)
 
 const useHomeNoobProHackerContext = () => {
   const context = use(Context)

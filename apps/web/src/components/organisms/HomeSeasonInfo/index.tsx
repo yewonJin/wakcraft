@@ -23,9 +23,9 @@ type HomeSeasonContext = {
   nextPlecementTest: Omit<PlacementTest, 'workInfo'> | undefined
   architectsWithTier: Pick<ArchitectDocument, '_id' | 'wakzooId' | 'tier'>[]
   changeSeason: (season: number) => void
-}
+} | null
 
-const Context = createContext<HomeSeasonContext | null>(null)
+const Context = createContext<HomeSeasonContext>(null)
 
 const useHomeSeasonInfoContext = () => {
   const context = use(Context)
