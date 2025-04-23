@@ -1,7 +1,7 @@
 'use client'
 
 import { create } from 'zustand'
-import { setCookie } from 'typescript-cookie'
+import Cookies from 'js-cookie'
 import { Category } from '@repo/types'
 
 interface ArchitectState {
@@ -20,7 +20,7 @@ export const useArchitectStore = create<ArchitectState>((set) => ({
   toggleView: () => {
     set((state) => {
       const newView = state.view === 'single' ? 'grid' : 'single'
-      setCookie('architect-view', newView, {
+      Cookies.set('architect-view', newView, {
         path: '/architect',
         expires: 365,
       })
