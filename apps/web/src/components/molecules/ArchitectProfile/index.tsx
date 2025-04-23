@@ -21,7 +21,7 @@ export default function ArchitectProfile({
     <div className="flex items-center gap-6">
       <TierBox tier={curTier} />
       <div className="flex flex-col gap-1">
-        {minecraftIdMatchingIndex ? (
+        {minecraftIdMatchingIndex && minecraftIdMatchingIndex.length ? (
           <p className="text-xl font-medium">
             {minecraftId.split('').map((char, index) => {
               if (minecraftIdMatchingIndex.includes(index))
@@ -37,7 +37,7 @@ export default function ArchitectProfile({
         ) : (
           <p className="text-xl font-medium">{minecraftId}</p>
         )}
-        {wakzooIdMatchingIndex ? (
+        {wakzooIdMatchingIndex && wakzooIdMatchingIndex.length ? (
           <p className="text-text-subtle">
             {wakzooId.split('').map((char, index) => {
               if (wakzooIdMatchingIndex.includes(index))
