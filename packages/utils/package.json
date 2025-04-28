@@ -11,6 +11,8 @@
     "dist/"
   ],
   "exports": {
-    ".": ["./src/index.ts"]
+    ".": [
+      "./src/index.ts"
+    ]
   }
 }
