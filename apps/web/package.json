@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@next/third-parties": "^15.2.4",
@@ -19,6 +21,16 @@
     "react-error-boundary": "^5.0.0"
   },
   "devDependencies": {
-    "@types/js-cookie": "^3.0.6"
+    "@chromatic-com/storybook": "3",
+    "@storybook/addon-essentials": "8.6.12",
+    "@storybook/addon-onboarding": "8.6.12",
+    "@storybook/addon-themes": "^8.6.12",
+    "@storybook/blocks": "8.6.12",
+    "@storybook/experimental-addon-test": "8.6.12",
+    "@storybook/nextjs": "8.6.12",
+    "@storybook/react": "8.6.12",
+    "@storybook/test": "8.6.12",
+    "@types/js-cookie": "^3.0.6",
+    "storybook": "8.6.12"
   }
 }
