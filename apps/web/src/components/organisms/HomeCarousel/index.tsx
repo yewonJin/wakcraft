@@ -125,8 +125,9 @@ HomeCarousel.Navigator = function Navigator() {
             onMouseOut={startAutoScroll}
             onClick={() => onCategoryClick(lineIndex)}
             key={line.title}
+            border="default"
             className={cn(
-              'border-border-default border-2 md:border-none md:bg-neutral-900/80 md:text-lg md:text-neutral-200',
+              'md:border-none md:bg-neutral-900/80 md:text-lg md:text-neutral-200',
               carouselIndex === lineIndex
                 ? 'text-text-default md:text-white'
                 : 'opacity-50 hover:opacity-80',
