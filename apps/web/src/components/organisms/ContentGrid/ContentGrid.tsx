@@ -1,0 +1,110 @@
+'use client'
+
+import Image from 'next/image'
+import Link from 'next/link'
+import { renamePngToWebp } from '@repo/utils'
+
+import { InfoBox, Tooltip } from '@/components/atoms'
+
+import {
+  PopulatedGridEventNoobProHacker,
+  PopulatedGridInfo,
+  PopulatedPlacementTest,
+} from '@/types/content'
+import { useVisibilityOnHover } from '@/hooks'
+
+type Props = {
+  content: PopulatedGridEventNoobProHacker | PopulatedPlacementTest
+}
+
+function ContentGrid({ content }: Props) {
+  return (
+    <ContentGrid.List>
+      {content.workInfo
+        .sort((a, b) => a.order - b.order)
+        .map((entry) => (
+          <ContentGrid.Item key={entry.imageUrl} entry={entry} />
+        ))}
+    </ContentGrid.List>
+  )
+}
+
+ContentGrid.List = function List({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mt-12 grid grid-cols-1 gap-6 gap-y-12 md:grid-cols-2 2xl:w-[1400px] 2xl:grid-cols-3">
+      {children}
+    </div>
+  )
+}
+
+ContentGrid.Item = function Item({ entry }: { entry: PopulatedGridInfo }) {
+  const { isHovered, setHoverTrue, setHoverFalse } = useVisibilityOnHover([
+    'youtube',
+  ])
+
+  return (
+    <div
+      onClick={() => {
+        if (!entry.youtubeUrl) return
+        window.open(entry.youtubeUrl)
+      }}
+      onMouseEnter={() => setHoverTrue('youtube')}
+      onMouseLeave={() => setHoverFalse('youtube')}
+      key={entry.imageUrl}
+      className="relative aspect-video h-full hover:cursor-pointer"
+    >
+      <Image
+        className="rounded-none xl:rounded-xl"
+        fill
+        alt="작품 이미지"
+        src={renamePngToWebp(entry.imageUrl)}
+      />
+      {entry.youtubeUrl && (
+        <Tooltip visible={isHovered['youtube']} position="bottom-right">
+          클릭하여 유튜브로 이동
+        </Tooltip>
+      )}
+      <InfoBox
+        position="top-left"
+        className="top-[6%] left-[4%] flex-col bg-transparent text-base"
+      >
+        <div className="mb-2 flex items-center gap-3">
+          <p className="text-lg font-semibold text-white [text-shadow:_1px_1px_0_#000]">
+            {entry.title}
+          </p>
+          <div className="mt-1 flex gap-2">
+            {entry.ranking !== null && entry.ranking !== 0 && (
+              <p className="rounded-md bg-neutral-800/80 px-3 py-1 text-neutral-300">
+                {entry.ranking}위
+              </p>
+            )}
+          </div>
+        </div>
+        {entry.architectId.length === 1 ? (
+          <Link
+            onClick={(e) => e.stopPropagation()}
+            href={`/architect/${entry.architectId[0].wakzooId}`}
+            className="text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
+          >
+            {entry.architectId[0].wakzooId.replaceAll('-', ' ')}
+          </Link>
+        ) : (
+          <div className="mt-3 flex flex-col gap-1.5">
+            {entry.architectId.map((id) => (
+              <Link
+                onClick={(e) => e.stopPropagation()}
+                key={id.wakzooId}
+                href={`/architect/${id.wakzooId}`}
+                className="text-neutral-300 [text-shadow:_1px_1px_0_#000] hover:text-neutral-200"
+              >
+                {id.wakzooId}
+              </Link>
+            ))}
+          </div>
+        )}
+      </InfoBox>
+    </div>
+  )
+}
+
+export default ContentGrid

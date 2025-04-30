@@ -5,8 +5,7 @@ import { Menu, Moon, Sun } from 'lucide-react'
 import { cn } from '@repo/utils'
 
 import { Button } from '@/components/atoms'
-
-import { useGlobalNav } from '@/hooks'
+import { useGlobalNav } from './GlobalNav.hooks'
 
 export default function GlobalNav() {
   const { isOpen, handleBackdropClick, toggleTheme, handleMenuClick } =
