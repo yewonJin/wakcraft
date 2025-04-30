@@ -1,109 +1,36 @@
-'use client'
-
-import { createContext, use, useState } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
-import { useQuery } from '@tanstack/react-query'
 import { DESCRIPTION } from '@repo/constants'
-import { AllTier, ArchitectDocument, PlacementTest } from '@repo/types'
+import { AllTier } from '@repo/types'
 import { cn } from '@repo/utils'
 
 import { Button, TierBox } from '@/components/atoms'
-import ErrorFallback from '../ErrorFallback'
 
-import { getPlacementTestsWithoutWorkInfo } from '@/libs/actions/placementTest'
-import { getArchitectsWithTier } from '@/libs/actions/architect'
 import { groupArchitectTierBySeason } from '@/services/content'
 import { getTierTextColor } from '@/services/architect'
 import { formatDateToKorean, getDaysBetween } from '@/utils/date'
+import { useHomeSeasonInfoContext } from './HomeSeasonInfo.context'
 
-type HomeSeasonContext = {
-  seasons: number[]
-  currentSeason: number
-  currentPlacementTest: Omit<PlacementTest, 'workInfo'> | undefined
-  nextPlecementTest: Omit<PlacementTest, 'workInfo'> | undefined
-  architectsWithTier: Pick<ArchitectDocument, '_id' | 'wakzooId' | 'tier'>[]
-  changeSeason: (season: number) => void
-} | null
-
-const Context = createContext<HomeSeasonContext>(null)
-
-const useHomeSeasonInfoContext = () => {
-  const context = use(Context)
-  if (!context) {
-    throw new Error('HomeSeasonInfoContext.Provider is missing')
-  }
-  return context
-}
-
-function HomeSeasonInfo() {
+export function HomeSeasonInfoView() {
   return (
-    <ErrorBoundary fallback={<ErrorFallback />}>
-      <HomeSeasonInfo.Provider>
-        <HomeSeasonInfo.Title />
-        <HomeSeasonInfo.Navigator />
-        <HomeSeasonInfo.ContentWrapper>
-          <HomeSeasonInfo.DateInfo />
-          <HomeSeasonInfo.TierList />
-        </HomeSeasonInfo.ContentWrapper>
-      </HomeSeasonInfo.Provider>
-    </ErrorBoundary>
+    <HomeSeasonInfoView.Container>
+      <HomeSeasonInfoView.Title />
+      <HomeSeasonInfoView.Navigator />
+      <HomeSeasonInfoView.ContentWrapper>
+        <HomeSeasonInfoView.DateInfo />
+        <HomeSeasonInfoView.TierList />
+      </HomeSeasonInfoView.ContentWrapper>
+    </HomeSeasonInfoView.Container>
   )
 }
 
-HomeSeasonInfo.Provider = function Provider({
+HomeSeasonInfoView.Container = function Container({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { data } = useQuery({
-    queryKey: ['placementTestsWithoutWorkInfo'],
-    queryFn: getPlacementTestsWithoutWorkInfo,
-  })
-
-  const { data: architectsWithTier } = useQuery({
-    queryKey: ['architectsWithTier'],
-    queryFn: getArchitectsWithTier,
-  })
-
-  if (!data || !architectsWithTier) {
-    throw new Error('데이터를 불러오지 못했습니다.')
-  }
-
-  const seasons = data.map((x) => x.contentInfo.episode)
-
-  const [currentSeason, setCurrentSeason] = useState(
-    Math.max(...data.map((item) => item.contentInfo.episode)),
-  )
-
-  const currentPlacementTest = data.find(
-    (x) => x.contentInfo.episode === currentSeason,
-  )
-
-  const nextPlecementTest = data.find(
-    (x) => x.contentInfo.episode === currentSeason + 1,
-  )
-
-  const changeSeason = (season: number) => {
-    setCurrentSeason(season)
-  }
-
-  return (
-    <Context.Provider
-      value={{
-        seasons,
-        currentSeason,
-        currentPlacementTest,
-        nextPlecementTest,
-        architectsWithTier,
-        changeSeason,
-      }}
-    >
-      <div className="mb-12 px-4 pt-24 md:mb-32 xl:px-0">{children}</div>
-    </Context.Provider>
-  )
+  return <div className="mb-12 px-4 pt-24 md:mb-32 xl:px-0">{children}</div>
 }
 
-HomeSeasonInfo.Title = function Title() {
+HomeSeasonInfoView.Title = function Title() {
   return (
     <h2 className="text-text-strong mb-8 text-2xl font-bold md:text-4xl">
       시즌별 건축가 티어
@@ -111,7 +38,7 @@ HomeSeasonInfo.Title = function Title() {
   )
 }
 
-HomeSeasonInfo.Navigator = function Navigator() {
+HomeSeasonInfoView.Navigator = function Navigator() {
   const { seasons, currentSeason, changeSeason } = useHomeSeasonInfoContext()
 
   return (
@@ -136,7 +63,7 @@ HomeSeasonInfo.Navigator = function Navigator() {
   )
 }
 
-HomeSeasonInfo.ContentWrapper = function Content({
+HomeSeasonInfoView.ContentWrapper = function Content({
   children,
 }: {
   children: React.ReactNode
@@ -144,7 +71,7 @@ HomeSeasonInfo.ContentWrapper = function Content({
   return <div className="mt-8 flex flex-col gap-6 md:gap-8">{children}</div>
 }
 
-HomeSeasonInfo.DateInfo = function DateInfo() {
+HomeSeasonInfoView.DateInfo = function DateInfo() {
   const { currentPlacementTest, nextPlecementTest } = useHomeSeasonInfoContext()
 
   if (!currentPlacementTest) return
@@ -153,7 +80,7 @@ HomeSeasonInfo.DateInfo = function DateInfo() {
     <div className="flex h-[40px] items-center gap-2">
       <p className="text-text-subtle text-md md:text-lg">
         {`${formatDateToKorean(currentPlacementTest.contentInfo.date)} ~
-        ${nextPlecementTest ? formatDateToKorean(nextPlecementTest.contentInfo.date) : ''}`}
+          ${nextPlecementTest ? formatDateToKorean(nextPlecementTest.contentInfo.date) : ''}`}
       </p>
       {nextPlecementTest && (
         <span className="text-md md:text-lg">
@@ -169,7 +96,7 @@ HomeSeasonInfo.DateInfo = function DateInfo() {
   )
 }
 
-HomeSeasonInfo.TierList = function TierList() {
+HomeSeasonInfoView.TierList = function TierList() {
   const { currentSeason, architectsWithTier } = useHomeSeasonInfoContext()
   const TIER_ORDER = ['눕', '계륵', '프로', '국밥', '해커']
 
@@ -232,5 +159,3 @@ HomeSeasonInfo.TierList = function TierList() {
     </div>
   )
 }
-
-export default HomeSeasonInfo

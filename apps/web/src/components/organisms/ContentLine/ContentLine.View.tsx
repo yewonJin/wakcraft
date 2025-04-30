@@ -1,7 +1,4 @@
-'use client'
-
-import { createContext, use, useEffect, useState } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronLeft, Users } from 'lucide-react'
@@ -9,62 +6,37 @@ import { ArchitectId } from '@repo/types'
 import { cn, renamePngToWebp } from '@repo/utils'
 
 import { Button, InfoBox, Tooltip } from '@/components/atoms'
-import ErrorFallback from '../ErrorFallback'
 
-import { useContentLine, useSlider } from '@/hooks'
-import {
-  PopulatedLineEntry,
-  PopulatedLineEventNoobProHacker,
-  PopulatedLineInfo,
-  PopulatedNoobProHacker,
-} from '@/types/content'
+import { PopulatedLineEntry, PopulatedLineInfo } from '@/types/content'
+import { useContentLineContext } from './ContentLine.context'
+import { useSlider } from './ContentLine.hooks'
+import { useVisibilityOnHover } from '@/hooks'
 
-type Props = {
-  isMobile: boolean
-  content: PopulatedNoobProHacker | PopulatedLineEventNoobProHacker
-}
+export function ContentLineView() {
+  const { content } = useContentLineContext()
 
-type ContentLineContext = (ReturnType<typeof useContentLine> & Props) | null
-
-const Context = createContext<ContentLineContext>(null)
-
-const useContentLineContext = () => {
-  const context = use(Context)
-  if (!context) {
-    throw new Error('ContentLineContext.Provider is missing')
-  }
-  return context
-}
-
-function ContentLine({ isMobile, content }: Props) {
   return (
-    <ErrorBoundary fallback={<ErrorFallback />}>
-      <ContentLine.Provider isMobile={isMobile} content={content}>
-        {content.workInfo.map((line, lineIndex) => (
-          <ContentLineCarousel
-            key={line.title}
-            line={line}
-            lineIndex={lineIndex}
-          />
-        ))}
-      </ContentLine.Provider>
-    </ErrorBoundary>
+    <ContentLineView.Container>
+      {content.workInfo.map((line, lineIndex) => (
+        <ContentLineViewCarousel
+          key={line.title}
+          line={line}
+          lineIndex={lineIndex}
+        />
+      ))}
+    </ContentLineView.Container>
   )
 }
 
-ContentLine.Provider = function Provider({
-  isMobile,
-  content,
+ContentLineView.Container = function Container({
   children,
-}: Props & { children: React.ReactNode }) {
-  return (
-    <Context.Provider value={{ ...useContentLine(content), content, isMobile }}>
-      <div className="mt-12 flex flex-col gap-32">{children}</div>
-    </Context.Provider>
-  )
+}: {
+  children: React.ReactNode
+}) {
+  return <div className="mt-12 flex flex-col gap-32">{children}</div>
 }
 
-function ContentLineCarousel({
+function ContentLineViewCarousel({
   line,
   lineIndex,
 }: {
@@ -74,25 +46,25 @@ function ContentLineCarousel({
   const { isMobile } = useContentLineContext()
 
   return (
-    <ContentLineCarousel.Wrapper>
-      <ContentLineCarousel.LineInfo line={line} lineIndex={lineIndex} />
+    <ContentLineViewCarousel.Wrapper>
+      <ContentLineViewCarousel.LineInfo line={line} lineIndex={lineIndex} />
       {isMobile ? (
-        <ContentLineCarousel.MobileContainer entries={line.entries} />
+        <ContentLineViewCarousel.MobileContainer entries={line.entries} />
       ) : (
-        <ContentLineCarousel.DesktopContainer
+        <ContentLineViewCarousel.DesktopContainer
           entries={line.entries}
           lineIndex={lineIndex}
         />
       )}
-      <ContentLineCarousel.Slider
+      <ContentLineViewCarousel.Slider
         lineIndex={lineIndex}
         entryLength={line.entries.length}
       />
-    </ContentLineCarousel.Wrapper>
+    </ContentLineViewCarousel.Wrapper>
   )
 }
 
-ContentLineCarousel.Wrapper = function Wrapper({
+ContentLineViewCarousel.Wrapper = function Wrapper({
   children,
 }: {
   children: React.ReactNode
@@ -100,7 +72,7 @@ ContentLineCarousel.Wrapper = function Wrapper({
   return <div>{children}</div>
 }
 
-ContentLineCarousel.LineInfo = function LineInfo({
+ContentLineViewCarousel.LineInfo = function LineInfo({
   line,
   lineIndex,
 }: {
@@ -126,7 +98,7 @@ ContentLineCarousel.LineInfo = function LineInfo({
   )
 }
 
-ContentLineCarousel.MobileContainer = function MobileContainer({
+ContentLineViewCarousel.MobileContainer = function MobileContainer({
   entries,
 }: {
   entries: PopulatedLineEntry[]
@@ -147,13 +119,13 @@ ContentLineCarousel.MobileContainer = function MobileContainer({
       }}
     >
       {entries.map((entry) => (
-        <ContentLineItem key={entry.imageUrl} entry={entry} />
+        <ContentLineViewItem key={entry.imageUrl} entry={entry} />
       ))}
     </div>
   )
 }
 
-ContentLineCarousel.DesktopContainer = function DesktopContainer({
+ContentLineViewCarousel.DesktopContainer = function DesktopContainer({
   entries,
   lineIndex,
 }: {
@@ -185,13 +157,13 @@ ContentLineCarousel.DesktopContainer = function DesktopContainer({
       }}
     >
       {entries.map((entry) => (
-        <ContentLineItem key={entry.imageUrl} entry={entry} />
+        <ContentLineViewItem key={entry.imageUrl} entry={entry} />
       ))}
     </div>
   )
 }
 
-ContentLineCarousel.Slider = function Slider({
+ContentLineViewCarousel.Slider = function Slider({
   lineIndex,
   entryLength,
 }: {
@@ -237,15 +209,21 @@ ContentLineCarousel.Slider = function Slider({
   )
 }
 
-function ContentLineItem({ entry }: { entry: PopulatedLineEntry }) {
+function ContentLineViewItem({ entry }: { entry: PopulatedLineEntry }) {
+  const { isHovered, setHoverTrue, setHoverFalse } = useVisibilityOnHover([
+    'youtube',
+  ])
+
   return (
     <div
       onClick={() => {
         if (!entry.youtubeUrl) return
         window.open(entry.youtubeUrl)
       }}
+      onMouseEnter={() => setHoverTrue('youtube')}
+      onMouseLeave={() => setHoverFalse('youtube')}
       key={entry.imageUrl}
-      className="group relative h-full min-w-[100%] hover:cursor-pointer xl:aspect-video xl:min-w-auto"
+      className="relative h-full min-w-[100%] hover:cursor-pointer xl:aspect-video xl:min-w-auto"
     >
       <Image
         className="rounded-none xl:rounded-xl"
@@ -283,13 +261,14 @@ function ContentLineItem({ entry }: { entry: PopulatedLineEntry }) {
             ))}
           </div>
         ) : (
-          <ContentLineItem.ArchitectList architectIds={entry.architectId} />
+          <ContentLineViewItem.ArchitectList architectIds={entry.architectId} />
         )}
       </InfoBox>
       {entry.youtubeUrl && (
         <Tooltip
+          visible={isHovered['youtube']}
           position="bottom-right"
-          className="group-hover:visible md:right-2 md:bottom-2 md:px-4 md:py-2"
+          className="md:right-2 md:bottom-2 md:px-4 md:py-2"
         >
           클릭하여 유튜브로 이동
         </Tooltip>
@@ -298,7 +277,7 @@ function ContentLineItem({ entry }: { entry: PopulatedLineEntry }) {
   )
 }
 
-ContentLineItem.ArchitectList = function ArchitectList({
+ContentLineViewItem.ArchitectList = function ArchitectList({
   architectIds,
 }: {
   architectIds: ArchitectId[]
@@ -333,5 +312,3 @@ ContentLineItem.ArchitectList = function ArchitectList({
     </div>
   )
 }
-
-export default ContentLine

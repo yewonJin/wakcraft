@@ -1,7 +1,4 @@
-'use client'
-
-import { createContext, Fragment, use } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
+import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Architect, Category } from '@repo/types'
@@ -16,9 +13,7 @@ import {
   Tooltip,
 } from '@/components/atoms'
 import { ArchitectProfile, ArchitectStatistics } from '@/components/molecules'
-import { ErrorFallback } from '@/components/organisms'
 
-import { useArchitectDetail } from '@/hooks'
 import {
   devideByYear,
   filterByCategory,
@@ -27,60 +22,30 @@ import {
   sortByRecentDate,
 } from '@/services/architect'
 import { getContentUrl } from '@/services/content'
+import { useArchitectDetailContext } from './ArchitectDetail.context'
+import { usePortfolioItem } from './ArchitectDetail.hooks'
 
-type Props = {
-  architect: Architect
-  defaultView: 'single' | 'grid'
-}
-
-type ArchitectDetailContext =
-  | (ReturnType<typeof useArchitectDetail> & Props)
-  | null
-
-const Context = createContext<ArchitectDetailContext>(null)
-
-const useArchitectDetailContext = () => {
-  const context = use(Context)
-  if (!context) {
-    throw new Error('ArchitectDetailContext.Provider is missing')
-  }
-  return context
-}
-
-function ArchitectDetail({ architect, defaultView }: Props) {
+export function ArchitectDetailView() {
   return (
-    <div className="mx-auto pt-6 md:pt-12 xl:w-[1300px]">
-      <ErrorBoundary fallback={<ErrorFallback />}>
-        <ArchitectDetail.Provider
-          architect={architect}
-          defaultView={defaultView}
-        >
-          <ArchitectDetail.Profile />
-          <ArchitectDetail.TierInfo />
-          <Separator className="mb-6" />
-          <ArchitectDetail.Controls />
-          <ArchitectDetail.PortfolioList />
-        </ArchitectDetail.Provider>
-      </ErrorBoundary>
-    </div>
+    <ArchitectDetailView.Container>
+      <ArchitectDetailView.Profile />
+      <ArchitectDetailView.TierInfo />
+      <Separator className="mb-6" />
+      <ArchitectDetailView.Controls />
+      <ArchitectDetailView.PortfolioList />
+    </ArchitectDetailView.Container>
   )
 }
 
-ArchitectDetail.Provider = function Provider({
+ArchitectDetailView.Container = function Container({
   children,
-  architect,
-  defaultView,
-}: Props & { children: React.ReactNode }) {
-  return (
-    <Context.Provider
-      value={{ ...useArchitectDetail(defaultView), architect, defaultView }}
-    >
-      {children}
-    </Context.Provider>
-  )
+}: {
+  children: React.ReactNode
+}) {
+  return <div className="mx-auto pt-6 md:pt-12 xl:w-[1300px]">{children}</div>
 }
 
-ArchitectDetail.Profile = function Profile() {
+ArchitectDetailView.Profile = function Profile() {
   const { architect } = useArchitectDetailContext()
 
   return (
@@ -95,7 +60,7 @@ ArchitectDetail.Profile = function Profile() {
   )
 }
 
-ArchitectDetail.TierInfo = function TierInfo() {
+ArchitectDetailView.TierInfo = function TierInfo() {
   const { architect } = useArchitectDetailContext()
   const { tier } = architect
 
@@ -124,7 +89,7 @@ ArchitectDetail.TierInfo = function TierInfo() {
   )
 }
 
-ArchitectDetail.Controls = function Controls() {
+ArchitectDetailView.Controls = function Controls() {
   const { category, handleCategoryClick, currentView, toggleView } =
     useArchitectDetailContext()
 
@@ -157,7 +122,7 @@ ArchitectDetail.Controls = function Controls() {
   )
 }
 
-ArchitectDetail.PortfolioList = function PortfolioList() {
+ArchitectDetailView.PortfolioList = function PortfolioList() {
   const { category, architect, currentView } = useArchitectDetailContext()
 
   return (
@@ -198,11 +163,15 @@ function ArchitectPortfolioGridItem({
 }: {
   item: Architect['portfolio'][number]
 }) {
+  const { isHovered, setHoverTrue, setHoverFalse } = usePortfolioItem()
+
   return (
     <div className="flex flex-col gap-4">
       <div
         className="group/image dark:shadow-neutral-850/90 relative aspect-video rounded-xl shadow-md shadow-neutral-700/80 hover:cursor-pointer"
         onClick={() => window.open(renamePngTo1080Webp(item.imageUrl))}
+        onMouseEnter={() => setHoverTrue('image')}
+        onMouseLeave={() => setHoverFalse('image')}
       >
         <Image
           className="rounded-xl"
@@ -210,10 +179,17 @@ function ArchitectPortfolioGridItem({
           src={renamePngToWebp(item.imageUrl)}
           alt="작품 이미지"
         />
-        <ArchitectYoutubeLink type="grid" youtubeUrl={item.youtubeUrl} />
+        <ArchitectYoutubeLink
+          type="grid"
+          youtubeUrl={item.youtubeUrl}
+          isHovered={isHovered['youtube']}
+          onMouseEnter={() => setHoverTrue('youtube')}
+          onMouseLeave={() => setHoverFalse('youtube')}
+        />
         <Tooltip
+          visible={isHovered['image'] && !isHovered['youtube']}
           position="bottom-right"
-          className="text-sm group-hover/image:visible peer-hover:invisible"
+          className={'text-sm'}
         >
           클릭하여 원본 이미지 보기
         </Tooltip>
@@ -250,11 +226,15 @@ function ArchitectPortfolioSingleItem({
 }: {
   item: Architect['portfolio'][number]
 }) {
+  const { isHovered, setHoverTrue, setHoverFalse } = usePortfolioItem()
+
   return (
     <div
       key={item.date}
-      className="group/image flex flex-col gap-4 hover:cursor-pointer"
+      className="flex flex-col gap-4 hover:cursor-pointer"
       onClick={() => window.open(renamePngTo1080Webp(item.imageUrl))}
+      onMouseEnter={() => setHoverTrue('image')}
+      onMouseLeave={() => setHoverFalse('image')}
     >
       <div className="relative aspect-video">
         <Image
@@ -263,10 +243,17 @@ function ArchitectPortfolioSingleItem({
           src={renamePngTo1080Webp(item.imageUrl)}
           alt="작품 이미지"
         />
-        <ArchitectYoutubeLink type="single" youtubeUrl={item.youtubeUrl} />
+        <ArchitectYoutubeLink
+          type="single"
+          youtubeUrl={item.youtubeUrl}
+          isHovered={isHovered['youtube']}
+          onMouseEnter={() => setHoverTrue('youtube')}
+          onMouseLeave={() => setHoverFalse('youtube')}
+        />
         <Tooltip
+          visible={isHovered['image'] && !isHovered['youtube']}
           position="bottom-right"
-          className="px-3 py-2 group-hover/image:visible peer-hover:invisible"
+          className={'px-3 py-2'}
         >
           클릭하여 원본 이미지 보기
         </Tooltip>
@@ -301,5 +288,3 @@ function ArchitectPortfolioSingleItem({
     </div>
   )
 }
-
-export default ArchitectDetail

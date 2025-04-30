@@ -1,7 +1,3 @@
-'use client'
-
-import { createContext, use } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
 import Link from 'next/link'
 import { LucideArrowDown, Search } from 'lucide-react'
 import { TIER } from '@repo/constants'
@@ -14,71 +10,46 @@ import {
   ArchitectStatistics,
   MainPageTitle,
 } from '@/components/molecules'
-import { ErrorFallback } from '@/components/organisms'
 
-import {
-  useArchitectMain,
-  useIntersectionObserver,
-  useSearchArchitect,
-} from '@/hooks'
+import { useIntersectionObserver } from '@/hooks'
 import { getTierBackgroundColor } from '@/services/architect'
 import { ArchitectWithMatchingIndices } from '@/types/architect'
+import { useArchitectMainContext } from './ArchitectMain.context'
 
-type Props = {
+export function ArchitectMainView({
+  architects,
+}: {
   architects: Omit<Architect, 'portfolio'>[]
-}
-
-type ArchitectMainContext =
-  | (ReturnType<typeof useArchitectMain> &
-      ReturnType<typeof useSearchArchitect>)
-  | null
-
-const Context = createContext<ArchitectMainContext>(null)
-
-const useArchitectMainContext = () => {
-  const context = use(Context)
-  if (!context) {
-    throw new Error('ArchitectMainContext.Provider is missing')
-  }
-  return context
-}
-
-function ArchitectMain({ architects }: Props) {
+}) {
   return (
-    <div className="mx-auto max-w-[1200px] px-4 pt-6 md:pt-12 xl:px-0">
-      <ErrorBoundary fallback={<ErrorFallback />}>
-        <MainPageTitle
-          title="건축가"
-          description="마인크래프트 건축가들의 포트폴리오를 볼 수 있다."
-        />
-        <ArchitectMain.Provider>
-          <div className="mb-4 flex flex-col-reverse justify-between gap-4 lg:flex-row">
-            <ArchitectMain.SearchBar />
-            <ArchitectMain.SortButtons />
-          </div>
-          <ArchitectMain.TierButtons />
-          <ArchitectMain.ArchitectList architects={architects} />
-        </ArchitectMain.Provider>
-      </ErrorBoundary>
-    </div>
+    <ArchitectMainView.Container>
+      <MainPageTitle
+        title="건축가"
+        description="마인크래프트 건축가들의 포트폴리오를 볼 수 있다."
+      />
+      <div className="mb-4 flex flex-col-reverse justify-between gap-4 lg:flex-row">
+        <ArchitectMainView.SearchBar />
+        <ArchitectMainView.SortButtons />
+      </div>
+      <ArchitectMainView.TierButtons />
+      <ArchitectMainView.ArchitectList architects={architects} />
+    </ArchitectMainView.Container>
   )
 }
 
-ArchitectMain.Provider = function Provider({
+ArchitectMainView.Container = function Container({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <Context.Provider
-      value={{ ...useArchitectMain(), ...useSearchArchitect() }}
-    >
+    <div className="mx-auto max-w-[1200px] px-4 pt-6 md:pt-12 xl:px-0">
       {children}
-    </Context.Provider>
+    </div>
   )
 }
 
-ArchitectMain.SearchBar = function SearchBar() {
+ArchitectMainView.SearchBar = function SearchBar() {
   const { input, handleInputChange } = useArchitectMainContext()
 
   return (
@@ -94,7 +65,7 @@ ArchitectMain.SearchBar = function SearchBar() {
   )
 }
 
-ArchitectMain.SortButtons = function SortButtons() {
+ArchitectMainView.SortButtons = function SortButtons() {
   const { input, isDescending, sortKey, handleSortClick } =
     useArchitectMainContext()
 
@@ -135,7 +106,7 @@ ArchitectMain.SortButtons = function SortButtons() {
   )
 }
 
-ArchitectMain.TierButtons = function TierButtons() {
+ArchitectMainView.TierButtons = function TierButtons() {
   const { selectedTier, handleTierClick } = useArchitectMainContext()
 
   return (
@@ -161,7 +132,7 @@ ArchitectMain.TierButtons = function TierButtons() {
   )
 }
 
-ArchitectMain.ArchitectList = function ArchitectList({
+ArchitectMainView.ArchitectList = function ArchitectList({
   architects,
 }: {
   architects: Omit<Architect, 'portfolio'>[]
@@ -182,7 +153,7 @@ ArchitectMain.ArchitectList = function ArchitectList({
         .sort(compareMatchingIndex)
         .sort(input === '' ? compareArchitects : () => 1)
         .map((architect, index) => (
-          <ArchitectMain.ArchitectListItem
+          <ArchitectMainView.ArchitectListItem
             key={architect.minecraftId}
             architect={architect}
             order={index}
@@ -192,7 +163,7 @@ ArchitectMain.ArchitectList = function ArchitectList({
   )
 }
 
-ArchitectMain.ArchitectListItem = function ArchitectMainItem({
+ArchitectMainView.ArchitectListItem = function ArchitectMainItem({
   architect,
   order,
 }: {
@@ -227,5 +198,3 @@ ArchitectMain.ArchitectListItem = function ArchitectMainItem({
     </Link>
   )
 }
-
-export default ArchitectMain

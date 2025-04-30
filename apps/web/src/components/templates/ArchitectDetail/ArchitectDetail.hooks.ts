@@ -2,8 +2,18 @@ import { useEffect } from 'react'
 import { Category } from '@repo/types'
 
 import { useArchitectStore } from '@/store/architectStore'
+import { useVisibilityOnHover } from '@/hooks'
 
-export const useArchitectDetail = (defaultView: 'single' | 'grid') => {
+export const usePortfolioItem = () => {
+  const { isHovered, setHoverTrue, setHoverFalse } = useVisibilityOnHover([
+    'youtube',
+    'image',
+  ])
+
+  return { isHovered, setHoverTrue, setHoverFalse }
+}
+
+export const useArchitectView = (defaultView: 'single' | 'grid') => {
   const { view, category, toggleView, setView, setCategory } =
     useArchitectStore()
 

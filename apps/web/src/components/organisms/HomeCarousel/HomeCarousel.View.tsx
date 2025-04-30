@@ -1,73 +1,34 @@
-'use client'
-
-import { createContext, use } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useQuery } from '@tanstack/react-query'
 import { cn, renamePngTo1080Webp, renamePngToWebp } from '@repo/utils'
 
 import { Button, Tooltip } from '@/components/atoms'
-import ErrorFallback from '../ErrorFallback'
 
-import { useCarousel } from '@/hooks'
-import { getHackerWinLine, getWinnerLineIndex } from '@/services/content'
-import { getLatestNoobProHacker } from '@/libs/actions/noobprohacker'
-import { PopulatedNoobProHacker } from '@/types/content'
+import { getHackerWinLine } from '@/services/content'
+import { useHomeCarouselContext } from './HomeCarousel.context'
 
-type HomeCarouselContext = {
-  noobprohacker: PopulatedNoobProHacker
-  carouselIndex: number
-  resetAutoScroll: () => void
-  startAutoScroll: () => void
-  onCategoryClick: (index: number) => void
-} | null
-
-const Context = createContext<HomeCarouselContext>(null)
-
-const useHomeCarouselContext = () => {
-  const context = use(Context)
-  if (!context) {
-    throw new Error('HomeCarouselContext.Provider is missing')
-  }
-  return context
-}
-
-function HomeCarousel() {
+export function HomeCarouselView() {
   return (
-    <ErrorBoundary fallback={<ErrorFallback />}>
-      <HomeCarousel.Provider>
-        <HomeCarousel.Background />
-        <HomeCarousel.Wrapper>
-          <HomeCarousel.Title />
-          <HomeCarousel.Navigator />
-          <HomeCarousel.Content />
-        </HomeCarousel.Wrapper>
-      </HomeCarousel.Provider>
-    </ErrorBoundary>
+    <HomeCarouselView.Container>
+      <HomeCarouselView.Background />
+      <HomeCarouselView.Wrapper>
+        <HomeCarouselView.Title />
+        <HomeCarouselView.Navigator />
+        <HomeCarouselView.Content />
+      </HomeCarouselView.Wrapper>
+    </HomeCarouselView.Container>
   )
 }
 
-HomeCarousel.Provider = function Provider({
+HomeCarouselView.Container = function Container({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { data } = useQuery({
-    queryKey: ['latestNoobProHacker'],
-    queryFn: getLatestNoobProHacker,
-  })
-  if (!data) throw new Error('최근 눕프로해커 데이터를 가져오지 못했습니다.')
-  const carousel = useCarousel(getWinnerLineIndex(data), data.workInfo.length)
-
-  return (
-    <Context.Provider value={{ noobprohacker: data, ...carousel }}>
-      <div className="mt-8 md:mt-0 md:h-[100vh]">{children}</div>
-    </Context.Provider>
-  )
+  return <div className="mt-8 md:mt-0 md:h-[100vh]">{children}</div>
 }
 
-HomeCarousel.Background = function Background() {
+HomeCarouselView.Background = function Background() {
   const { noobprohacker } = useHomeCarouselContext()
 
   return (
@@ -80,7 +41,7 @@ HomeCarousel.Background = function Background() {
   )
 }
 
-HomeCarousel.Wrapper = function Wrapper({
+HomeCarouselView.Wrapper = function Wrapper({
   children,
 }: {
   children: React.ReactNode
@@ -92,7 +53,7 @@ HomeCarousel.Wrapper = function Wrapper({
   )
 }
 
-HomeCarousel.Title = function Title() {
+HomeCarouselView.Title = function Title() {
   const { noobprohacker } = useHomeCarouselContext()
 
   return (
@@ -107,7 +68,7 @@ HomeCarousel.Title = function Title() {
   )
 }
 
-HomeCarousel.Navigator = function Navigator() {
+HomeCarouselView.Navigator = function Navigator() {
   const {
     noobprohacker,
     carouselIndex,
@@ -141,7 +102,7 @@ HomeCarousel.Navigator = function Navigator() {
   )
 }
 
-HomeCarousel.Content = function Content() {
+HomeCarouselView.Content = function Content() {
   const { noobprohacker, carouselIndex, resetAutoScroll, startAutoScroll } =
     useHomeCarouselContext()
 
@@ -173,6 +134,7 @@ HomeCarousel.Content = function Content() {
                   alt="작품 이미지"
                 />
                 <Tooltip
+                  visible={false}
                   onClick={(e) => e.preventDefault()}
                   position="bottom"
                   className="md:group-hover:animate-fadeIn visible flex w-max gap-4 rounded-2xl px-6 py-2 hover:cursor-auto md:invisible md:group-hover:visible"
@@ -192,5 +154,3 @@ HomeCarousel.Content = function Content() {
     </div>
   )
 }
-
-export default HomeCarousel

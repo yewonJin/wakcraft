@@ -1,5 +1,5 @@
-export { default as ArchitectDetail } from './ArchitectDetail'
-export { default as ArchitectMain } from './ArchitectMain'
+export { default as ArchitectDetail } from './ArchitectDetail/ArchitectDetail'
+export { default as ArchitectMain } from './ArchitectMain/ArchitectMain'
 export { default as ContentDetail } from './ContentDetail'
 export { default as ContentMain } from './ContentMain'
 export { default as Home } from './Home'

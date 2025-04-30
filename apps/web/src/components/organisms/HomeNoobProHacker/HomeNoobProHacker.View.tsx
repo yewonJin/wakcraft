@@ -1,81 +1,33 @@
-'use client'
-
-import { createContext, Fragment, use, useState } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
+import { Fragment, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useQuery } from '@tanstack/react-query'
 import { ChevronLeft, Link2 } from 'lucide-react'
-import { ContentInfo } from '@repo/types'
-import { cn, renamePngToWebp } from '@repo/utils'
 
 import { InfoBox, Tooltip } from '@/components/atoms'
-import ErrorFallback from '../ErrorFallback'
 
-import {
-  getRecentNoobProHackers,
-  getSweepLines,
-} from '@/libs/actions/noobprohacker'
+import { cn, renamePngToWebp } from '@repo/utils'
 import { getHackerWinLine, getProWinLine } from '@/services/content'
-import { PopulatedLineInfo, PopulatedNoobProHacker } from '@/types/content'
+import { useHomeNoobProHackerContext } from './HomeNoobProHacker.context'
 
-type HomeNoobProHackerContext = {
-  recentNoobProHackers: PopulatedNoobProHacker[]
-  sweepLines: {
-    contentInfo: ContentInfo
-    workInfo: PopulatedLineInfo
-  }[]
-} | null
-
-const Context = createContext<HomeNoobProHackerContext>(null)
-
-const useHomeNoobProHackerContext = () => {
-  const context = use(Context)
-  if (!context) {
-    throw new Error('HomeNoobProHackerContext.Provider is missing')
-  }
-  return context
-}
-
-function HomeNoobProHacker() {
+export function HomeNoobProHackerView() {
   return (
-    <ErrorBoundary fallback={<ErrorFallback />}>
-      <HomeNoobProHacker.Provider>
-        <HomeNoobProHacker.Title />
-        <HomeNoobProHacker.RecentWinEntries />
-        <HomeNoobProHacker.SweepLine />
-      </HomeNoobProHacker.Provider>
-    </ErrorBoundary>
+    <HomeNoobProHackerView.Container>
+      <HomeNoobProHackerView.Title />
+      <HomeNoobProHackerView.RecentWinEntries />
+      <HomeNoobProHackerView.SweepLine />
+    </HomeNoobProHackerView.Container>
   )
 }
 
-HomeNoobProHacker.Provider = function Provider({
+HomeNoobProHackerView.Container = function Container({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { data: recentNoobProHackers } = useQuery({
-    queryKey: ['recentNoobProHackers'],
-    queryFn: () => getRecentNoobProHackers(3),
-  })
-
-  const { data: sweepLines } = useQuery({
-    queryKey: ['sweepLines'],
-    queryFn: getSweepLines,
-  })
-
-  if (!recentNoobProHackers || !sweepLines) {
-    throw new Error('데이터를 불러오지 못했습니다.')
-  }
-
-  return (
-    <Context.Provider value={{ recentNoobProHackers, sweepLines }}>
-      <div className="px-4 pt-12 md:pt-24 xl:px-0">{children}</div>
-    </Context.Provider>
-  )
+  return <div className="px-4 pt-12 md:pt-24 xl:px-0">{children}</div>
 }
 
-HomeNoobProHacker.Title = function Title() {
+HomeNoobProHackerView.Title = function Title() {
   return (
     <Fragment>
       <h2 className="text-text-strong mb-8 text-3xl font-bold md:text-4xl">
@@ -92,7 +44,7 @@ HomeNoobProHacker.Title = function Title() {
   )
 }
 
-HomeNoobProHacker.RecentWinEntries = function RecentWinEntries() {
+HomeNoobProHackerView.RecentWinEntries = function RecentWinEntries() {
   const { recentNoobProHackers } = useHomeNoobProHackerContext()
 
   return (
@@ -101,7 +53,7 @@ HomeNoobProHacker.RecentWinEntries = function RecentWinEntries() {
       <div className="relative mt-6 flex flex-wrap gap-5 gap-y-8 md:[&>div:nth-child(2)]:flex-row-reverse">
         {recentNoobProHackers.map((noobprohacker) => {
           const hackerWinTitle = getHackerWinLine(noobprohacker)?.title
-          const proWinTitle = getHackerWinLine(noobprohacker)?.title
+          const proWinTitle = getProWinLine(noobprohacker)?.title
           const hackerEntry = getHackerWinLine(noobprohacker)?.entries[2]
           const proEntry = getProWinLine(noobprohacker)?.entries[1]
 
@@ -179,7 +131,7 @@ HomeNoobProHacker.RecentWinEntries = function RecentWinEntries() {
   )
 }
 
-HomeNoobProHacker.SweepLine = function SweepLine() {
+HomeNoobProHackerView.SweepLine = function SweepLine() {
   const [page, setPage] = useState(0)
 
   const moveToNextPage = () => {
@@ -209,7 +161,10 @@ HomeNoobProHacker.SweepLine = function SweepLine() {
             {sweepLines[page].workInfo.title}
           </span>
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div
+          key={sweepLines[page].contentInfo.date}
+          className="grid grid-cols-1 gap-6 md:grid-cols-3"
+        >
           {sweepLines[page].workInfo.entries.map((entry) => (
             <div
               key={entry.imageUrl}
@@ -223,6 +178,7 @@ HomeNoobProHacker.SweepLine = function SweepLine() {
                 style={{ objectFit: 'cover' }}
               />
               <Tooltip
+                visible={false}
                 position="bottom"
                 className="md:group-hover:animate-fadeIn visible flex w-max gap-4 rounded-2xl bg-[#121212] px-6 py-2 md:invisible md:group-hover:visible"
               >
@@ -257,5 +213,3 @@ HomeNoobProHacker.SweepLine = function SweepLine() {
     </div>
   )
 }
-
-export default HomeNoobProHacker
