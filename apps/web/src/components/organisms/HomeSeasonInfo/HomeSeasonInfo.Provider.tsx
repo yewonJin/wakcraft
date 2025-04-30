@@ -54,7 +54,7 @@ export function HomeSeasonInfoProvider({
         changeSeason,
       }}
     >
-      <div className="mb-12 px-4 pt-24 md:mb-32 xl:px-0">{children}</div>
+      {children}
     </Context.Provider>
   )
 }
