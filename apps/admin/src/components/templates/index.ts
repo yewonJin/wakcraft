@@ -1,5 +1,5 @@
 export { default as ArchitectForm } from './ArchitectForm'
-export { default as EditArchitectForm } from './EditArchitectForm'
+export { default as ArchitectEditForm } from './ArchitectEditForm'
 export { default as EventNoobProHackerEditForm } from './EventNoobProHackerEditForm'
 export { default as EventNoobProHackerForm } from './EventNoobProHackerForm/EventNoobProHackerForm'
 export { default as NoobProHackerForm } from './NoobProHackerForm'

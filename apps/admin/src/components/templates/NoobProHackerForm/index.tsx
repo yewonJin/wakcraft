@@ -22,17 +22,14 @@ export default function NoobProHackerForm({
   content,
   nextEpisode,
 }: Props) {
-  const initialNoobProHacker = makeInitialNoobProHackerContent(
-    nextEpisode,
-    BASE_WORKINFO_LENGTH,
-    BASE_ENTRY_LENGTH,
-    BASE_LINE_TIERS,
-  )
+  const initialContent =
+    content ||
+    makeInitialNoobProHackerContent(
+      nextEpisode,
+      BASE_WORKINFO_LENGTH,
+      BASE_ENTRY_LENGTH,
+      BASE_LINE_TIERS,
+    )
 
-  return (
-    <LineContentForm
-      action={action}
-      initialContent={content || initialNoobProHacker}
-    />
-  )
+  return <LineContentForm action={action} initialContent={initialContent} />
 }

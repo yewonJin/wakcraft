@@ -1,4 +1,4 @@
-import { EditArchitectForm } from '@/components/templates'
+import { ArchitectEditForm } from '@/components/templates'
 
 import { getArchitect, updateArchitect } from '@/lib/actions/architect'
 
@@ -13,7 +13,7 @@ export default async function Page({
   if (!architect) return <h1>해당 건축가가 없습니다.</h1>
 
   return (
-    <EditArchitectForm
+    <ArchitectEditForm
       action={updateArchitect}
       architect={JSON.parse(JSON.stringify(architect))}
     />
