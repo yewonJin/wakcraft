@@ -1,9 +1,10 @@
 import { Noto_Sans_KR } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { ErrorBoundary } from 'react-error-boundary'
 
 import './globals.css'
-import { GlobalNav, ScrollToTop } from '@/components/organisms'
+import { ErrorFallback, GlobalNav, ScrollToTop } from '@/components/organisms'
 import Providers from './provider'
 
 import { setInitialThemeMode } from '@/utils/theme'
@@ -31,7 +32,9 @@ export default function RootLayout({
           <GoogleAnalytics gaId={process.env.GA_TRACKING_ID as string} />
           <GlobalNav />
           <ScrollToTop />
-          <main className="pt-16 pb-20 md:gap-40">{children}</main>
+          <ErrorBoundary fallback={<ErrorFallback />}>
+            <main className="pt-16 pb-20 md:gap-40">{children}</main>
+          </ErrorBoundary>
         </Providers>
       </body>
     </html>

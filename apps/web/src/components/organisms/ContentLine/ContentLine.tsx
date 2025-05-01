@@ -1,8 +1,5 @@
 'use client'
 
-import { ErrorBoundary } from 'react-error-boundary'
-
-import ErrorFallback from '../ErrorFallback'
 import { ContentLineProvider } from './ContentLine.Provider'
 import { ContentLineView } from './ContentLine.View'
 
@@ -18,10 +15,8 @@ export type Props = {
 
 export default function ContentLine({ isMobile, content }: Props) {
   return (
-    <ErrorBoundary fallback={<ErrorFallback />}>
-      <ContentLineProvider isMobile={isMobile} content={content}>
-        <ContentLineView />
-      </ContentLineProvider>
-    </ErrorBoundary>
+    <ContentLineProvider isMobile={isMobile} content={content}>
+      <ContentLineView />
+    </ContentLineProvider>
   )
 }
