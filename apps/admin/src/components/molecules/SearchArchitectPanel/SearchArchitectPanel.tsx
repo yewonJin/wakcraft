@@ -1,8 +1,6 @@
-import { useState } from 'react'
-
 import { Input } from '@/components/atoms'
-import { useSearchArchitect } from '@/hooks/useSearchArchitect'
 import { ArchitectIdInfo } from '@/store/architectStore'
+import { useSearchArchitectPanel } from './SearchArchitectPanel.hooks'
 
 type Props = {
   disabled?: boolean
@@ -15,40 +13,14 @@ export default function SearchArchitectPanel({
   architects,
   onArchitectIdChange,
 }: Props) {
-  const [input, setInput] = useState('')
-
-  const { filteredArchitect, isSelected } = useSearchArchitect({
-    architects,
+  const {
+    filteredArchitect,
     input,
-  })
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (input === '') return
-    if (!filteredArchitect.length) return
-
-    if (e.key === 'Tab') {
-      setInput(filteredArchitect[0].wakzooId)
-      onArchitectIdChange([filteredArchitect[0].minecraftId])
-    }
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value)
-    onArchitectIdChange([filteredArchitect[0]?.minecraftId ?? ''])
-    if (
-      filteredArchitect.length &&
-      (input === filteredArchitect[0].minecraftId ||
-        input === filteredArchitect[0].wakzooId)
-    ) {
-      setInput(e.target.value)
-      onArchitectIdChange([filteredArchitect[0].minecraftId])
-    }
-  }
-
-  const handleArchitectClick = (architect: ArchitectIdInfo) => {
-    setInput(architect.wakzooId)
-    onArchitectIdChange([architect.minecraftId])
-  }
+    isSelected,
+    handleKeyDown,
+    handleInputChange,
+    handleArchitectClick,
+  } = useSearchArchitectPanel(architects, onArchitectIdChange)
 
   return (
     <div className="w-full relative">

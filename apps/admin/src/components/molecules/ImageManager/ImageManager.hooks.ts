@@ -5,7 +5,7 @@ import { AWS_BASE_URL } from '@/lib/aws'
 import { useContentStore } from '@/store/contentStore'
 import { useModalStore } from '@/store/modalStore'
 
-export const useImageForm = (
+export const useImageManager = (
   handleImageSelect: (imageUrl: string | null) => void,
 ) => {
   const { toggleModal, setHandleImageSelect } = useModalStore()

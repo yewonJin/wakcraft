@@ -5,7 +5,7 @@ import { cn, renamePngToWebp } from '@repo/utils'
 
 import { Button, Input } from '@/components/atoms'
 
-import { useImageForm } from '@/hooks/useImageForm'
+import { useImageManager } from './ImageManager.hooks'
 
 type Props = {
   imageUrl: string
@@ -14,7 +14,7 @@ type Props = {
 
 export default function ImageManager({ imageUrl, handleImageSelect }: Props) {
   const { onImageClick, onFileDrop, onFileChange } =
-    useImageForm(handleImageSelect)
+    useImageManager(handleImageSelect)
   const [inputId] = useState(uuidv4())
 
   return (

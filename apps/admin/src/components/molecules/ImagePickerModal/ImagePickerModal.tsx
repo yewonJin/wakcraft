@@ -6,27 +6,12 @@ import { renamePngToWebp } from '@repo/utils'
 
 import { Button } from '@/components/atoms'
 
+import { useImagePickerModal } from './ImagePickerModal.hooks'
 import { sortImagesByTierName } from '@/services/tier'
-import { useModalStore } from '@/store/modalStore'
-import { useContentStore } from '@/store/contentStore'
 
 export default function ImagePickerModal() {
-  const { toggleModal, handleImageSelect } = useModalStore()
-  const { imageUrls } = useContentStore()
-
-  const handleImageDelete = () => {
-    if (handleImageSelect !== null) {
-      handleImageSelect(null)
-    }
-    toggleModal()
-  }
-
-  const onCloseClick = (imageUrl: string) => {
-    if (handleImageSelect !== null) {
-      handleImageSelect(imageUrl)
-    }
-    toggleModal()
-  }
+  const { imageUrls, toggleModal, handleImageDelete, onCloseClick } =
+    useImagePickerModal()
 
   return createPortal(
     <div
