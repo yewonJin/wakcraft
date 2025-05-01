@@ -1,8 +1,3 @@
-'use client'
-
-import { useParams } from 'next/navigation'
-import { LineEventNoobProHacker, NoobProHacker } from '@repo/types'
-
 import { Divider, Input } from '@/components/atoms'
 import {
   ContentInfo,
@@ -11,67 +6,28 @@ import {
   SearchArchitectPanel,
 } from '@/components/molecules'
 
-import { useContentForm } from '@/hooks/useContentForm'
-import {
-  LineContentFormContext,
-  useLineContentFormContext,
-} from '@/hooks/useContentFormContext'
+import { useLineContentFormContext } from '@/hooks/useContentFormContext'
 import { convertLineContentArchitectId } from '@/services/content'
 import { useArchitectsStore } from '@/store/architectStore'
 import { useModalStore } from '@/store/modalStore'
 
-type Props<T extends NoobProHacker | LineEventNoobProHacker> = {
-  action: (payload: T) => Promise<void>
-  initialContent: T
-}
-
-function LineContentForm<T extends NoobProHacker | LineEventNoobProHacker>({
-  action,
-  initialContent,
-}: Props<T>) {
+export function LineContentFormView() {
   return (
-    <LineContentForm.Provider initialContent={initialContent}>
-      <LineContentForm.FormWrapper action={action}>
-        <LineContentForm.Title />
-        <ContentInfo />
-        <Divider />
-        <LineContentForm.LineInfo />
-      </LineContentForm.FormWrapper>
-    </LineContentForm.Provider>
+    <LineContentFormView.FormWrapper>
+      <LineContentFormView.Title />
+      <ContentInfo />
+      <Divider />
+      <LineContentFormView.LineInfo />
+    </LineContentFormView.FormWrapper>
   )
 }
 
-LineContentForm.Provider = function Provider<
-  T extends NoobProHacker | LineEventNoobProHacker,
->({
-  initialContent,
+LineContentFormView.FormWrapper = function FormWrapper({
   children,
 }: {
-  initialContent: T
   children: React.ReactNode
 }) {
-  const params = useParams()
-  const isEditMode = Boolean(params?.episode)
-
-  return (
-    <LineContentFormContext.Provider
-      value={{ ...useContentForm(initialContent), isEditMode }}
-    >
-      {children}
-    </LineContentFormContext.Provider>
-  )
-}
-
-LineContentForm.FormWrapper = function FormWrapper<
-  T extends NoobProHacker | LineEventNoobProHacker,
->({
-  action,
-  children,
-}: {
-  action: (payload: T) => Promise<void>
-  children: React.ReactNode
-}) {
-  const { content, isEditMode } = useLineContentFormContext()
+  const { action, content, isEditMode } = useLineContentFormContext()
   const { architects } = useArchitectsStore()
 
   return (
@@ -79,8 +35,8 @@ LineContentForm.FormWrapper = function FormWrapper<
       action={() =>
         action(
           !isEditMode
-            ? convertLineContentArchitectId(architects, content as T)
-            : (content as T),
+            ? convertLineContentArchitectId(architects, content)
+            : content,
         )
       }
       className="flex flex-col gap-8 p-8 max-w-[1920px] mx-auto"
@@ -90,7 +46,7 @@ LineContentForm.FormWrapper = function FormWrapper<
   )
 }
 
-LineContentForm.Title = function Title() {
+LineContentFormView.Title = function Title() {
   const { content } = useLineContentFormContext()
 
   return (
@@ -100,7 +56,7 @@ LineContentForm.Title = function Title() {
   )
 }
 
-LineContentForm.LineInfo = function LineInfo() {
+LineContentFormView.LineInfo = function LineInfo() {
   const {
     content,
     onLineInfoChange,
@@ -200,5 +156,3 @@ LineContentForm.LineInfo = function LineInfo() {
     </div>
   )
 }
-
-export default LineContentForm

@@ -8,8 +8,7 @@ import {
   LineContentForm,
   GridContentForm,
 } from '@/components/organisms'
-
-import { useEventNoobProHacker } from '@/hooks/useEventNoobProHacker'
+import { useEventNoobProHackerForm } from './EventNoobProHackerForm.hooks'
 
 type Props = {
   actions: {
@@ -30,8 +29,8 @@ export default function EventNoobProHackerForm({
     onSelectChange,
     onButtonClick,
     initialLineEventNoobProHacker,
-    intialGridEventNoobProHacker,
-  } = useEventNoobProHacker(nextEpisode)
+    initialGridEventNoobProHacker,
+  } = useEventNoobProHackerForm(nextEpisode)
 
   if (!isEnd)
     return (
@@ -53,7 +52,7 @@ export default function EventNoobProHackerForm({
       ) : (
         <GridContentForm
           action={actions.grid}
-          initialContent={intialGridEventNoobProHacker}
+          initialContent={initialGridEventNoobProHacker}
         />
       )}
     </Fragment>

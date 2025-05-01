@@ -22,6 +22,7 @@ export type TLineContentFormContext =
       typeof useContentForm<NoobProHacker | LineEventNoobProHacker>
     > & {
       isEditMode: boolean
+      action: (payload: NoobProHacker | LineEventNoobProHacker) => Promise<void>
     })
   | null
 
@@ -38,9 +39,10 @@ export const useLineContentFormContext = () => {
 
 type TGridContentFormContext =
   | (ReturnType<
-      typeof useContentForm<PlacementTest | GridEventNoobProHacker>
+      typeof useContentForm<GridEventNoobProHacker | PlacementTest>
     > & {
       isEditMode: boolean
+      action: (payload: GridEventNoobProHacker | PlacementTest) => Promise<void>
     })
   | null
 

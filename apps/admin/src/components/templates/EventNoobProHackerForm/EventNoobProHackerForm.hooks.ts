@@ -25,7 +25,7 @@ const initialState: InitialState = {
   lineTiers: BASE_LINE_TIERS,
 }
 
-export const useEventNoobProHacker = (nextEpisode: number) => {
+export const useEventNoobProHackerForm = (nextEpisode: number) => {
   const [state, setState] = useState(initialState)
   const [isEnd, setIsEnd] = useState(false)
 
@@ -63,16 +63,14 @@ export const useEventNoobProHacker = (nextEpisode: number) => {
       state.lineTiers,
     )
 
-  const intialGridEventNoobProHacker = makeInitialGridEventNoobProHackerContent(
-    nextEpisode,
-    state.workInfoLength,
-  )
+  const initialGridEventNoobProHacker =
+    makeInitialGridEventNoobProHackerContent(nextEpisode, state.workInfoLength)
 
   return {
     state,
     isEnd,
     initialLineEventNoobProHacker,
-    intialGridEventNoobProHacker,
+    initialGridEventNoobProHacker,
     onStateChange,
     onSelectChange,
     onButtonClick,

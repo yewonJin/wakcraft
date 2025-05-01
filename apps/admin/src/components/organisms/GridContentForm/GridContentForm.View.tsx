@@ -1,10 +1,5 @@
-'use client'
-
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
-import { TIER } from '@repo/constants'
-import { GridEventNoobProHacker, PlacementTest } from '@repo/types'
-import { renamePngToWebp } from '@repo/utils'
 
 import { Divider, Input, SelectBox } from '@/components/atoms'
 import {
@@ -14,71 +9,36 @@ import {
   SearchArchitectPanel,
 } from '@/components/molecules'
 
-import { useContentForm } from '@/hooks/useContentForm'
-import {
-  GridContentFormContext,
-  useGridContentFormContext,
-} from '@/hooks/useContentFormContext'
+import { useGridContentFormContext } from '@/hooks/useContentFormContext'
 import { convertGridContentArchitectId } from '@/services/content'
 import { useArchitectsStore } from '@/store/architectStore'
 import { useModalStore } from '@/store/modalStore'
+import { TIER } from '@repo/constants'
+import { renamePngToWebp } from '@repo/utils'
 
-type Props<T extends GridEventNoobProHacker | PlacementTest> = {
-  action: (payload: T) => Promise<void>
-  initialContent: T
-}
+export function GridContentFormView() {
+  const { content } = useGridContentFormContext()
 
-function GridContentForm<T extends GridEventNoobProHacker | PlacementTest>({
-  action,
-  initialContent,
-}: Props<T>) {
   return (
-    <GridContentForm.Provider initialContent={initialContent}>
-      <GridContentForm.FormWrapper action={action}>
-        <GridContentForm.Title />
-        <ContentInfo />
-        <Divider />
-        {'type' in initialContent ? (
-          <GridContentForm.GridInfo />
-        ) : (
-          <GridContentForm.PlacementTestInfo />
-        )}
-      </GridContentForm.FormWrapper>
-    </GridContentForm.Provider>
+    <GridContentFormView.FormWrapper>
+      <GridContentFormView.Title />
+      <ContentInfo />
+      <Divider />
+      {'type' in content ? (
+        <GridContentFormView.GridInfo />
+      ) : (
+        <GridContentFormView.PlacementTestInfo />
+      )}
+    </GridContentFormView.FormWrapper>
   )
 }
 
-GridContentForm.Provider = function Provider<
-  T extends PlacementTest | GridEventNoobProHacker,
->({
-  initialContent,
+GridContentFormView.FormWrapper = function FormWrapper({
   children,
 }: {
-  initialContent: T
   children: React.ReactNode
 }) {
-  const params = useParams()
-  const isEditMode = Boolean(params?.episode)
-
-  return (
-    <GridContentFormContext.Provider
-      value={{ ...useContentForm(initialContent), isEditMode }}
-    >
-      {children}
-    </GridContentFormContext.Provider>
-  )
-}
-
-GridContentForm.FormWrapper = function FormWrapper<
-  T extends PlacementTest | GridEventNoobProHacker,
->({
-  action,
-  children,
-}: {
-  action: (payload: T) => Promise<void>
-  children: React.ReactNode
-}) {
-  const { content, isEditMode } = useGridContentFormContext()
+  const { action, content, isEditMode } = useGridContentFormContext()
   const { architects } = useArchitectsStore()
 
   return (
@@ -86,8 +46,8 @@ GridContentForm.FormWrapper = function FormWrapper<
       action={() =>
         action(
           !isEditMode
-            ? convertGridContentArchitectId(architects, content as T)
-            : (content as T),
+            ? convertGridContentArchitectId(architects, content)
+            : content,
         )
       }
       className="flex flex-col gap-8 p-8 max-w-[1920px] mx-auto"
@@ -97,7 +57,7 @@ GridContentForm.FormWrapper = function FormWrapper<
   )
 }
 
-GridContentForm.Title = function Title() {
+GridContentFormView.Title = function Title() {
   const { content } = useGridContentFormContext()
 
   return (
@@ -107,7 +67,7 @@ GridContentForm.Title = function Title() {
   )
 }
 
-GridContentForm.GridInfo = function GridInfo() {
+GridContentFormView.GridInfo = function GridInfo() {
   const {
     content,
     isEditMode,
@@ -188,7 +148,7 @@ GridContentForm.GridInfo = function GridInfo() {
   )
 }
 
-GridContentForm.PlacementTestInfo = function PlacementTestGridInfo() {
+GridContentFormView.PlacementTestInfo = function PlacementTestGridInfo() {
   const { content, onGridInfoChange } = useGridContentFormContext()
   const { show } = useModalStore()
   const params = useParams()
@@ -255,5 +215,3 @@ GridContentForm.PlacementTestInfo = function PlacementTestGridInfo() {
     </div>
   )
 }
-
-export default GridContentForm
