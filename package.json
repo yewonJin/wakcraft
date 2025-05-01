@@ -8,6 +8,7 @@
     "dev:admin": "turbo run dev --filter=admin",
     "build:web": "turbo run build --filter=web",
     "build:admin": "turbo run build --filter=admin",
+    "test:admin": "yarn jest --config apps/admin/jest.config.ts",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
