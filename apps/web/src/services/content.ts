@@ -11,7 +11,8 @@ import {
 } from '@repo/types'
 
 export const getWinnerLineIndex = (noobprohacker: PopulatedNoobProHacker) => {
-  return noobprohacker.workInfo.findIndex((line) => line.ranking === 1)
+  const index = noobprohacker.workInfo.findIndex((line) => line.ranking === 1)
+  return index === -1 ? null : index
 }
 
 export const getHackerWinLine = (noobprohacker: PopulatedNoobProHacker) => {
